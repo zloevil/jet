@@ -2,7 +2,6 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/zloevil/jet.svg)](https://pkg.go.dev/github.com/zloevil/jet)
 [![CI](https://github.com/zloevil/jet/actions/workflows/ci.yml/badge.svg)](https://github.com/zloevil/jet/actions/workflows/ci.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/zloevil/jet)](https://goreportcard.com/report/github.com/zloevil/jet)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/zloevil/jet)](go.mod)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
