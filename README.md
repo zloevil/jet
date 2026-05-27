@@ -163,6 +163,21 @@ go test -tags integration ./...    # integration tests (need real Postgres/Kafka
 Integration tests are guarded by the `integration` build tag and require the
 corresponding services to be running.
 
+## AI agents
+
+The [`.agents/`](.agents/) directory ships two expert subagent definitions for building
+services *on top of* `jet`. They encode the toolkit's API (verified against this source) and
+its conventions — layering, error model, lifecycle, observability — so an agent can scaffold
+and extend a service without rediscovering the patterns each time.
+
+| Agent | Use it for |
+|---|---|
+| [`jet-service-agent`](.agents/jet-service-agent.md) | Domain / business microservices: a gRPC/HTTP service owning business logic and relational data, in the layered `cmd → bootstrap → transport / usecase / domain / repository` style. |
+| [`jet-gateway-agent`](.agents/jet-gateway-agent.md) | Gateway / external-integration services: fronting an external protocol behind an internal gRPC/HTTP facade, managing a bounded pool of long-lived client sessions with reconnection and graceful drain. |
+
+Each file is a self-contained system prompt (Markdown with `name`/`description` frontmatter):
+point your agent harness at it, or read it as a hands-on guide to building a service with `jet`.
+
 ## Contributing
 
 Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
