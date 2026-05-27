@@ -1,0 +1,29 @@
+# golangci-lint configuration (schema v2).
+#
+# Conservative, green-on-current-code linter set for v1 CI. Every enabled
+# linter reports zero findings on the current tree, so the lint job is a real
+# gate (a regression fails it) rather than a wall of pre-existing warnings.
+#
+# Deliberately deferred until the existing debt is paid down incrementally
+# (each currently reports findings in committed source):
+#   errcheck, staticcheck, unused, ineffassign,
+#   and the gofmt/goimports formatters (formatting is enforced by `make fmt`).
+# Enable them one at a time in follow-up changes once their findings are fixed.
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  default: none
+  enable:
+    - govet         # suspicious constructs (same default analyzers as `go vet`)
+    - misspell      # commonly misspelled English words in comments/strings
+    - durationcheck # catches time.Duration multiplication mistakes
+    - usestdlibvars # use stdlib constants (http.MethodGet, ...) instead of literals
+    - nilerr        # returning nil after a non-nil error check
+    - asciicheck    # non-ASCII identifiers (reinforces the English-only convention)
+    - bidichk       # dangerous bidirectional Unicode sequences
+  exclusions:
+    # Skip files carrying a "Code generated ... DO NOT EDIT." header (mocks, protobuf).
+    generated: lax

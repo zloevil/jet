@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod   # single source of truth (currently Go 1.26.x)
+          cache: true
+      - run: make build
+
+  vet:
+    name: vet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - run: make vet
+
+  lint:
+    name: golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.3.0
+          # Build golangci-lint from source with the Go set up above (1.26.x).
+          # The prebuilt release binaries are built with an older Go and refuse
+          # to load the config when go.mod targets a newer Go than they were
+          # built with ("used to build golangci-lint is lower than the targeted
+          # Go version"). goinstall rebuilds it with our Go, avoiding the clash.
+          install-mode: goinstall
+
+  unit-tests:
+    name: unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Run unit tests with coverage
+        run: make test-with-coverage   # go test -count=1 -coverprofile=.testCoverage.txt ./...
+      - name: Upload coverage profile
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-profile
+          path: .testCoverage.txt
+          if-no-files-found: error
+          # .testCoverage.txt is a dotfile; upload-artifact@v4 skips hidden
+          # files by default, so it must be opted in explicitly.
+          include-hidden-files: true
+
+  integration-tests:
+    name: integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      # Brings up redis/kafka/clickhouse/minio/centrifugo (ci/docker-compose.yml)
+      # and blocks until every service is ready (compose healthchecks + ci/wait-for-infra.sh).
+      - name: Start integration infrastructure
+        run: make ci-infra-up
+      # Runs every integration-tagged package except google/captcha (live Google API).
+      # grpc and excel carry the tag but need no infrastructure.
+      - name: Run integration tests
+        run: make test-integration-ci
+      - name: Stop integration infrastructure
+        if: always()
+        run: make ci-infra-down

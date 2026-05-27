@@ -1,0 +1,107 @@
+# CI / local integration-test infrastructure for jet.
+#
+# Every service is configured to match the connection values that the
+# integration tests hardcode (see *_test.go files guarded by the
+# `integration` build tag). Do NOT change ports/credentials here without
+# changing the tests — the tests are the source of truth, this file conforms.
+#
+# Usage:
+#   docker compose -f ci/docker-compose.yml up -d --wait
+#   bash ci/wait-for-infra.sh
+#   go test -tags integration -count=1 $(go list -tags integration ./... | grep -v '/google')
+#   docker compose -f ci/docker-compose.yml down -v
+#
+# Or via the Makefile: `make ci-infra-up` / `make ci-infra-down`.
+
+services:
+  # storages/redis tests -> Config{Host: localhost, Port: 6379}, no auth.
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # kafka tests -> BrokerConfig{Url: localhost:9092, TopicAutoCreation: true}, PLAINTEXT, no SASL.
+  # Single-node KRaft broker (no ZooKeeper) advertising localhost:9092 so a
+  # client on the host reaches the broker through the published port.
+  kafka:
+    image: apache/kafka:3.8.0
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 15s
+
+  # storages/clickhouse tests -> Config{Host: 127.0.0.1, Port: 19000 (native), User/Password: admin, Database: test}.
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    ports:
+      - "19000:9000"
+    environment:
+      CLICKHOUSE_USER: admin
+      CLICKHOUSE_PASSWORD: admin
+      CLICKHOUSE_DB: test
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    healthcheck:
+      test: ["CMD-SHELL", "clickhouse-client --user admin --password admin --query 'SELECT 1' >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  # storages/minio tests -> Config{Host: localhost, Port: 29000, AccessKey: minioaccesskey, SecretKey: miniosecretkey, Ssl: false}.
+  # MinIO needs the `server /data` command, so it cannot be a bare image; the
+  # compose `command` provides it. Health is checked from the host (the image
+  # ships no curl) via ci/wait-for-infra.sh against /minio/health/live.
+  minio:
+    image: minio/minio:RELEASE.2024-09-22T00-33-43Z
+    command: server /data
+    ports:
+      - "29000:9000"
+    environment:
+      MINIO_ROOT_USER: minioaccesskey
+      MINIO_ROOT_PASSWORD: miniosecretkey
+
+  # centrifugo tests -> ClientConfig{Url: ws://localhost:18000/connection/websocket},
+  # ServerConfig{Host: localhost, Port: 20000 (gRPC API), ApiKey, Secret}.
+  # Config (api_key, token_hmac_secret_key, grpc_api) is supplied via the
+  # mounted config.json; readiness is checked from the host (TCP 18000/20000).
+  centrifugo:
+    image: centrifugo/centrifugo:v5.1
+    command: centrifugo -c /centrifugo/config.json
+    ports:
+      - "18000:8000"   # HTTP / websocket
+      - "20000:10000"  # gRPC API
+    volumes:
+      - ./centrifugo:/centrifugo:ro
+    ulimits:
+      nproc: 65536
+      nofile:
+        soft: 65536
+        hard: 65536
