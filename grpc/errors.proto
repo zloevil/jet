@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package grpc;
+
+option go_package = "github.com/zloevil/jet/grpc";
+
+message AppErrorDetails {
+    string code = 1;
+    bytes fields = 2;
+    string type = 3;
+}
+
+
+

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package grpc;
+
+option go_package = "github.com/zloevil/jet/grpc";
+
+message WithErrorRequest {}
+message WithErrorResponse {}
+
+message WithPanicRequest {}
+message WithPanicResponse {}
+
+message Empty {}
+
+service TestService {
+    rpc WithError (WithErrorRequest) returns (WithErrorResponse) {}
+    rpc WithPanic (WithPanicRequest) returns (WithPanicResponse) {}
+    rpc Do (Empty) returns (Empty) {}
+}
+
+
+
+
