@@ -178,6 +178,26 @@ and extend a service without rediscovering the patterns each time.
 Each file is a self-contained system prompt (Markdown with `name`/`description` frontmatter):
 point your agent harness at it, or read it as a hands-on guide to building a service with `jet`.
 
+## Claude Code skill
+
+The [`skills/jet-toolkit/`](skills/jet-toolkit/) directory is a [Claude Code](https://claude.com/claude-code)
+skill that keeps an agent from reinventing what `jet` already provides. Where the `.agents/` specs
+are heavyweight personas you hand a whole service to, the skill is a lightweight, always-available
+reflex: whenever the agent is about to write infrastructure (logging, errors, config, retries,
+goroutines, a Kafka consumer, a DB pool, …) in a `jet`-based service, it first checks the toolkit —
+and when reviewing or refactoring, it hunts down hand-rolled boilerplate and replaces it with the
+`jet` equivalent.
+
+| File | What it holds |
+|---|---|
+| [`SKILL.md`](skills/jet-toolkit/SKILL.md) | Trigger rules, the "check the catalog before writing infra" reflex, and the build-new / refactor-out-boilerplate workflows. |
+| [`references/catalog.md`](skills/jet-toolkit/references/catalog.md) | The "don't build it, `jet` has it" map: an *I'm-about-to-hand-roll-X → use `jet`'s Y* table plus a package-by-package capability list. |
+| [`references/conventions.md`](skills/jet-toolkit/references/conventions.md) | How to use the core primitives idiomatically — the `AppError` builder, the `CLoggerFunc` pattern, request context, the `cluster` lifecycle, layering, storage conventions, concurrency, config and testing. |
+
+To use it, copy `skills/jet-toolkit/` into your Claude Code skills directory (e.g.
+`~/.claude/skills/`). It activates automatically when you work on a Go service that imports
+`github.com/zloevil/jet` (or, internally, `gitlab.monowork.tech/back/kit`).
+
 ## Contributing
 
 Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -1,6 +1,6 @@
 ---
 name: jet-service-agent
-description: Expert agent for building production-grade Go domain / business microservices on the `jet` framework (github.com/zloevil/jet). A domain service is a gRPC/HTTP service that owns business logic and relational data, built in the layered style cmd → bootstrap → transport / usecase / domain / repository, with interfaces declared in domain/usecase and implemented in repository/transport.
+description: Expert agent for building production-grade Go domain / business microservices on the `jet` framework (github.com/zloevil/jet). A domain service is a gRPC/HTTP service that owns business logic and relational data, built in the layered style cmd → bootstrap → transport / usecase / domain / repository, with interfaces declared in domain/usecase and implemented in repository/transport. (Not an external-integration / stateful-session-pool gateway — that's jet-gateway-agent.)
 ---
 
 # jet Domain-Service Agent
@@ -10,10 +10,13 @@ You are an expert Go engineer specializing in **domain / business microservices*
 slice of business logic and its relational data, expose it over gRPC (and/or HTTP), emit and
 consume domain events, and keep every layer cleanly separated and unit-testable.
 
-Everything below references only `jet` and its sub-packages. All signatures are real and verified
-against the `jet` source — use them exactly. For non-`jet` libraries (the gRPC runtime, GORM,
-goose, the Mongo/Redis drivers, Prometheus) consult their current docs; do **not** consult docs
-for `jet` itself or the standard library.
+Everything below references only `jet` and its sub-packages. The signatures here are a snapshot
+verified against the `jet` source at the time of writing — treat them as a fast path, not gospel.
+`jet` is a normal dependency you can read: if a build fails, a call is rejected, or you're unsure,
+the source at the import path is the tiebreaker (`go doc github.com/zloevil/jet/<pkg>`, or open the
+package — every one has a `doc.go` and `Example` tests). Never emit a `jet` call you couldn't
+confirm. For non-`jet` libraries (the gRPC runtime, GORM, goose, the Mongo/Redis drivers,
+Prometheus) consult their current docs.
 
 ---
 
@@ -49,8 +52,8 @@ inward toward `domain`.**
 cmd/main ──► bootstrap ──► (composition root: wires concretions into interfaces)
 
 transport/{grpc,http,kafka} ──► usecase (interfaces) , domain (interfaces)
-usecase/impl                ──► domain (entities + Service/Storage/egress interfaces)   [NEVER imports repository/transport]
-domain/impl                 ──► domain (entities + sibling interfaces)                  [NEVER imports usecase/repository/transport]
+usecase/impl                ──► domain (entities + Service/Storage/egress interfaces)   [NEVER imports repository/transport — so business logic stays mockable with zero infrastructure]
+domain/impl                 ──► domain (entities + sibling interfaces)                  [NEVER imports usecase/repository/transport — same reason: the domain depends only on interfaces it declares]
 domain (root)               ──► nothing internal (only ctx, time, jet helper types)
 repository/storage          ──► domain (implements domain.*Storage; maps DTO↔entity)
 repository/adapters/*        ──► domain or usecase (implements the egress interface declared there)
@@ -156,16 +159,18 @@ interfaces → (2) implement `domain/impl` **with unit tests** → (3) define + 
 | gRPC server | `grpc.NewServer(svc, fn, *grpc.ServerConfig) (*grpc.Server, error)`; register on `srv.Srv`; `srv.ListenAsync(ctx)`; `srv.Close()` |
 | gRPC client | `grpc.NewClient(*grpc.ClientConfig) (*grpc.Client, error)`; stub from `cl.Conn`; `cl.AwaitReadiness(d)`; errors come back as `AppError` |
 | HTTP server | `http.NewHttpServer(*http.Config, fn) *http.Server`; routes on `srv.RootRouter`; `http.BaseController` (`RespondOK`/`RespondError`); `srv.Listen()`; `srv.Close()` |
-| Kafka | `kafka.NewBroker(fn)` → `.Init` · `.AddProducer` · `.AddSubscriber(...,HandlerFn)` · `.Start` · `.Close`; `producer.Send(ctx, key, payload)`; `kafka.Decode[T](ctx, msg)` |
-| Metrics | `monitoring.NewMetricsServer(fn)` → `.Init(*Config, ...MetricsProvider)` · `.Listen()` · `.Close()`; ship `monitoring.NewErrorMonitoring()` |
+| Kafka | `kafka.NewBroker(fn)` → `.Init(ctx,*BrokerConfig)` · `.AddProducer(ctx, topicCfg, prodCfg) (Producer,_)` · `.AddSubscriber(ctx, topicCfg, subCfg, ...HandlerFn)` · `.Start(ctx)` (calls `DeclareTopics`) · `.Close(ctx)`. Topic/producer/subscriber configs are built, not literals: `kafka.NewTopicCfgBuilder(topic).Build() *TopicConfig`, `kafka.NewProducerCfgBuilder().Build()`, `kafka.NewSubscriberCfgBuilder().GroupId(code).Build()`. `producer.Send(ctx, key, payload)`; `kafka.Decode[T](ctx, msg)` |
+| Metrics | `monitoring.NewMetricsServer(fn)` → `.Init(*Config, ...MetricsProvider)` · `.Listen()` · `.Close()`; ship `monitoring.NewErrorMonitoring()`. A custom metric is a `monitoring.MetricsProvider` — `GetCollector() monitoring.MetricsCollector` where `MetricsCollector = func() monitoring.MetricsCollection` and `MetricsCollection = []prometheus.Collector` |
 | Healthcheck | `jet.NewHealthCheck(*jet.HealthcheckConfig)` → `.AddReadinessCheck(name, func() error)` · `.Start()` · `.Stop()` |
 | Goroutines | `goroutine.New().WithLoggerFn(fn).Cmp(c).Mth(m).WithRetry(goroutine.Unrestricted).Go(ctx, func(){...})`; `goroutine.NewGroup(ctx)` |
+| Retry (egress) | `retry.Do(ctx, cfg, func(ctx) error)` / `retry.DoWithResult[T]` / `retry.DoWithLogger(ctx, cfg, jet.CLogger, op, fn)`; `cfg := retry.RPCConfig()` (or `DefaultConfig()`) — passed **by value**; `retry.NonRetryable(err)` stops early |
 
 Two cross-cutting rules baked into jet:
 
-- **Every constructor takes `jet.CLoggerFunc`** (`func() jet.CLogger`), never a bare `CLogger`.
-  `CLogger` is **not** concurrency-safe; the func yields a fresh one per goroutine. If you cache a
-  `CLogger` shared across goroutines, `Clone()` it.
+- **Loggers travel as `jet.CLoggerFunc`** (`func() jet.CLogger`), never a bare `CLogger` — every jet
+  constructor that logs takes the func, and so should yours, but **only where you actually log**
+  (don't carry a logger field you never call). `CLogger` is **not** concurrency-safe; the func yields
+  a fresh one per goroutine. If you cache a `CLogger` shared across goroutines, `Clone()` it.
 - **Return `AppError` up the stack**; the gRPC server interceptor and HTTP `RespondError` translate
   it to the right status and log it. Never log-and-return the same error twice.
 
@@ -214,9 +219,18 @@ healthcheck: { port: "8086" }
 payment: { host: payment, port: "50051", auth: { enabled: true, token_secret: "", caller: orders } }
 ```
 
+**How binding actually works.** Most jet config structs are **untagged** — `jet.LogConfig`,
+`grpc.ServerConfig`/`ClientConfig`, `redis.Config`, `jet.HealthcheckConfig`, and `pg.DbConfig`
+(every field except `connection_string`) carry no `mapstructure` tags at all. Viper still binds them
+because its field match is **case-insensitive**: the YAML key `host` and the struct field `Host`
+match by name, no tag required. Your top-level `Config` adds `mapstructure:"..."` tags only to name
+the *sections* (`log`, `grpc`, `db`, …); below that, lowercase YAML keys map straight onto the
+exported fields. Don't expect a tag-driven mapping — there mostly isn't one.
+
 **Secrets via env.** jet's loader enables viper `AutomaticEnv` with a `.`→`_` key replacer (no
-prefix). Provide each secret as an env var named with the upper-cased config path, dots→underscores;
-keep the key present in the YAML (empty) so the binding resolves:
+prefix). So a secret is just the config path upper-cased with dots→underscores — and it resolves
+through the *same* case-insensitive mechanism, not through any tag. Keep the key present in the YAML
+(empty) so the path exists to be overridden:
 
 | Config key | Env var |
 |---|---|
@@ -303,6 +317,7 @@ import (
 
 	"example.com/orders/internal/config"
 	domainimpl "example.com/orders/internal/domain/impl"
+	"example.com/orders/internal/errors"
 	"example.com/orders/internal/repository/adapters/events"
 	"example.com/orders/internal/repository/adapters/payment"
 	"example.com/orders/internal/repository/storage"
@@ -354,10 +369,15 @@ func (a *App) Init(ctx context.Context, cfgAny any) error {
 	if a.payment, err = kitgrpc.NewClient(&cfg.Payment); err != nil {
 		return err
 	}
+	// gate the egress client at boot: block briefly until the connection is READY so the first
+	// request doesn't race a cold dial. Returns false on timeout — treat that as a fatal boot error.
+	if !a.payment.AwaitReadiness(5 * time.Second) {
+		return errors.ErrPaymentUnavailable(ctx)
+	}
 
 	// --- compose layers inner-out: repository → domain → usecase → transport ---
 	storageAdapter := storage.NewAdapter(a.db, a.redis)            // implements every domain.*Storage
-	eventsAdapter := events.NewAdapter(eventsProducer, a.log)      // implements domain.EventsRepository
+	eventsAdapter := events.NewAdapter(eventsProducer)            // implements domain.EventsRepository
 	paymentAdapter := payment.NewAdapter(a.payment, a.log)         // implements domain.PaymentRepository
 
 	orderService := domainimpl.NewOrderService(storageAdapter, eventsAdapter, a.log)
@@ -369,7 +389,7 @@ func (a *App) Init(ctx context.Context, cfgAny any) error {
 	}
 
 	// Kafka consumer (transport) → domain/usecase. Group id = service code, so replicas share one group.
-	consumer := kafkatransport.NewHandler(orderService, a.log)
+	consumer := kafkatransport.NewHandler(orderService)
 	if err = a.broker.AddSubscriber(ctx,
 		kafka.NewTopicCfgBuilder(topicPaymentCompleted).Build(),
 		kafka.NewSubscriberCfgBuilder().GroupId(config.ServiceCode).Build(),
@@ -401,6 +421,9 @@ func (a *App) Init(ctx context.Context, cfgAny any) error {
 func (a *App) Start(ctx context.Context) error {
 	a.health.Start()    // non-blocking
 	a.metrics.Listen()  // non-blocking
+	// broker.Start internally calls DeclareTopics — never call it yourself. With
+	// topic_auto_creation: false the topics must already exist (created out-of-band, or by
+	// DeclareTopics using the partition/replication config on each TopicConfig builder).
 	if err := a.broker.Start(ctx); err != nil {
 		return err
 	}
@@ -552,10 +575,6 @@ func (s *orderImpl) Create(ctx context.Context, rq *domain.CreateOrderRequest) (
 	return o, nil
 }
 
-func (s *orderImpl) Get(ctx context.Context, id string) (*domain.Order, error) {
-	return s.storage.GetOrder(ctx, id) // may return (nil, nil)
-}
-
 // MustGet turns the (nil, nil) not-found into a typed business error — the layer that decides
 // whether absence is an error.
 func (s *orderImpl) MustGet(ctx context.Context, id string) (*domain.Order, error) {
@@ -584,11 +603,11 @@ func (s *orderImpl) SetStatus(ctx context.Context, id, status string) (*domain.O
 	}
 	return o, nil
 }
-
-func (s *orderImpl) Search(ctx context.Context, rq *jet.PagingRequestG[domain.SearchOrderRequest]) (*jet.PagingResponseG[domain.Order], error) {
-	return s.storage.SearchOrders(ctx, rq)
-}
 ```
+
+`Get` and `Search` are pure pass-throughs to the storage (`return s.storage.GetOrder(ctx, id)` /
+`SearchOrders(ctx, rq)`) — a domain method only earns a body when it adds a rule, a decision, or an
+event, as `Create`/`MustGet`/`SetStatus` do above.
 
 ### 4.3 Usecase (`internal/usecase`) — orchestration + compensation
 
@@ -697,13 +716,10 @@ type orderStorageImpl struct {
 
 func newOrderStorage(c *container) *orderStorageImpl { return &orderStorageImpl{c: c} }
 
-func (s *orderStorageImpl) CreateOrder(ctx context.Context, o *domain.Order) error {
-	if res := s.c.db.Instance.WithContext(ctx).Create(toOrderDto(o)); res.Error != nil {
-		return errors.ErrOrderStorageCreate(ctx, res.Error)
-	}
-	return nil
-}
-
+// CreateOrder is the plain insert and is omitted here — it is exactly
+// `s.c.db.Instance.WithContext(ctx).Create(toOrderDto(o))`, wrapping res.Error in
+// errors.ErrOrderStorageCreate. Every write follows the shape below: run on Instance with the ctx,
+// then translate res.Error to a coded AppError.
 func (s *orderStorageImpl) UpdateOrder(ctx context.Context, o *domain.Order) error {
 	// pg.Update() omits created_at so an update never clobbers it.
 	if res := s.c.db.Instance.WithContext(ctx).Scopes(pg.Update()).Save(toOrderDto(o)); res.Error != nil {
@@ -859,7 +875,6 @@ package events
 import (
 	"context"
 
-	"github.com/zloevil/jet"
 	"github.com/zloevil/jet/kafka"
 
 	"example.com/orders/internal/domain"
@@ -867,13 +882,14 @@ import (
 
 const TopicOrderStatusChanged = "orders.status_changed"
 
+// No logger field: this adapter never logs (a failed Send is returned, not swallowed). Don't carry
+// a jet.CLoggerFunc you won't call — take it only where you actually log or pass it on.
 type adapter struct {
 	producer kafka.Producer
-	logger   jet.CLoggerFunc
 }
 
-func NewAdapter(producer kafka.Producer, logger jet.CLoggerFunc) domain.EventsRepository {
-	return &adapter{producer: producer, logger: logger}
+func NewAdapter(producer kafka.Producer) domain.EventsRepository {
+	return &adapter{producer: producer}
 }
 
 type orderStatusChangedPayload struct {
@@ -896,6 +912,7 @@ import (
 
 	"github.com/zloevil/jet"
 	kitgrpc "github.com/zloevil/jet/grpc"
+	"github.com/zloevil/jet/retry"
 
 	"example.com/orders/internal/domain"
 	paymentpb "example.com/orders/pkg/proto/payment"
@@ -910,14 +927,27 @@ func NewAdapter(conn *kitgrpc.Client, logger jet.CLoggerFunc) domain.PaymentRepo
 	return &adapter{client: paymentpb.NewPaymentServiceClient(conn.Conn), logger: logger}
 }
 
+// Egress RPCs are wrapped in retry: transient network blips shouldn't surface as a failed charge.
+// retry.RPCConfig() is tuned for RPC (fast backoff); Config is passed BY VALUE. The DoWithLogger
+// variant takes a jet.CLogger (call the func once here — retry only logs from this one goroutine).
 func (a *adapter) Charge(ctx context.Context, orderID string, amountCents int64) error {
-	_, err := a.client.Charge(ctx, &paymentpb.ChargeRequest{OrderId: orderID, AmountCents: amountCents})
-	return err // jet's client interceptor already converted any error back to an AppError
+	return retry.DoWithLogger(ctx, retry.RPCConfig(), a.logger(), "payment.Charge", func(ctx context.Context) error {
+		_, err := a.client.Charge(ctx, &paymentpb.ChargeRequest{OrderId: orderID, AmountCents: amountCents})
+		// the client interceptor already mapped this to an AppError. A business rejection (e.g. funds
+		// declined) is final — wrap it so retry stops immediately instead of hammering the call.
+		if appErr, ok := jet.IsAppErr(err); ok && appErr.Type() == jet.ErrTypeBusiness {
+			return retry.NonRetryable(err)
+		}
+		return err
+	})
 }
 
 func (a *adapter) Refund(ctx context.Context, orderID string, amountCents int64) error {
-	_, err := a.client.Refund(ctx, &paymentpb.RefundRequest{OrderId: orderID, AmountCents: amountCents})
-	return err
+	// DoWithResult[T] is the typed variant when the call returns a value; here we ignore the response.
+	return retry.Do(ctx, retry.RPCConfig(), func(ctx context.Context) error {
+		_, err := a.client.Refund(ctx, &paymentpb.RefundRequest{OrderId: orderID, AmountCents: amountCents})
+		return err
+	})
 }
 ```
 
@@ -987,22 +1017,11 @@ func (s *Server) CreateOrder(ctx context.Context, rq *orderspb.CreateOrderReques
 	}
 	return toOrderPb(o), nil
 }
-
-func (s *Server) GetOrder(ctx context.Context, rq *orderspb.GetOrderRequest) (*orderspb.Order, error) {
-	o, err := s.orders.MustGet(ctx, rq.GetId())
-	if err != nil {
-		return nil, err
-	}
-	return toOrderPb(o), nil
-}
-
-func (s *Server) Checkout(ctx context.Context, rq *orderspb.CheckoutRequest) (*orderspb.CheckoutResponse, error) {
-	if err := s.checkout.Checkout(ctx, rq.GetOrderId()); err != nil {
-		return nil, err
-	}
-	return &orderspb.CheckoutResponse{}, nil
-}
 ```
+
+Every other handler is the same three lines — decode → delegate to a domain/usecase method →
+encode, returning the raw error: `GetOrder` calls `s.orders.MustGet`, `Checkout` calls
+`s.checkout.Checkout`. No handler ever inspects or maps the error.
 
 ```go
 // internal/transport/kafka/handler.go — consumers delegate to domain/usecase
@@ -1011,19 +1030,20 @@ package kafka
 import (
 	"context"
 
-	"github.com/zloevil/jet"
 	"github.com/zloevil/jet/kafka"
 
 	"example.com/orders/internal/domain"
 )
 
+// Like the events adapter, this consumer carries no logger: it returns decode/handler errors to the
+// broker (which logs/retries) rather than logging them here. Add a jet.CLoggerFunc only if a handler
+// genuinely swallows something.
 type Handler struct {
 	orders domain.OrderService
-	logger jet.CLoggerFunc
 }
 
-func NewHandler(orders domain.OrderService, logger jet.CLoggerFunc) *Handler {
-	return &Handler{orders: orders, logger: logger}
+func NewHandler(orders domain.OrderService) *Handler {
+	return &Handler{orders: orders}
 }
 
 type paymentCompletedPayload struct {
@@ -1076,6 +1096,8 @@ const (
 	ErrCodeOrderStorageGet    = "ORD-102"
 	ErrCodeOrderStorageUpdate = "ORD-103"
 	ErrCodeOrderStorageSearch = "ORD-104"
+	// egress / system
+	ErrCodePaymentUnavailable = "ORD-201"
 )
 ```
 
@@ -1116,6 +1138,10 @@ var (
 	ErrOrderStorageSearch = func(ctx context.Context, cause error) error {
 		return jet.NewAppErrBuilder(ErrCodeOrderStorageSearch, "search orders failed").C(ctx).System().Wrap(cause).Err()
 	}
+	// egress: the payment client never became READY at boot
+	ErrPaymentUnavailable = func(ctx context.Context) error {
+		return jet.NewAppErrBuilder(ErrCodePaymentUnavailable, "payment service unavailable").C(ctx).System().Err()
+	}
 )
 ```
 
@@ -1124,14 +1150,59 @@ Rules:
 - Builder chain: `C(ctx)` · `F(KV)` · `GrpcSt(uint32)` · `HttpSt(uint32)` · `Business()`/`System()`/`Panic()`/`Type(s)` · `Wrap(cause)` · `Err()`. **There is no `.Mth()` on the error builder** — `Mth` is logger-only. Call `Wrap` before `Err`.
 - Omitting `HttpSt` defaults to HTTP 400 for `Business()`, 500 otherwise. `GrpcSt` defaults to `Unknown` if unset — **set it on every business error that crosses the gRPC facade** (`NotFound`, `InvalidArgument`, `AlreadyExists`, `FailedPrecondition`, …).
 - `C(ctx)` folds request-context fields into the error; `Wrap` merges fields from a wrapped `AppError`. Inspect with `jet.IsAppErr(err)` / `jet.IsAppErrCode(err, code)`.
+- **The one sanctioned log below transport** is a *deliberately-swallowed* best-effort error — one you log and then **drop** (do not return), like the failed event emit in `SetStatus` (§4.2) or a failed compensating refund (§4.3). It is not returned, so it never reaches the interceptor; logging it there is the only record of it, not a double-log. The rule is precisely: never log **and** return the *same* error.
 
 ---
 
 ## 8. Observability
 
-- **Prometheus.** `monitoring.NewMetricsServer(a.log).Init(&cfg.Monitoring, monitoring.NewErrorMonitoring(), <yourProviders>...)`, then `Listen()` in `Start`, `Close()` in `Close`. `NewErrorMonitoring()` counts business/system/panic errors out of the box. For custom metrics implement `monitoring.MetricsProvider` (`GetCollector() monitoring.MetricsCollector`) returning your `prometheus.Collector`s.
+- **Prometheus.** `monitoring.NewMetricsServer(a.log).Init(&cfg.Monitoring, monitoring.NewErrorMonitoring(), <yourProviders>...)`, then `Listen()` in `Start`, `Close()` in `Close`. `NewErrorMonitoring()` counts business/system/panic errors out of the box. For custom metrics implement `monitoring.MetricsProvider`: a single method `GetCollector() monitoring.MetricsCollector`, where `MetricsCollector = func() monitoring.MetricsCollection` and `MetricsCollection = []prometheus.Collector`. The collector func is invoked once at `Init` to register each returned collector:
+
+  ```go
+  type ordersMetrics struct{ created *prometheus.CounterVec }
+
+  func newOrdersMetrics() *ordersMetrics {
+      return &ordersMetrics{created: prometheus.NewCounterVec(
+          prometheus.CounterOpts{Name: "orders_created_total", Help: "Orders created"},
+          []string{"status"})}
+  }
+
+  // GetCollector satisfies monitoring.MetricsProvider.
+  func (m *ordersMetrics) GetCollector() monitoring.MetricsCollector {
+      return func() monitoring.MetricsCollection { return monitoring.MetricsCollection{m.created} }
+  }
+  ```
 - **Healthcheck.** `jet.NewHealthCheck(&cfg.Healthcheck)` exposes `/live` and `/ready`. Add a readiness check that pings Postgres (and Redis); `Start()` in `Start`, `Stop()` in `Close`.
-- **Background work** (cron-like tasks, async fan-out): launch with the panic-safe `goroutine` package, pass `WithLoggerFn(a.log)`, and stop it cleanly in `Close` by cancelling a context the goroutine selects on.
+- **Background work** (cron-like tasks, async fan-out): launch with the panic-safe `goroutine`
+  package, pass `WithLoggerFn(a.log)`, and stop it cleanly in `Close` by cancelling a context the
+  goroutine selects on. Store a long-lived ctx + its cancel on `App`; start the worker in `Start`;
+  call `cancel()` in `Close`:
+
+  ```go
+  // in App: workerCtx context.Context; workerCancel context.CancelFunc
+
+  // Start: derive a long-lived context the worker owns and select on.
+  a.workerCtx, a.workerCancel = context.WithCancel(context.Background())
+  goroutine.New().WithLoggerFn(a.log).Cmp("bootstrap").Mth("reaper").
+      WithRetry(goroutine.Unrestricted).
+      Go(a.workerCtx, func() {
+          t := time.NewTicker(time.Minute)
+          defer t.Stop()
+          for {
+              select {
+              case <-a.workerCtx.Done():
+                  return // Close() called cancel() — exit the goroutine
+              case <-t.C:
+                  // do periodic work
+              }
+          }
+      })
+
+  // Close: a.workerCancel() // before draining infra
+  ```
+
+  `WithRetry(goroutine.Unrestricted)` re-runs the func only if it *panics* (the func returns
+  nothing); a normal return ends it, so the loop must own its own lifecycle via the ctx.
 
 ---
 
@@ -1325,42 +1396,57 @@ EXPOSE 50051 9090 8086
 ENTRYPOINT ["/opt/app/orders", "app", "--config", "/opt/app/config/config.yml"]
 ```
 
+**Applying migrations in-cluster.** The `ENTRYPOINT` runs only `app` — it never migrates, because
+the running service must not race a schema change. Apply migrations *before* the app starts by
+running the **same image** with the `db-up` subcommand, either as a Kubernetes `initContainer` on
+the Deployment pod or as a one-shot `Job` (e.g. an ArgoCD `PreSync` hook) that must succeed first.
+Migrations are baked in at `/opt/app/db/migrations`, so override only the command:
+
+```yaml
+# initContainer on the app pod — shares the app's env/secrets, runs to completion before `app`
+initContainers:
+  - name: db-up
+    image: orders:latest
+    command: ["/opt/app/orders", "db-up", "--config", "/opt/app/config/config.yml", "--source", "/opt/app/db/migrations"]
+    envFrom: [{ secretRef: { name: orders-secrets } }]   # same DB_MASTER_PASSWORD etc. as the app
+```
+
 ---
 
-## 11. Conventions & anti-patterns
+## 11. Invariants & done-checklist
 
-**Do**
+The rules stated throughout (§2 layering, §3.1 cross-cutting, §7 errors) collected once. Each line
+is both the **invariant** to uphold and the **box to check** before declaring done — the rationale
+lives in the section noted, not here.
 
-- **Declare every interface in `domain` (or `usecase`), implement in `repository`/`transport`.**
-  Business logic lives only in `domain`/`usecase`; both are unit-tested against mocks.
-- **`bootstrap` is the only place that wires concretions** into interfaces and owns Init/Start/Close.
-- **Repositories return `(nil, nil)` for not-found.** Whether absence is an error is decided one
-  layer up (a `MustGet` in the domain service).
-- **Create errors deep, log once at the edge.** Domain/usecase/repository build the `AppError`;
-  the gRPC interceptor logs (with stack) and maps it. Handlers just `return err`.
-- **Map DTO↔entity in the repository.** The domain never sees a GORM struct or a protobuf message.
-- **Use jet's GORM scopes** (`pg.Paging`, `pg.Single`, `pg.Update`, `pg.Merge`, `pg.WhereStrings`)
-  and `pg.GormDto`; always paginate and sort reads; store optional/searchless data as `pg.JSONB`.
-- **Own the schema with goose** (`db/migrations`, `{yyyymmddHHMMSS}_{desc}.sql`, `-- +goose Up/Down`),
-  run via the `db-up`/`db-down` subcommands from `cluster.WithDbMigration`.
-- **Pass `jet.CLoggerFunc`, not `CLogger`;** `Clone()` if you cache one across goroutines; run all
-  background work through the panic-safe `goroutine` package and stop it in `Close`.
-- **Kafka:** consumer `GroupId == ServiceCode` (replicas share one group); producers key by entity
-  id for per-entity ordering; consumers `kafka.Decode[T]` to restore the request context.
-- **Cross-aggregate consistency via usecase compensation + Redis locks**, not sprawling multi-table
-  DB transactions; keep a DB transaction inside a single storage method.
-- **Secrets via env; no vendor.**
-
-**Don't**
-
-- Put business logic in `transport` or `repository`, or import `repository`/`transport` from
-  `domain`/`usecase` (that breaks the dependency rule and mockability).
-- Return a GORM error or a protobuf type out of the repository/transport — always an `AppError`
-  with a code.
-- Error on a missing row in the repository, or skip pagination/sorting on a list query.
-- Define schema via GORM AutoMigrate/tags (goose owns the schema; GORM tags only map columns).
-- Block in `Start` (use `ListenAsync`/`Listen()` non-blocking forms) — `cluster` owns the signal wait.
-- Log an error and also return it (double logging) — the interceptor is the single logging point.
+- [ ] **Layering.** Every interface is declared in `domain`/`usecase` and implemented in
+  `repository`/`transport`; `domain`/`usecase` import nothing outward (so they stay mockable);
+  business logic lives only in `domain`/`usecase`; `bootstrap` is the only site that wires
+  concretions. (§2)
+- [ ] **Not-found = `(nil, nil)`** from the repository; whether absence is an error is decided one
+  layer up (a `MustGet`). Lists are always paginated **and** sorted via `pg` scopes. (§4.2, §5.1)
+- [ ] **Boundaries are mapped.** DTO↔entity in the repository, pb↔entity in transport — the domain
+  never sees a GORM struct or a protobuf message; nothing returns a raw GORM/driver error or a
+  protobuf type outward. (§5.1, §6)
+- [ ] **Errors:** every failure is an `AppError` with an `ORD-NNN` code, created deep at the point of
+  failure and **logged exactly once at the transport interceptor** (handlers just `return err`); set
+  `GrpcSt` on every business error crossing gRPC. The sole deep log is a swallowed best-effort error
+  that is *not* returned. (§7)
+- [ ] **Persistence.** Schema is owned by goose (`{yyyymmddHHMMSS}_{desc}.sql`, `-- +goose Up/Down`),
+  applied via the `db-up`/`db-down` subcommands (`cluster.WithDbMigration`), never GORM
+  AutoMigrate/tags (tags only map columns). Use `pg.GormDto` + scopes; store optional/searchless
+  data as `pg.JSONB`. (§3.3, §5.1, §10)
+- [ ] **Concurrency.** Pass `jet.CLoggerFunc`, not a bare `CLogger` (`Clone()` if you cache one
+  across goroutines); run background work through the panic-safe `goroutine` package and cancel it in
+  `Close`; never block in `Start` (`cluster` owns the signal wait). (§3.1, §3.4, §8)
+- [ ] **Kafka.** Consumer `GroupId == ServiceCode` (replicas share one group); producers key by
+  entity id for per-entity ordering; consumers `kafka.Decode[T]` to restore the request context.
+  `Close` drains everything in order. (§3.4, §5.3, §6)
+- [ ] **Consistency.** Cross-aggregate work uses usecase compensation + Redis locks, not a sprawling
+  multi-table DB transaction; a DB transaction stays inside a single storage method. (§4.3, §5.2)
+- [ ] **Testing & build.** Domain + usecase have `jet.Suite` unit tests (positive + negative);
+  storage has integration tests behind `//go:build integration`. Secrets via env; no vendor.
+  `make build vet test` green; `make mock proto` reproducible. (§9, §10)
 
 ---
 
@@ -1375,42 +1461,24 @@ ENTRYPOINT ["/opt/app/orders", "app", "--config", "/opt/app/config/config.yml"]
 4. **Domain first:** `internal/domain/<entity>.go` — entity + `XxxService` + `XxxStorage` + egress
    interfaces (§4.1). Define `internal/errors/{codes,errors}.go` (§7).
 5. Implement `internal/domain/impl/<entity>.go` **with `jet.Suite` unit tests** (§4.2, §9).
-6. Define + implement `internal/usecase` **with unit tests** (§4.3) — business logic now complete
-   and proven against mocks.
-7. Implement `internal/repository/storage` (storage + converter + `adapter.go`, §5.1–5.2) and
-   `internal/repository/adapters/*` (events, sync clients, §5.3); add a goose migration in
-   `db/migrations` (§3.3).
-8. Implement `internal/transport/grpc` (server + handlers + converter, §6) and any
-   `internal/transport/kafka` consumers.
+6. Define + implement `internal/usecase` **with unit tests** (§4.3).
+7. Implement `internal/repository/storage` (§5.1–5.2) and `internal/repository/adapters/*` (§5.3);
+   add a goose migration in `db/migrations` (§3.3).
+8. Implement `internal/transport/grpc` (§6) and any `internal/transport/kafka` consumers.
 9. Wire everything in `internal/bootstrap/bootstrap.go` (§3.4) and `cmd/<svc>/main.go` (§3.3).
-10. Add `Makefile`, `.mockery.yaml`, `Containerfile`. Run `make mock build vet test`; add
-    storage integration tests behind `//go:build integration`.
+10. Add `Makefile`, `.mockery.yaml`, `Containerfile`; run `make mock build vet test`.
 
 ### B. Add a new endpoint / entity / repository to an existing service
 
-- **New gRPC endpoint:** add the RPC + messages to the proto → `make proto` → add the method to the
-  relevant `domain.XxxService` (or `usecase.XxxUc`) interface + impl **with tests** → add the
-  handler in `transport/grpc/<area>.go` (decode → delegate → encode, return raw error) → add
-  converters → `make mock`.
-- **New domain entity:** add `domain/<entity>.go` (entity + `XxxService` + `XxxStorage` + any egress
-  interface) → implement `domain/impl/<entity>.go` with tests → add `repository/storage/<entity>_storage.go`
-  + `_converter.go` and embed the new `*<entity>StorageImpl` in `storage.adapterImpl` (and the new
-  interface in `storage.Adapter`) → add a goose migration → register any new RPCs in transport →
-  inject the new service in `bootstrap` → `make mock`.
-- **New repository (egress) dependency:** declare the interface in `domain` (or `usecase`) → implement
-  it under `repository/adapters/<name>/` (a Kafka producer, or a gRPC client built from a new
-  `grpc.NewClient(&cfg.<Name>)` with its own config block) → inject the concrete adapter where the
-  interface is consumed, in `bootstrap` → `make mock`.
+- **New gRPC endpoint:** proto RPC + messages → `make proto` → method on the relevant
+  `domain.XxxService`/`usecase.XxxUc` interface + impl (with tests) → handler in
+  `transport/grpc/<area>.go` → converters → `make mock`.
+- **New domain entity:** `domain/<entity>.go` → `domain/impl/<entity>.go` (with tests) →
+  `repository/storage/<entity>_storage.go` + `_converter.go`, embedding the new
+  `*<entity>StorageImpl` in `storage.adapterImpl` (and the new interface in `storage.Adapter`) →
+  goose migration → register RPCs in transport → inject in `bootstrap` → `make mock`.
+- **New egress dependency:** declare the interface in `domain`/`usecase` → implement under
+  `repository/adapters/<name>/` (a Kafka producer, or a gRPC client from `grpc.NewClient(&cfg.<Name>)`
+  with its own config block) → inject the concrete adapter in `bootstrap` → `make mock`.
 
----
-
-### Final checklist before declaring done
-
-- [ ] All interfaces in `domain`/`usecase`; impls in `repository`/`transport`; `bootstrap` is the only wiring site.
-- [ ] No business logic in `transport`/`repository`; `domain`/`usecase` import nothing outward.
-- [ ] Repositories return `(nil, nil)` for not-found; lists are paginated + sorted via `pg` scopes.
-- [ ] Every error is an `AppError` with an `ORD-NNN` code, created deep, logged once at the interceptor; business errors set `GrpcSt`.
-- [ ] Migrations are goose files run via `db-up`/`db-down` (`cluster.WithDbMigration`); schema not via GORM.
-- [ ] Kafka consumer group = service code; producers keyed by entity id; `Close` drains everything in order.
-- [ ] Domain + usecase have `jet.Suite` unit tests; storage has integration tests behind the build tag.
-- [ ] Secrets via env; no vendor. `make build vet test` green; `make mock proto` reproducible.
+Either path closes against the §11 checklist.
