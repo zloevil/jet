@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 	"github.com/zloevil/jet"
-	kitAws "github.com/zloevil/jet/aws"
+	jetaws "github.com/zloevil/jet/aws"
 )
 
 type s3TestSuite struct {
@@ -32,7 +32,7 @@ var (
 		PrivateBucketName: "int.storage.dev.back",
 		PresignedLinkTTL:  60,
 	}
-	awsCfg = &kitAws.Config{
+	awsCfg = &jetaws.Config{
 		Region:              "eu-central-1",
 		AccessKeyId:         "access_key_id",
 		SecretAccessKey:     "secret_access_key",

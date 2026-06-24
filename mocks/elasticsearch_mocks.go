@@ -51,14 +51,20 @@ type ElasticsearchSearch_Close_Call struct {
 }
 
 // Close is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *ElasticsearchSearch_Expecter) Close(ctx interface{}) *ElasticsearchSearch_Close_Call {
 	return &ElasticsearchSearch_Close_Call{Call: _e.mock.On("Close", ctx)}
 }
 
 func (_c *ElasticsearchSearch_Close_Call) Run(run func(ctx context.Context)) *ElasticsearchSearch_Close_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -96,16 +102,32 @@ type ElasticsearchSearch_Delete_Call struct {
 }
 
 // Delete is a helper method to define mock.On call
-//   - ctx
-//   - index
-//   - id
+//   - ctx context.Context
+//   - index string
+//   - id string
 func (_e *ElasticsearchSearch_Expecter) Delete(ctx interface{}, index interface{}, id interface{}) *ElasticsearchSearch_Delete_Call {
 	return &ElasticsearchSearch_Delete_Call{Call: _e.mock.On("Delete", ctx, index, id)}
 }
 
 func (_c *ElasticsearchSearch_Delete_Call) Run(run func(ctx context.Context, index string, id string)) *ElasticsearchSearch_Delete_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 string
+		if args[2] != nil {
+			arg2 = args[2].(string)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -143,16 +165,32 @@ type ElasticsearchSearch_DeleteBulk_Call struct {
 }
 
 // DeleteBulk is a helper method to define mock.On call
-//   - ctx
-//   - index
-//   - ids
+//   - ctx context.Context
+//   - index string
+//   - ids []string
 func (_e *ElasticsearchSearch_Expecter) DeleteBulk(ctx interface{}, index interface{}, ids interface{}) *ElasticsearchSearch_DeleteBulk_Call {
 	return &ElasticsearchSearch_DeleteBulk_Call{Call: _e.mock.On("DeleteBulk", ctx, index, ids)}
 }
 
 func (_c *ElasticsearchSearch_DeleteBulk_Call) Run(run func(ctx context.Context, index string, ids []string)) *ElasticsearchSearch_DeleteBulk_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].([]string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 []string
+		if args[2] != nil {
+			arg2 = args[2].([]string)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -190,15 +228,26 @@ type ElasticsearchSearch_DeleteIndex_Call struct {
 }
 
 // DeleteIndex is a helper method to define mock.On call
-//   - ctx
-//   - index
+//   - ctx context.Context
+//   - index string
 func (_e *ElasticsearchSearch_Expecter) DeleteIndex(ctx interface{}, index interface{}) *ElasticsearchSearch_DeleteIndex_Call {
 	return &ElasticsearchSearch_DeleteIndex_Call{Call: _e.mock.On("DeleteIndex", ctx, index)}
 }
 
 func (_c *ElasticsearchSearch_DeleteIndex_Call) Run(run func(ctx context.Context, index string)) *ElasticsearchSearch_DeleteIndex_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -245,16 +294,32 @@ type ElasticsearchSearch_Exists_Call struct {
 }
 
 // Exists is a helper method to define mock.On call
-//   - ctx
-//   - index
-//   - id
+//   - ctx context.Context
+//   - index string
+//   - id string
 func (_e *ElasticsearchSearch_Expecter) Exists(ctx interface{}, index interface{}, id interface{}) *ElasticsearchSearch_Exists_Call {
 	return &ElasticsearchSearch_Exists_Call{Call: _e.mock.On("Exists", ctx, index, id)}
 }
 
 func (_c *ElasticsearchSearch_Exists_Call) Run(run func(ctx context.Context, index string, id string)) *ElasticsearchSearch_Exists_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 string
+		if args[2] != nil {
+			arg2 = args[2].(string)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -338,17 +403,38 @@ type ElasticsearchSearch_Index_Call struct {
 }
 
 // Index is a helper method to define mock.On call
-//   - ctx
-//   - index
-//   - id
-//   - data
+//   - ctx context.Context
+//   - index string
+//   - id string
+//   - data interface{}
 func (_e *ElasticsearchSearch_Expecter) Index(ctx interface{}, index interface{}, id interface{}, data interface{}) *ElasticsearchSearch_Index_Call {
 	return &ElasticsearchSearch_Index_Call{Call: _e.mock.On("Index", ctx, index, id, data)}
 }
 
 func (_c *ElasticsearchSearch_Index_Call) Run(run func(ctx context.Context, index string, id string, data interface{})) *ElasticsearchSearch_Index_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(string), args[3].(interface{}))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 string
+		if args[2] != nil {
+			arg2 = args[2].(string)
+		}
+		var arg3 interface{}
+		if args[3] != nil {
+			arg3 = args[3].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+			arg3,
+		)
 	})
 	return _c
 }
@@ -375,17 +461,38 @@ type ElasticsearchSearch_IndexAsync_Call struct {
 }
 
 // IndexAsync is a helper method to define mock.On call
-//   - ctx
-//   - index
-//   - id
-//   - data
+//   - ctx context.Context
+//   - index string
+//   - id string
+//   - data interface{}
 func (_e *ElasticsearchSearch_Expecter) IndexAsync(ctx interface{}, index interface{}, id interface{}, data interface{}) *ElasticsearchSearch_IndexAsync_Call {
 	return &ElasticsearchSearch_IndexAsync_Call{Call: _e.mock.On("IndexAsync", ctx, index, id, data)}
 }
 
 func (_c *ElasticsearchSearch_IndexAsync_Call) Run(run func(ctx context.Context, index string, id string, data interface{})) *ElasticsearchSearch_IndexAsync_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(string), args[3].(interface{}))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 string
+		if args[2] != nil {
+			arg2 = args[2].(string)
+		}
+		var arg3 interface{}
+		if args[3] != nil {
+			arg3 = args[3].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+			arg3,
+		)
 	})
 	return _c
 }
@@ -423,16 +530,32 @@ type ElasticsearchSearch_IndexBulk_Call struct {
 }
 
 // IndexBulk is a helper method to define mock.On call
-//   - ctx
-//   - index
-//   - docs
+//   - ctx context.Context
+//   - index string
+//   - docs map[string]interface{}
 func (_e *ElasticsearchSearch_Expecter) IndexBulk(ctx interface{}, index interface{}, docs interface{}) *ElasticsearchSearch_IndexBulk_Call {
 	return &ElasticsearchSearch_IndexBulk_Call{Call: _e.mock.On("IndexBulk", ctx, index, docs)}
 }
 
 func (_c *ElasticsearchSearch_IndexBulk_Call) Run(run func(ctx context.Context, index string, docs map[string]interface{})) *ElasticsearchSearch_IndexBulk_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(map[string]interface{}))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 map[string]interface{}
+		if args[2] != nil {
+			arg2 = args[2].(map[string]interface{})
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -459,16 +582,32 @@ type ElasticsearchSearch_IndexBulkAsync_Call struct {
 }
 
 // IndexBulkAsync is a helper method to define mock.On call
-//   - ctx
-//   - index
-//   - docs
+//   - ctx context.Context
+//   - index string
+//   - docs map[string]interface{}
 func (_e *ElasticsearchSearch_Expecter) IndexBulkAsync(ctx interface{}, index interface{}, docs interface{}) *ElasticsearchSearch_IndexBulkAsync_Call {
 	return &ElasticsearchSearch_IndexBulkAsync_Call{Call: _e.mock.On("IndexBulkAsync", ctx, index, docs)}
 }
 
 func (_c *ElasticsearchSearch_IndexBulkAsync_Call) Run(run func(ctx context.Context, index string, docs map[string]interface{})) *ElasticsearchSearch_IndexBulkAsync_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(map[string]interface{}))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 map[string]interface{}
+		if args[2] != nil {
+			arg2 = args[2].(map[string]interface{})
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -596,15 +735,26 @@ type ElasticsearchSearch_Refresh_Call struct {
 }
 
 // Refresh is a helper method to define mock.On call
-//   - ctx
-//   - index
+//   - ctx context.Context
+//   - index string
 func (_e *ElasticsearchSearch_Expecter) Refresh(ctx interface{}, index interface{}) *ElasticsearchSearch_Refresh_Call {
 	return &ElasticsearchSearch_Refresh_Call{Call: _e.mock.On("Refresh", ctx, index)}
 }
 
 func (_c *ElasticsearchSearch_Refresh_Call) Run(run func(ctx context.Context, index string)) *ElasticsearchSearch_Refresh_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -669,14 +819,20 @@ type ElasticsearchIndexBuilder_Build_Call struct {
 }
 
 // Build is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *ElasticsearchIndexBuilder_Expecter) Build(ctx interface{}) *ElasticsearchIndexBuilder_Build_Call {
 	return &ElasticsearchIndexBuilder_Build_Call{Call: _e.mock.On("Build", ctx)}
 }
 
 func (_c *ElasticsearchIndexBuilder_Build_Call) Run(run func(ctx context.Context)) *ElasticsearchIndexBuilder_Build_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -716,14 +872,20 @@ type ElasticsearchIndexBuilder_WithAlias_Call struct {
 }
 
 // WithAlias is a helper method to define mock.On call
-//   - name
+//   - name string
 func (_e *ElasticsearchIndexBuilder_Expecter) WithAlias(name interface{}) *ElasticsearchIndexBuilder_WithAlias_Call {
 	return &ElasticsearchIndexBuilder_WithAlias_Call{Call: _e.mock.On("WithAlias", name)}
 }
 
 func (_c *ElasticsearchIndexBuilder_WithAlias_Call) Run(run func(name string)) *ElasticsearchIndexBuilder_WithAlias_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -763,14 +925,20 @@ type ElasticsearchIndexBuilder_WithExplicitMapping_Call struct {
 }
 
 // WithExplicitMapping is a helper method to define mock.On call
-//   - mapping
+//   - mapping string
 func (_e *ElasticsearchIndexBuilder_Expecter) WithExplicitMapping(mapping interface{}) *ElasticsearchIndexBuilder_WithExplicitMapping_Call {
 	return &ElasticsearchIndexBuilder_WithExplicitMapping_Call{Call: _e.mock.On("WithExplicitMapping", mapping)}
 }
 
 func (_c *ElasticsearchIndexBuilder_WithExplicitMapping_Call) Run(run func(mapping string)) *ElasticsearchIndexBuilder_WithExplicitMapping_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -810,14 +978,20 @@ type ElasticsearchIndexBuilder_WithIndex_Call struct {
 }
 
 // WithIndex is a helper method to define mock.On call
-//   - name
+//   - name string
 func (_e *ElasticsearchIndexBuilder_Expecter) WithIndex(name interface{}) *ElasticsearchIndexBuilder_WithIndex_Call {
 	return &ElasticsearchIndexBuilder_WithIndex_Call{Call: _e.mock.On("WithIndex", name)}
 }
 
 func (_c *ElasticsearchIndexBuilder_WithIndex_Call) Run(run func(name string)) *ElasticsearchIndexBuilder_WithIndex_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -857,14 +1031,20 @@ type ElasticsearchIndexBuilder_WithMappingModel_Call struct {
 }
 
 // WithMappingModel is a helper method to define mock.On call
-//   - model
+//   - model interface{}
 func (_e *ElasticsearchIndexBuilder_Expecter) WithMappingModel(model interface{}) *ElasticsearchIndexBuilder_WithMappingModel_Call {
 	return &ElasticsearchIndexBuilder_WithMappingModel_Call{Call: _e.mock.On("WithMappingModel", model)}
 }
 
 func (_c *ElasticsearchIndexBuilder_WithMappingModel_Call) Run(run func(model interface{})) *ElasticsearchIndexBuilder_WithMappingModel_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(interface{}))
+		var arg0 interface{}
+		if args[0] != nil {
+			arg0 = args[0].(interface{})
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }

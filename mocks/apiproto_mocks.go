@@ -79,9 +79,9 @@ type ApiprotoCentrifugoApiClient_Batch_Call struct {
 }
 
 // Batch is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.BatchRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Batch(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Batch_Call {
 	return &ApiprotoCentrifugoApiClient_Batch_Call{Call: _e.mock.On("Batch",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -89,8 +89,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Batch(ctx interface{}, in interf
 
 func (_c *ApiprotoCentrifugoApiClient_Batch_Call) Run(run func(ctx context.Context, in *apiproto.BatchRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Batch_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.BatchRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.BatchRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.BatchRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -145,9 +162,9 @@ type ApiprotoCentrifugoApiClient_BlockUser_Call struct {
 }
 
 // BlockUser is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.BlockUserRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) BlockUser(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_BlockUser_Call {
 	return &ApiprotoCentrifugoApiClient_BlockUser_Call{Call: _e.mock.On("BlockUser",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -155,8 +172,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) BlockUser(ctx interface{}, in in
 
 func (_c *ApiprotoCentrifugoApiClient_BlockUser_Call) Run(run func(ctx context.Context, in *apiproto.BlockUserRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_BlockUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.BlockUserRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.BlockUserRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.BlockUserRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -211,9 +245,9 @@ type ApiprotoCentrifugoApiClient_Broadcast_Call struct {
 }
 
 // Broadcast is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.BroadcastRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Broadcast(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Broadcast_Call {
 	return &ApiprotoCentrifugoApiClient_Broadcast_Call{Call: _e.mock.On("Broadcast",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -221,8 +255,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Broadcast(ctx interface{}, in in
 
 func (_c *ApiprotoCentrifugoApiClient_Broadcast_Call) Run(run func(ctx context.Context, in *apiproto.BroadcastRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Broadcast_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.BroadcastRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.BroadcastRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.BroadcastRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -277,9 +328,9 @@ type ApiprotoCentrifugoApiClient_CancelPush_Call struct {
 }
 
 // CancelPush is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.CancelPushRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) CancelPush(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_CancelPush_Call {
 	return &ApiprotoCentrifugoApiClient_CancelPush_Call{Call: _e.mock.On("CancelPush",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -287,8 +338,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) CancelPush(ctx interface{}, in i
 
 func (_c *ApiprotoCentrifugoApiClient_CancelPush_Call) Run(run func(ctx context.Context, in *apiproto.CancelPushRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_CancelPush_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.CancelPushRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.CancelPushRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.CancelPushRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -343,9 +411,9 @@ type ApiprotoCentrifugoApiClient_Channels_Call struct {
 }
 
 // Channels is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.ChannelsRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Channels(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Channels_Call {
 	return &ApiprotoCentrifugoApiClient_Channels_Call{Call: _e.mock.On("Channels",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -353,8 +421,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Channels(ctx interface{}, in int
 
 func (_c *ApiprotoCentrifugoApiClient_Channels_Call) Run(run func(ctx context.Context, in *apiproto.ChannelsRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Channels_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.ChannelsRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.ChannelsRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.ChannelsRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -409,9 +494,9 @@ type ApiprotoCentrifugoApiClient_Connections_Call struct {
 }
 
 // Connections is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.ConnectionsRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Connections(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Connections_Call {
 	return &ApiprotoCentrifugoApiClient_Connections_Call{Call: _e.mock.On("Connections",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -419,8 +504,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Connections(ctx interface{}, in 
 
 func (_c *ApiprotoCentrifugoApiClient_Connections_Call) Run(run func(ctx context.Context, in *apiproto.ConnectionsRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Connections_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.ConnectionsRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.ConnectionsRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.ConnectionsRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -475,9 +577,9 @@ type ApiprotoCentrifugoApiClient_DeleteUserStatus_Call struct {
 }
 
 // DeleteUserStatus is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DeleteUserStatusRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) DeleteUserStatus(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_DeleteUserStatus_Call {
 	return &ApiprotoCentrifugoApiClient_DeleteUserStatus_Call{Call: _e.mock.On("DeleteUserStatus",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -485,8 +587,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) DeleteUserStatus(ctx interface{}
 
 func (_c *ApiprotoCentrifugoApiClient_DeleteUserStatus_Call) Run(run func(ctx context.Context, in *apiproto.DeleteUserStatusRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_DeleteUserStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DeleteUserStatusRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeleteUserStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeleteUserStatusRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -541,9 +660,9 @@ type ApiprotoCentrifugoApiClient_DeviceList_Call struct {
 }
 
 // DeviceList is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DeviceListRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceList(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_DeviceList_Call {
 	return &ApiprotoCentrifugoApiClient_DeviceList_Call{Call: _e.mock.On("DeviceList",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -551,8 +670,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceList(ctx interface{}, in i
 
 func (_c *ApiprotoCentrifugoApiClient_DeviceList_Call) Run(run func(ctx context.Context, in *apiproto.DeviceListRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_DeviceList_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceListRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceListRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceListRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -607,9 +743,9 @@ type ApiprotoCentrifugoApiClient_DeviceRegister_Call struct {
 }
 
 // DeviceRegister is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DeviceRegisterRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceRegister(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_DeviceRegister_Call {
 	return &ApiprotoCentrifugoApiClient_DeviceRegister_Call{Call: _e.mock.On("DeviceRegister",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -617,8 +753,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceRegister(ctx interface{}, 
 
 func (_c *ApiprotoCentrifugoApiClient_DeviceRegister_Call) Run(run func(ctx context.Context, in *apiproto.DeviceRegisterRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_DeviceRegister_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceRegisterRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceRegisterRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceRegisterRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -673,9 +826,9 @@ type ApiprotoCentrifugoApiClient_DeviceRemove_Call struct {
 }
 
 // DeviceRemove is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DeviceRemoveRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceRemove(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_DeviceRemove_Call {
 	return &ApiprotoCentrifugoApiClient_DeviceRemove_Call{Call: _e.mock.On("DeviceRemove",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -683,8 +836,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceRemove(ctx interface{}, in
 
 func (_c *ApiprotoCentrifugoApiClient_DeviceRemove_Call) Run(run func(ctx context.Context, in *apiproto.DeviceRemoveRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_DeviceRemove_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceRemoveRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceRemoveRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceRemoveRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -739,9 +909,9 @@ type ApiprotoCentrifugoApiClient_DeviceTopicList_Call struct {
 }
 
 // DeviceTopicList is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DeviceTopicListRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceTopicList(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_DeviceTopicList_Call {
 	return &ApiprotoCentrifugoApiClient_DeviceTopicList_Call{Call: _e.mock.On("DeviceTopicList",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -749,8 +919,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceTopicList(ctx interface{},
 
 func (_c *ApiprotoCentrifugoApiClient_DeviceTopicList_Call) Run(run func(ctx context.Context, in *apiproto.DeviceTopicListRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_DeviceTopicList_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceTopicListRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceTopicListRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceTopicListRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -805,9 +992,9 @@ type ApiprotoCentrifugoApiClient_DeviceTopicUpdate_Call struct {
 }
 
 // DeviceTopicUpdate is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DeviceTopicUpdateRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceTopicUpdate(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_DeviceTopicUpdate_Call {
 	return &ApiprotoCentrifugoApiClient_DeviceTopicUpdate_Call{Call: _e.mock.On("DeviceTopicUpdate",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -815,8 +1002,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceTopicUpdate(ctx interface{
 
 func (_c *ApiprotoCentrifugoApiClient_DeviceTopicUpdate_Call) Run(run func(ctx context.Context, in *apiproto.DeviceTopicUpdateRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_DeviceTopicUpdate_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceTopicUpdateRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceTopicUpdateRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceTopicUpdateRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -871,9 +1075,9 @@ type ApiprotoCentrifugoApiClient_DeviceUpdate_Call struct {
 }
 
 // DeviceUpdate is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DeviceUpdateRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceUpdate(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_DeviceUpdate_Call {
 	return &ApiprotoCentrifugoApiClient_DeviceUpdate_Call{Call: _e.mock.On("DeviceUpdate",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -881,8 +1085,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) DeviceUpdate(ctx interface{}, in
 
 func (_c *ApiprotoCentrifugoApiClient_DeviceUpdate_Call) Run(run func(ctx context.Context, in *apiproto.DeviceUpdateRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_DeviceUpdate_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceUpdateRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceUpdateRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceUpdateRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -937,9 +1158,9 @@ type ApiprotoCentrifugoApiClient_Disconnect_Call struct {
 }
 
 // Disconnect is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.DisconnectRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Disconnect(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Disconnect_Call {
 	return &ApiprotoCentrifugoApiClient_Disconnect_Call{Call: _e.mock.On("Disconnect",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -947,8 +1168,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Disconnect(ctx interface{}, in i
 
 func (_c *ApiprotoCentrifugoApiClient_Disconnect_Call) Run(run func(ctx context.Context, in *apiproto.DisconnectRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Disconnect_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.DisconnectRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DisconnectRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DisconnectRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1003,9 +1241,9 @@ type ApiprotoCentrifugoApiClient_GetUserStatus_Call struct {
 }
 
 // GetUserStatus is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.GetUserStatusRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) GetUserStatus(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_GetUserStatus_Call {
 	return &ApiprotoCentrifugoApiClient_GetUserStatus_Call{Call: _e.mock.On("GetUserStatus",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1013,8 +1251,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) GetUserStatus(ctx interface{}, i
 
 func (_c *ApiprotoCentrifugoApiClient_GetUserStatus_Call) Run(run func(ctx context.Context, in *apiproto.GetUserStatusRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_GetUserStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.GetUserStatusRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.GetUserStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.GetUserStatusRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1069,9 +1324,9 @@ type ApiprotoCentrifugoApiClient_History_Call struct {
 }
 
 // History is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.HistoryRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) History(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_History_Call {
 	return &ApiprotoCentrifugoApiClient_History_Call{Call: _e.mock.On("History",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1079,8 +1334,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) History(ctx interface{}, in inte
 
 func (_c *ApiprotoCentrifugoApiClient_History_Call) Run(run func(ctx context.Context, in *apiproto.HistoryRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_History_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.HistoryRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.HistoryRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.HistoryRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1135,9 +1407,9 @@ type ApiprotoCentrifugoApiClient_HistoryRemove_Call struct {
 }
 
 // HistoryRemove is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.HistoryRemoveRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) HistoryRemove(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_HistoryRemove_Call {
 	return &ApiprotoCentrifugoApiClient_HistoryRemove_Call{Call: _e.mock.On("HistoryRemove",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1145,8 +1417,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) HistoryRemove(ctx interface{}, i
 
 func (_c *ApiprotoCentrifugoApiClient_HistoryRemove_Call) Run(run func(ctx context.Context, in *apiproto.HistoryRemoveRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_HistoryRemove_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.HistoryRemoveRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.HistoryRemoveRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.HistoryRemoveRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1201,9 +1490,9 @@ type ApiprotoCentrifugoApiClient_Info_Call struct {
 }
 
 // Info is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.InfoRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Info(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Info_Call {
 	return &ApiprotoCentrifugoApiClient_Info_Call{Call: _e.mock.On("Info",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1211,8 +1500,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Info(ctx interface{}, in interfa
 
 func (_c *ApiprotoCentrifugoApiClient_Info_Call) Run(run func(ctx context.Context, in *apiproto.InfoRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Info_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.InfoRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.InfoRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.InfoRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1267,9 +1573,9 @@ type ApiprotoCentrifugoApiClient_InvalidateUserTokens_Call struct {
 }
 
 // InvalidateUserTokens is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.InvalidateUserTokensRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) InvalidateUserTokens(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_InvalidateUserTokens_Call {
 	return &ApiprotoCentrifugoApiClient_InvalidateUserTokens_Call{Call: _e.mock.On("InvalidateUserTokens",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1277,8 +1583,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) InvalidateUserTokens(ctx interfa
 
 func (_c *ApiprotoCentrifugoApiClient_InvalidateUserTokens_Call) Run(run func(ctx context.Context, in *apiproto.InvalidateUserTokensRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_InvalidateUserTokens_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.InvalidateUserTokensRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.InvalidateUserTokensRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.InvalidateUserTokensRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1333,9 +1656,9 @@ type ApiprotoCentrifugoApiClient_Presence_Call struct {
 }
 
 // Presence is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.PresenceRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Presence(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Presence_Call {
 	return &ApiprotoCentrifugoApiClient_Presence_Call{Call: _e.mock.On("Presence",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1343,8 +1666,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Presence(ctx interface{}, in int
 
 func (_c *ApiprotoCentrifugoApiClient_Presence_Call) Run(run func(ctx context.Context, in *apiproto.PresenceRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Presence_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.PresenceRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.PresenceRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.PresenceRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1399,9 +1739,9 @@ type ApiprotoCentrifugoApiClient_PresenceStats_Call struct {
 }
 
 // PresenceStats is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.PresenceStatsRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) PresenceStats(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_PresenceStats_Call {
 	return &ApiprotoCentrifugoApiClient_PresenceStats_Call{Call: _e.mock.On("PresenceStats",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1409,8 +1749,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) PresenceStats(ctx interface{}, i
 
 func (_c *ApiprotoCentrifugoApiClient_PresenceStats_Call) Run(run func(ctx context.Context, in *apiproto.PresenceStatsRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_PresenceStats_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.PresenceStatsRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.PresenceStatsRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.PresenceStatsRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1465,9 +1822,9 @@ type ApiprotoCentrifugoApiClient_Publish_Call struct {
 }
 
 // Publish is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.PublishRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Publish(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Publish_Call {
 	return &ApiprotoCentrifugoApiClient_Publish_Call{Call: _e.mock.On("Publish",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1475,8 +1832,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Publish(ctx interface{}, in inte
 
 func (_c *ApiprotoCentrifugoApiClient_Publish_Call) Run(run func(ctx context.Context, in *apiproto.PublishRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Publish_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.PublishRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.PublishRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.PublishRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1531,9 +1905,9 @@ type ApiprotoCentrifugoApiClient_RPC_Call struct {
 }
 
 // RPC is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.RPCRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) RPC(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_RPC_Call {
 	return &ApiprotoCentrifugoApiClient_RPC_Call{Call: _e.mock.On("RPC",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1541,8 +1915,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) RPC(ctx interface{}, in interfac
 
 func (_c *ApiprotoCentrifugoApiClient_RPC_Call) Run(run func(ctx context.Context, in *apiproto.RPCRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_RPC_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.RPCRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RPCRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RPCRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1597,9 +1988,9 @@ type ApiprotoCentrifugoApiClient_RateLimit_Call struct {
 }
 
 // RateLimit is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.RateLimitRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) RateLimit(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_RateLimit_Call {
 	return &ApiprotoCentrifugoApiClient_RateLimit_Call{Call: _e.mock.On("RateLimit",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1607,8 +1998,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) RateLimit(ctx interface{}, in in
 
 func (_c *ApiprotoCentrifugoApiClient_RateLimit_Call) Run(run func(ctx context.Context, in *apiproto.RateLimitRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_RateLimit_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.RateLimitRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RateLimitRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RateLimitRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1663,9 +2071,9 @@ type ApiprotoCentrifugoApiClient_Refresh_Call struct {
 }
 
 // Refresh is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.RefreshRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Refresh(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Refresh_Call {
 	return &ApiprotoCentrifugoApiClient_Refresh_Call{Call: _e.mock.On("Refresh",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1673,8 +2081,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Refresh(ctx interface{}, in inte
 
 func (_c *ApiprotoCentrifugoApiClient_Refresh_Call) Run(run func(ctx context.Context, in *apiproto.RefreshRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Refresh_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.RefreshRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RefreshRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RefreshRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1729,9 +2154,9 @@ type ApiprotoCentrifugoApiClient_RevokeToken_Call struct {
 }
 
 // RevokeToken is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.RevokeTokenRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) RevokeToken(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_RevokeToken_Call {
 	return &ApiprotoCentrifugoApiClient_RevokeToken_Call{Call: _e.mock.On("RevokeToken",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1739,8 +2164,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) RevokeToken(ctx interface{}, in 
 
 func (_c *ApiprotoCentrifugoApiClient_RevokeToken_Call) Run(run func(ctx context.Context, in *apiproto.RevokeTokenRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_RevokeToken_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.RevokeTokenRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RevokeTokenRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RevokeTokenRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1795,9 +2237,9 @@ type ApiprotoCentrifugoApiClient_SendPushNotification_Call struct {
 }
 
 // SendPushNotification is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.SendPushNotificationRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) SendPushNotification(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_SendPushNotification_Call {
 	return &ApiprotoCentrifugoApiClient_SendPushNotification_Call{Call: _e.mock.On("SendPushNotification",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1805,8 +2247,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) SendPushNotification(ctx interfa
 
 func (_c *ApiprotoCentrifugoApiClient_SendPushNotification_Call) Run(run func(ctx context.Context, in *apiproto.SendPushNotificationRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_SendPushNotification_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.SendPushNotificationRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.SendPushNotificationRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.SendPushNotificationRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1861,9 +2320,9 @@ type ApiprotoCentrifugoApiClient_Subscribe_Call struct {
 }
 
 // Subscribe is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.SubscribeRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Subscribe(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Subscribe_Call {
 	return &ApiprotoCentrifugoApiClient_Subscribe_Call{Call: _e.mock.On("Subscribe",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1871,8 +2330,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Subscribe(ctx interface{}, in in
 
 func (_c *ApiprotoCentrifugoApiClient_Subscribe_Call) Run(run func(ctx context.Context, in *apiproto.SubscribeRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Subscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.SubscribeRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.SubscribeRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.SubscribeRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1927,9 +2403,9 @@ type ApiprotoCentrifugoApiClient_UnblockUser_Call struct {
 }
 
 // UnblockUser is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.UnblockUserRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) UnblockUser(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_UnblockUser_Call {
 	return &ApiprotoCentrifugoApiClient_UnblockUser_Call{Call: _e.mock.On("UnblockUser",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -1937,8 +2413,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) UnblockUser(ctx interface{}, in 
 
 func (_c *ApiprotoCentrifugoApiClient_UnblockUser_Call) Run(run func(ctx context.Context, in *apiproto.UnblockUserRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_UnblockUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.UnblockUserRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UnblockUserRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UnblockUserRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -1993,9 +2486,9 @@ type ApiprotoCentrifugoApiClient_Unsubscribe_Call struct {
 }
 
 // Unsubscribe is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.UnsubscribeRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) Unsubscribe(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_Unsubscribe_Call {
 	return &ApiprotoCentrifugoApiClient_Unsubscribe_Call{Call: _e.mock.On("Unsubscribe",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -2003,8 +2496,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) Unsubscribe(ctx interface{}, in 
 
 func (_c *ApiprotoCentrifugoApiClient_Unsubscribe_Call) Run(run func(ctx context.Context, in *apiproto.UnsubscribeRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_Unsubscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.UnsubscribeRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UnsubscribeRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UnsubscribeRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -2059,9 +2569,9 @@ type ApiprotoCentrifugoApiClient_UpdatePushStatus_Call struct {
 }
 
 // UpdatePushStatus is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.UpdatePushStatusRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) UpdatePushStatus(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_UpdatePushStatus_Call {
 	return &ApiprotoCentrifugoApiClient_UpdatePushStatus_Call{Call: _e.mock.On("UpdatePushStatus",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -2069,8 +2579,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) UpdatePushStatus(ctx interface{}
 
 func (_c *ApiprotoCentrifugoApiClient_UpdatePushStatus_Call) Run(run func(ctx context.Context, in *apiproto.UpdatePushStatusRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_UpdatePushStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.UpdatePushStatusRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UpdatePushStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UpdatePushStatusRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -2125,9 +2652,9 @@ type ApiprotoCentrifugoApiClient_UpdateUserStatus_Call struct {
 }
 
 // UpdateUserStatus is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.UpdateUserStatusRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) UpdateUserStatus(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_UpdateUserStatus_Call {
 	return &ApiprotoCentrifugoApiClient_UpdateUserStatus_Call{Call: _e.mock.On("UpdateUserStatus",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -2135,8 +2662,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) UpdateUserStatus(ctx interface{}
 
 func (_c *ApiprotoCentrifugoApiClient_UpdateUserStatus_Call) Run(run func(ctx context.Context, in *apiproto.UpdateUserStatusRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_UpdateUserStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.UpdateUserStatusRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UpdateUserStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UpdateUserStatusRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -2191,9 +2735,9 @@ type ApiprotoCentrifugoApiClient_UserTopicList_Call struct {
 }
 
 // UserTopicList is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.UserTopicListRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) UserTopicList(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_UserTopicList_Call {
 	return &ApiprotoCentrifugoApiClient_UserTopicList_Call{Call: _e.mock.On("UserTopicList",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -2201,8 +2745,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) UserTopicList(ctx interface{}, i
 
 func (_c *ApiprotoCentrifugoApiClient_UserTopicList_Call) Run(run func(ctx context.Context, in *apiproto.UserTopicListRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_UserTopicList_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.UserTopicListRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UserTopicListRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UserTopicListRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -2257,9 +2818,9 @@ type ApiprotoCentrifugoApiClient_UserTopicUpdate_Call struct {
 }
 
 // UserTopicUpdate is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *apiproto.UserTopicUpdateRequest
+//   - opts ...grpc.CallOption
 func (_e *ApiprotoCentrifugoApiClient_Expecter) UserTopicUpdate(ctx interface{}, in interface{}, opts ...interface{}) *ApiprotoCentrifugoApiClient_UserTopicUpdate_Call {
 	return &ApiprotoCentrifugoApiClient_UserTopicUpdate_Call{Call: _e.mock.On("UserTopicUpdate",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -2267,8 +2828,25 @@ func (_e *ApiprotoCentrifugoApiClient_Expecter) UserTopicUpdate(ctx interface{},
 
 func (_c *ApiprotoCentrifugoApiClient_UserTopicUpdate_Call) Run(run func(ctx context.Context, in *apiproto.UserTopicUpdateRequest, opts ...grpc.CallOption)) *ApiprotoCentrifugoApiClient_UserTopicUpdate_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc.CallOption)
-		run(args[0].(context.Context), args[1].(*apiproto.UserTopicUpdateRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UserTopicUpdateRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UserTopicUpdateRequest)
+		}
+		var arg2 []grpc.CallOption
+		var variadicArgs []grpc.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -2344,15 +2922,26 @@ type ApiprotoCentrifugoApiServer_Batch_Call struct {
 }
 
 // Batch is a helper method to define mock.On call
-//   - context1
-//   - batchRequest
+//   - context1 context.Context
+//   - batchRequest *apiproto.BatchRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Batch(context1 interface{}, batchRequest interface{}) *ApiprotoCentrifugoApiServer_Batch_Call {
 	return &ApiprotoCentrifugoApiServer_Batch_Call{Call: _e.mock.On("Batch", context1, batchRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Batch_Call) Run(run func(context1 context.Context, batchRequest *apiproto.BatchRequest)) *ApiprotoCentrifugoApiServer_Batch_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.BatchRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.BatchRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.BatchRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2401,15 +2990,26 @@ type ApiprotoCentrifugoApiServer_BlockUser_Call struct {
 }
 
 // BlockUser is a helper method to define mock.On call
-//   - context1
-//   - blockUserRequest
+//   - context1 context.Context
+//   - blockUserRequest *apiproto.BlockUserRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) BlockUser(context1 interface{}, blockUserRequest interface{}) *ApiprotoCentrifugoApiServer_BlockUser_Call {
 	return &ApiprotoCentrifugoApiServer_BlockUser_Call{Call: _e.mock.On("BlockUser", context1, blockUserRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_BlockUser_Call) Run(run func(context1 context.Context, blockUserRequest *apiproto.BlockUserRequest)) *ApiprotoCentrifugoApiServer_BlockUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.BlockUserRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.BlockUserRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.BlockUserRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2458,15 +3058,26 @@ type ApiprotoCentrifugoApiServer_Broadcast_Call struct {
 }
 
 // Broadcast is a helper method to define mock.On call
-//   - context1
-//   - broadcastRequest
+//   - context1 context.Context
+//   - broadcastRequest *apiproto.BroadcastRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Broadcast(context1 interface{}, broadcastRequest interface{}) *ApiprotoCentrifugoApiServer_Broadcast_Call {
 	return &ApiprotoCentrifugoApiServer_Broadcast_Call{Call: _e.mock.On("Broadcast", context1, broadcastRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Broadcast_Call) Run(run func(context1 context.Context, broadcastRequest *apiproto.BroadcastRequest)) *ApiprotoCentrifugoApiServer_Broadcast_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.BroadcastRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.BroadcastRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.BroadcastRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2515,15 +3126,26 @@ type ApiprotoCentrifugoApiServer_CancelPush_Call struct {
 }
 
 // CancelPush is a helper method to define mock.On call
-//   - context1
-//   - cancelPushRequest
+//   - context1 context.Context
+//   - cancelPushRequest *apiproto.CancelPushRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) CancelPush(context1 interface{}, cancelPushRequest interface{}) *ApiprotoCentrifugoApiServer_CancelPush_Call {
 	return &ApiprotoCentrifugoApiServer_CancelPush_Call{Call: _e.mock.On("CancelPush", context1, cancelPushRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_CancelPush_Call) Run(run func(context1 context.Context, cancelPushRequest *apiproto.CancelPushRequest)) *ApiprotoCentrifugoApiServer_CancelPush_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.CancelPushRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.CancelPushRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.CancelPushRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2572,15 +3194,26 @@ type ApiprotoCentrifugoApiServer_Channels_Call struct {
 }
 
 // Channels is a helper method to define mock.On call
-//   - context1
-//   - channelsRequest
+//   - context1 context.Context
+//   - channelsRequest *apiproto.ChannelsRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Channels(context1 interface{}, channelsRequest interface{}) *ApiprotoCentrifugoApiServer_Channels_Call {
 	return &ApiprotoCentrifugoApiServer_Channels_Call{Call: _e.mock.On("Channels", context1, channelsRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Channels_Call) Run(run func(context1 context.Context, channelsRequest *apiproto.ChannelsRequest)) *ApiprotoCentrifugoApiServer_Channels_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.ChannelsRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.ChannelsRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.ChannelsRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2629,15 +3262,26 @@ type ApiprotoCentrifugoApiServer_Connections_Call struct {
 }
 
 // Connections is a helper method to define mock.On call
-//   - context1
-//   - connectionsRequest
+//   - context1 context.Context
+//   - connectionsRequest *apiproto.ConnectionsRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Connections(context1 interface{}, connectionsRequest interface{}) *ApiprotoCentrifugoApiServer_Connections_Call {
 	return &ApiprotoCentrifugoApiServer_Connections_Call{Call: _e.mock.On("Connections", context1, connectionsRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Connections_Call) Run(run func(context1 context.Context, connectionsRequest *apiproto.ConnectionsRequest)) *ApiprotoCentrifugoApiServer_Connections_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.ConnectionsRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.ConnectionsRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.ConnectionsRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2686,15 +3330,26 @@ type ApiprotoCentrifugoApiServer_DeleteUserStatus_Call struct {
 }
 
 // DeleteUserStatus is a helper method to define mock.On call
-//   - context1
-//   - deleteUserStatusRequest
+//   - context1 context.Context
+//   - deleteUserStatusRequest *apiproto.DeleteUserStatusRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) DeleteUserStatus(context1 interface{}, deleteUserStatusRequest interface{}) *ApiprotoCentrifugoApiServer_DeleteUserStatus_Call {
 	return &ApiprotoCentrifugoApiServer_DeleteUserStatus_Call{Call: _e.mock.On("DeleteUserStatus", context1, deleteUserStatusRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_DeleteUserStatus_Call) Run(run func(context1 context.Context, deleteUserStatusRequest *apiproto.DeleteUserStatusRequest)) *ApiprotoCentrifugoApiServer_DeleteUserStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DeleteUserStatusRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeleteUserStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeleteUserStatusRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2743,15 +3398,26 @@ type ApiprotoCentrifugoApiServer_DeviceList_Call struct {
 }
 
 // DeviceList is a helper method to define mock.On call
-//   - context1
-//   - deviceListRequest
+//   - context1 context.Context
+//   - deviceListRequest *apiproto.DeviceListRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) DeviceList(context1 interface{}, deviceListRequest interface{}) *ApiprotoCentrifugoApiServer_DeviceList_Call {
 	return &ApiprotoCentrifugoApiServer_DeviceList_Call{Call: _e.mock.On("DeviceList", context1, deviceListRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_DeviceList_Call) Run(run func(context1 context.Context, deviceListRequest *apiproto.DeviceListRequest)) *ApiprotoCentrifugoApiServer_DeviceList_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceListRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceListRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceListRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2800,15 +3466,26 @@ type ApiprotoCentrifugoApiServer_DeviceRegister_Call struct {
 }
 
 // DeviceRegister is a helper method to define mock.On call
-//   - context1
-//   - deviceRegisterRequest
+//   - context1 context.Context
+//   - deviceRegisterRequest *apiproto.DeviceRegisterRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) DeviceRegister(context1 interface{}, deviceRegisterRequest interface{}) *ApiprotoCentrifugoApiServer_DeviceRegister_Call {
 	return &ApiprotoCentrifugoApiServer_DeviceRegister_Call{Call: _e.mock.On("DeviceRegister", context1, deviceRegisterRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_DeviceRegister_Call) Run(run func(context1 context.Context, deviceRegisterRequest *apiproto.DeviceRegisterRequest)) *ApiprotoCentrifugoApiServer_DeviceRegister_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceRegisterRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceRegisterRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceRegisterRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2857,15 +3534,26 @@ type ApiprotoCentrifugoApiServer_DeviceRemove_Call struct {
 }
 
 // DeviceRemove is a helper method to define mock.On call
-//   - context1
-//   - deviceRemoveRequest
+//   - context1 context.Context
+//   - deviceRemoveRequest *apiproto.DeviceRemoveRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) DeviceRemove(context1 interface{}, deviceRemoveRequest interface{}) *ApiprotoCentrifugoApiServer_DeviceRemove_Call {
 	return &ApiprotoCentrifugoApiServer_DeviceRemove_Call{Call: _e.mock.On("DeviceRemove", context1, deviceRemoveRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_DeviceRemove_Call) Run(run func(context1 context.Context, deviceRemoveRequest *apiproto.DeviceRemoveRequest)) *ApiprotoCentrifugoApiServer_DeviceRemove_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceRemoveRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceRemoveRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceRemoveRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2914,15 +3602,26 @@ type ApiprotoCentrifugoApiServer_DeviceTopicList_Call struct {
 }
 
 // DeviceTopicList is a helper method to define mock.On call
-//   - context1
-//   - deviceTopicListRequest
+//   - context1 context.Context
+//   - deviceTopicListRequest *apiproto.DeviceTopicListRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) DeviceTopicList(context1 interface{}, deviceTopicListRequest interface{}) *ApiprotoCentrifugoApiServer_DeviceTopicList_Call {
 	return &ApiprotoCentrifugoApiServer_DeviceTopicList_Call{Call: _e.mock.On("DeviceTopicList", context1, deviceTopicListRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_DeviceTopicList_Call) Run(run func(context1 context.Context, deviceTopicListRequest *apiproto.DeviceTopicListRequest)) *ApiprotoCentrifugoApiServer_DeviceTopicList_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceTopicListRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceTopicListRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceTopicListRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -2971,15 +3670,26 @@ type ApiprotoCentrifugoApiServer_DeviceTopicUpdate_Call struct {
 }
 
 // DeviceTopicUpdate is a helper method to define mock.On call
-//   - context1
-//   - deviceTopicUpdateRequest
+//   - context1 context.Context
+//   - deviceTopicUpdateRequest *apiproto.DeviceTopicUpdateRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) DeviceTopicUpdate(context1 interface{}, deviceTopicUpdateRequest interface{}) *ApiprotoCentrifugoApiServer_DeviceTopicUpdate_Call {
 	return &ApiprotoCentrifugoApiServer_DeviceTopicUpdate_Call{Call: _e.mock.On("DeviceTopicUpdate", context1, deviceTopicUpdateRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_DeviceTopicUpdate_Call) Run(run func(context1 context.Context, deviceTopicUpdateRequest *apiproto.DeviceTopicUpdateRequest)) *ApiprotoCentrifugoApiServer_DeviceTopicUpdate_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceTopicUpdateRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceTopicUpdateRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceTopicUpdateRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3028,15 +3738,26 @@ type ApiprotoCentrifugoApiServer_DeviceUpdate_Call struct {
 }
 
 // DeviceUpdate is a helper method to define mock.On call
-//   - context1
-//   - deviceUpdateRequest
+//   - context1 context.Context
+//   - deviceUpdateRequest *apiproto.DeviceUpdateRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) DeviceUpdate(context1 interface{}, deviceUpdateRequest interface{}) *ApiprotoCentrifugoApiServer_DeviceUpdate_Call {
 	return &ApiprotoCentrifugoApiServer_DeviceUpdate_Call{Call: _e.mock.On("DeviceUpdate", context1, deviceUpdateRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_DeviceUpdate_Call) Run(run func(context1 context.Context, deviceUpdateRequest *apiproto.DeviceUpdateRequest)) *ApiprotoCentrifugoApiServer_DeviceUpdate_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DeviceUpdateRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DeviceUpdateRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DeviceUpdateRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3085,15 +3806,26 @@ type ApiprotoCentrifugoApiServer_Disconnect_Call struct {
 }
 
 // Disconnect is a helper method to define mock.On call
-//   - context1
-//   - disconnectRequest
+//   - context1 context.Context
+//   - disconnectRequest *apiproto.DisconnectRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Disconnect(context1 interface{}, disconnectRequest interface{}) *ApiprotoCentrifugoApiServer_Disconnect_Call {
 	return &ApiprotoCentrifugoApiServer_Disconnect_Call{Call: _e.mock.On("Disconnect", context1, disconnectRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Disconnect_Call) Run(run func(context1 context.Context, disconnectRequest *apiproto.DisconnectRequest)) *ApiprotoCentrifugoApiServer_Disconnect_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.DisconnectRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.DisconnectRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.DisconnectRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3142,15 +3874,26 @@ type ApiprotoCentrifugoApiServer_GetUserStatus_Call struct {
 }
 
 // GetUserStatus is a helper method to define mock.On call
-//   - context1
-//   - getUserStatusRequest
+//   - context1 context.Context
+//   - getUserStatusRequest *apiproto.GetUserStatusRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) GetUserStatus(context1 interface{}, getUserStatusRequest interface{}) *ApiprotoCentrifugoApiServer_GetUserStatus_Call {
 	return &ApiprotoCentrifugoApiServer_GetUserStatus_Call{Call: _e.mock.On("GetUserStatus", context1, getUserStatusRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_GetUserStatus_Call) Run(run func(context1 context.Context, getUserStatusRequest *apiproto.GetUserStatusRequest)) *ApiprotoCentrifugoApiServer_GetUserStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.GetUserStatusRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.GetUserStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.GetUserStatusRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3199,15 +3942,26 @@ type ApiprotoCentrifugoApiServer_History_Call struct {
 }
 
 // History is a helper method to define mock.On call
-//   - context1
-//   - historyRequest
+//   - context1 context.Context
+//   - historyRequest *apiproto.HistoryRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) History(context1 interface{}, historyRequest interface{}) *ApiprotoCentrifugoApiServer_History_Call {
 	return &ApiprotoCentrifugoApiServer_History_Call{Call: _e.mock.On("History", context1, historyRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_History_Call) Run(run func(context1 context.Context, historyRequest *apiproto.HistoryRequest)) *ApiprotoCentrifugoApiServer_History_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.HistoryRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.HistoryRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.HistoryRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3256,15 +4010,26 @@ type ApiprotoCentrifugoApiServer_HistoryRemove_Call struct {
 }
 
 // HistoryRemove is a helper method to define mock.On call
-//   - context1
-//   - historyRemoveRequest
+//   - context1 context.Context
+//   - historyRemoveRequest *apiproto.HistoryRemoveRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) HistoryRemove(context1 interface{}, historyRemoveRequest interface{}) *ApiprotoCentrifugoApiServer_HistoryRemove_Call {
 	return &ApiprotoCentrifugoApiServer_HistoryRemove_Call{Call: _e.mock.On("HistoryRemove", context1, historyRemoveRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_HistoryRemove_Call) Run(run func(context1 context.Context, historyRemoveRequest *apiproto.HistoryRemoveRequest)) *ApiprotoCentrifugoApiServer_HistoryRemove_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.HistoryRemoveRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.HistoryRemoveRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.HistoryRemoveRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3313,15 +4078,26 @@ type ApiprotoCentrifugoApiServer_Info_Call struct {
 }
 
 // Info is a helper method to define mock.On call
-//   - context1
-//   - infoRequest
+//   - context1 context.Context
+//   - infoRequest *apiproto.InfoRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Info(context1 interface{}, infoRequest interface{}) *ApiprotoCentrifugoApiServer_Info_Call {
 	return &ApiprotoCentrifugoApiServer_Info_Call{Call: _e.mock.On("Info", context1, infoRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Info_Call) Run(run func(context1 context.Context, infoRequest *apiproto.InfoRequest)) *ApiprotoCentrifugoApiServer_Info_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.InfoRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.InfoRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.InfoRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3370,15 +4146,26 @@ type ApiprotoCentrifugoApiServer_InvalidateUserTokens_Call struct {
 }
 
 // InvalidateUserTokens is a helper method to define mock.On call
-//   - context1
-//   - invalidateUserTokensRequest
+//   - context1 context.Context
+//   - invalidateUserTokensRequest *apiproto.InvalidateUserTokensRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) InvalidateUserTokens(context1 interface{}, invalidateUserTokensRequest interface{}) *ApiprotoCentrifugoApiServer_InvalidateUserTokens_Call {
 	return &ApiprotoCentrifugoApiServer_InvalidateUserTokens_Call{Call: _e.mock.On("InvalidateUserTokens", context1, invalidateUserTokensRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_InvalidateUserTokens_Call) Run(run func(context1 context.Context, invalidateUserTokensRequest *apiproto.InvalidateUserTokensRequest)) *ApiprotoCentrifugoApiServer_InvalidateUserTokens_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.InvalidateUserTokensRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.InvalidateUserTokensRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.InvalidateUserTokensRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3427,15 +4214,26 @@ type ApiprotoCentrifugoApiServer_Presence_Call struct {
 }
 
 // Presence is a helper method to define mock.On call
-//   - context1
-//   - presenceRequest
+//   - context1 context.Context
+//   - presenceRequest *apiproto.PresenceRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Presence(context1 interface{}, presenceRequest interface{}) *ApiprotoCentrifugoApiServer_Presence_Call {
 	return &ApiprotoCentrifugoApiServer_Presence_Call{Call: _e.mock.On("Presence", context1, presenceRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Presence_Call) Run(run func(context1 context.Context, presenceRequest *apiproto.PresenceRequest)) *ApiprotoCentrifugoApiServer_Presence_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.PresenceRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.PresenceRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.PresenceRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3484,15 +4282,26 @@ type ApiprotoCentrifugoApiServer_PresenceStats_Call struct {
 }
 
 // PresenceStats is a helper method to define mock.On call
-//   - context1
-//   - presenceStatsRequest
+//   - context1 context.Context
+//   - presenceStatsRequest *apiproto.PresenceStatsRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) PresenceStats(context1 interface{}, presenceStatsRequest interface{}) *ApiprotoCentrifugoApiServer_PresenceStats_Call {
 	return &ApiprotoCentrifugoApiServer_PresenceStats_Call{Call: _e.mock.On("PresenceStats", context1, presenceStatsRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_PresenceStats_Call) Run(run func(context1 context.Context, presenceStatsRequest *apiproto.PresenceStatsRequest)) *ApiprotoCentrifugoApiServer_PresenceStats_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.PresenceStatsRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.PresenceStatsRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.PresenceStatsRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3541,15 +4350,26 @@ type ApiprotoCentrifugoApiServer_Publish_Call struct {
 }
 
 // Publish is a helper method to define mock.On call
-//   - context1
-//   - publishRequest
+//   - context1 context.Context
+//   - publishRequest *apiproto.PublishRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Publish(context1 interface{}, publishRequest interface{}) *ApiprotoCentrifugoApiServer_Publish_Call {
 	return &ApiprotoCentrifugoApiServer_Publish_Call{Call: _e.mock.On("Publish", context1, publishRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Publish_Call) Run(run func(context1 context.Context, publishRequest *apiproto.PublishRequest)) *ApiprotoCentrifugoApiServer_Publish_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.PublishRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.PublishRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.PublishRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3598,15 +4418,26 @@ type ApiprotoCentrifugoApiServer_RPC_Call struct {
 }
 
 // RPC is a helper method to define mock.On call
-//   - context1
-//   - rPCRequest
+//   - context1 context.Context
+//   - rPCRequest *apiproto.RPCRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) RPC(context1 interface{}, rPCRequest interface{}) *ApiprotoCentrifugoApiServer_RPC_Call {
 	return &ApiprotoCentrifugoApiServer_RPC_Call{Call: _e.mock.On("RPC", context1, rPCRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_RPC_Call) Run(run func(context1 context.Context, rPCRequest *apiproto.RPCRequest)) *ApiprotoCentrifugoApiServer_RPC_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.RPCRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RPCRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RPCRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3655,15 +4486,26 @@ type ApiprotoCentrifugoApiServer_RateLimit_Call struct {
 }
 
 // RateLimit is a helper method to define mock.On call
-//   - context1
-//   - rateLimitRequest
+//   - context1 context.Context
+//   - rateLimitRequest *apiproto.RateLimitRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) RateLimit(context1 interface{}, rateLimitRequest interface{}) *ApiprotoCentrifugoApiServer_RateLimit_Call {
 	return &ApiprotoCentrifugoApiServer_RateLimit_Call{Call: _e.mock.On("RateLimit", context1, rateLimitRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_RateLimit_Call) Run(run func(context1 context.Context, rateLimitRequest *apiproto.RateLimitRequest)) *ApiprotoCentrifugoApiServer_RateLimit_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.RateLimitRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RateLimitRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RateLimitRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3712,15 +4554,26 @@ type ApiprotoCentrifugoApiServer_Refresh_Call struct {
 }
 
 // Refresh is a helper method to define mock.On call
-//   - context1
-//   - refreshRequest
+//   - context1 context.Context
+//   - refreshRequest *apiproto.RefreshRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Refresh(context1 interface{}, refreshRequest interface{}) *ApiprotoCentrifugoApiServer_Refresh_Call {
 	return &ApiprotoCentrifugoApiServer_Refresh_Call{Call: _e.mock.On("Refresh", context1, refreshRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Refresh_Call) Run(run func(context1 context.Context, refreshRequest *apiproto.RefreshRequest)) *ApiprotoCentrifugoApiServer_Refresh_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.RefreshRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RefreshRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RefreshRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3769,15 +4622,26 @@ type ApiprotoCentrifugoApiServer_RevokeToken_Call struct {
 }
 
 // RevokeToken is a helper method to define mock.On call
-//   - context1
-//   - revokeTokenRequest
+//   - context1 context.Context
+//   - revokeTokenRequest *apiproto.RevokeTokenRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) RevokeToken(context1 interface{}, revokeTokenRequest interface{}) *ApiprotoCentrifugoApiServer_RevokeToken_Call {
 	return &ApiprotoCentrifugoApiServer_RevokeToken_Call{Call: _e.mock.On("RevokeToken", context1, revokeTokenRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_RevokeToken_Call) Run(run func(context1 context.Context, revokeTokenRequest *apiproto.RevokeTokenRequest)) *ApiprotoCentrifugoApiServer_RevokeToken_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.RevokeTokenRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.RevokeTokenRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.RevokeTokenRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3826,15 +4690,26 @@ type ApiprotoCentrifugoApiServer_SendPushNotification_Call struct {
 }
 
 // SendPushNotification is a helper method to define mock.On call
-//   - context1
-//   - sendPushNotificationRequest
+//   - context1 context.Context
+//   - sendPushNotificationRequest *apiproto.SendPushNotificationRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) SendPushNotification(context1 interface{}, sendPushNotificationRequest interface{}) *ApiprotoCentrifugoApiServer_SendPushNotification_Call {
 	return &ApiprotoCentrifugoApiServer_SendPushNotification_Call{Call: _e.mock.On("SendPushNotification", context1, sendPushNotificationRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_SendPushNotification_Call) Run(run func(context1 context.Context, sendPushNotificationRequest *apiproto.SendPushNotificationRequest)) *ApiprotoCentrifugoApiServer_SendPushNotification_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.SendPushNotificationRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.SendPushNotificationRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.SendPushNotificationRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3883,15 +4758,26 @@ type ApiprotoCentrifugoApiServer_Subscribe_Call struct {
 }
 
 // Subscribe is a helper method to define mock.On call
-//   - context1
-//   - subscribeRequest
+//   - context1 context.Context
+//   - subscribeRequest *apiproto.SubscribeRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Subscribe(context1 interface{}, subscribeRequest interface{}) *ApiprotoCentrifugoApiServer_Subscribe_Call {
 	return &ApiprotoCentrifugoApiServer_Subscribe_Call{Call: _e.mock.On("Subscribe", context1, subscribeRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Subscribe_Call) Run(run func(context1 context.Context, subscribeRequest *apiproto.SubscribeRequest)) *ApiprotoCentrifugoApiServer_Subscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.SubscribeRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.SubscribeRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.SubscribeRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3940,15 +4826,26 @@ type ApiprotoCentrifugoApiServer_UnblockUser_Call struct {
 }
 
 // UnblockUser is a helper method to define mock.On call
-//   - context1
-//   - unblockUserRequest
+//   - context1 context.Context
+//   - unblockUserRequest *apiproto.UnblockUserRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) UnblockUser(context1 interface{}, unblockUserRequest interface{}) *ApiprotoCentrifugoApiServer_UnblockUser_Call {
 	return &ApiprotoCentrifugoApiServer_UnblockUser_Call{Call: _e.mock.On("UnblockUser", context1, unblockUserRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_UnblockUser_Call) Run(run func(context1 context.Context, unblockUserRequest *apiproto.UnblockUserRequest)) *ApiprotoCentrifugoApiServer_UnblockUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.UnblockUserRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UnblockUserRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UnblockUserRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -3997,15 +4894,26 @@ type ApiprotoCentrifugoApiServer_Unsubscribe_Call struct {
 }
 
 // Unsubscribe is a helper method to define mock.On call
-//   - context1
-//   - unsubscribeRequest
+//   - context1 context.Context
+//   - unsubscribeRequest *apiproto.UnsubscribeRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) Unsubscribe(context1 interface{}, unsubscribeRequest interface{}) *ApiprotoCentrifugoApiServer_Unsubscribe_Call {
 	return &ApiprotoCentrifugoApiServer_Unsubscribe_Call{Call: _e.mock.On("Unsubscribe", context1, unsubscribeRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_Unsubscribe_Call) Run(run func(context1 context.Context, unsubscribeRequest *apiproto.UnsubscribeRequest)) *ApiprotoCentrifugoApiServer_Unsubscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.UnsubscribeRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UnsubscribeRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UnsubscribeRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -4054,15 +4962,26 @@ type ApiprotoCentrifugoApiServer_UpdatePushStatus_Call struct {
 }
 
 // UpdatePushStatus is a helper method to define mock.On call
-//   - context1
-//   - updatePushStatusRequest
+//   - context1 context.Context
+//   - updatePushStatusRequest *apiproto.UpdatePushStatusRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) UpdatePushStatus(context1 interface{}, updatePushStatusRequest interface{}) *ApiprotoCentrifugoApiServer_UpdatePushStatus_Call {
 	return &ApiprotoCentrifugoApiServer_UpdatePushStatus_Call{Call: _e.mock.On("UpdatePushStatus", context1, updatePushStatusRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_UpdatePushStatus_Call) Run(run func(context1 context.Context, updatePushStatusRequest *apiproto.UpdatePushStatusRequest)) *ApiprotoCentrifugoApiServer_UpdatePushStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.UpdatePushStatusRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UpdatePushStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UpdatePushStatusRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -4111,15 +5030,26 @@ type ApiprotoCentrifugoApiServer_UpdateUserStatus_Call struct {
 }
 
 // UpdateUserStatus is a helper method to define mock.On call
-//   - context1
-//   - updateUserStatusRequest
+//   - context1 context.Context
+//   - updateUserStatusRequest *apiproto.UpdateUserStatusRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) UpdateUserStatus(context1 interface{}, updateUserStatusRequest interface{}) *ApiprotoCentrifugoApiServer_UpdateUserStatus_Call {
 	return &ApiprotoCentrifugoApiServer_UpdateUserStatus_Call{Call: _e.mock.On("UpdateUserStatus", context1, updateUserStatusRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_UpdateUserStatus_Call) Run(run func(context1 context.Context, updateUserStatusRequest *apiproto.UpdateUserStatusRequest)) *ApiprotoCentrifugoApiServer_UpdateUserStatus_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.UpdateUserStatusRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UpdateUserStatusRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UpdateUserStatusRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -4168,15 +5098,26 @@ type ApiprotoCentrifugoApiServer_UserTopicList_Call struct {
 }
 
 // UserTopicList is a helper method to define mock.On call
-//   - context1
-//   - userTopicListRequest
+//   - context1 context.Context
+//   - userTopicListRequest *apiproto.UserTopicListRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) UserTopicList(context1 interface{}, userTopicListRequest interface{}) *ApiprotoCentrifugoApiServer_UserTopicList_Call {
 	return &ApiprotoCentrifugoApiServer_UserTopicList_Call{Call: _e.mock.On("UserTopicList", context1, userTopicListRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_UserTopicList_Call) Run(run func(context1 context.Context, userTopicListRequest *apiproto.UserTopicListRequest)) *ApiprotoCentrifugoApiServer_UserTopicList_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.UserTopicListRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UserTopicListRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UserTopicListRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -4225,15 +5166,26 @@ type ApiprotoCentrifugoApiServer_UserTopicUpdate_Call struct {
 }
 
 // UserTopicUpdate is a helper method to define mock.On call
-//   - context1
-//   - userTopicUpdateRequest
+//   - context1 context.Context
+//   - userTopicUpdateRequest *apiproto.UserTopicUpdateRequest
 func (_e *ApiprotoCentrifugoApiServer_Expecter) UserTopicUpdate(context1 interface{}, userTopicUpdateRequest interface{}) *ApiprotoCentrifugoApiServer_UserTopicUpdate_Call {
 	return &ApiprotoCentrifugoApiServer_UserTopicUpdate_Call{Call: _e.mock.On("UserTopicUpdate", context1, userTopicUpdateRequest)}
 }
 
 func (_c *ApiprotoCentrifugoApiServer_UserTopicUpdate_Call) Run(run func(context1 context.Context, userTopicUpdateRequest *apiproto.UserTopicUpdateRequest)) *ApiprotoCentrifugoApiServer_UserTopicUpdate_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*apiproto.UserTopicUpdateRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *apiproto.UserTopicUpdateRequest
+		if args[1] != nil {
+			arg1 = args[1].(*apiproto.UserTopicUpdateRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }

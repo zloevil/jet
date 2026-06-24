@@ -48,14 +48,20 @@ type MonitoringErrorMonitoring_BusinessErrorInc_Call struct {
 }
 
 // BusinessErrorInc is a helper method to define mock.On call
-//   - errCode
+//   - errCode string
 func (_e *MonitoringErrorMonitoring_Expecter) BusinessErrorInc(errCode interface{}) *MonitoringErrorMonitoring_BusinessErrorInc_Call {
 	return &MonitoringErrorMonitoring_BusinessErrorInc_Call{Call: _e.mock.On("BusinessErrorInc", errCode)}
 }
 
 func (_c *MonitoringErrorMonitoring_BusinessErrorInc_Call) Run(run func(errCode string)) *MonitoringErrorMonitoring_BusinessErrorInc_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -82,14 +88,20 @@ type MonitoringErrorMonitoring_Error_Call struct {
 }
 
 // Error is a helper method to define mock.On call
-//   - err
+//   - err error
 func (_e *MonitoringErrorMonitoring_Expecter) Error(err interface{}) *MonitoringErrorMonitoring_Error_Call {
 	return &MonitoringErrorMonitoring_Error_Call{Call: _e.mock.On("Error", err)}
 }
 
 func (_c *MonitoringErrorMonitoring_Error_Call) Run(run func(err error)) *MonitoringErrorMonitoring_Error_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(error))
+		var arg0 error
+		if args[0] != nil {
+			arg0 = args[0].(error)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -195,14 +207,20 @@ type MonitoringErrorMonitoring_SystemErrorInc_Call struct {
 }
 
 // SystemErrorInc is a helper method to define mock.On call
-//   - errCode
+//   - errCode string
 func (_e *MonitoringErrorMonitoring_Expecter) SystemErrorInc(errCode interface{}) *MonitoringErrorMonitoring_SystemErrorInc_Call {
 	return &MonitoringErrorMonitoring_SystemErrorInc_Call{Call: _e.mock.On("SystemErrorInc", errCode)}
 }
 
 func (_c *MonitoringErrorMonitoring_SystemErrorInc_Call) Run(run func(errCode string)) *MonitoringErrorMonitoring_SystemErrorInc_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -379,8 +397,8 @@ type MonitoringMetricsServer_Init_Call struct {
 }
 
 // Init is a helper method to define mock.On call
-//   - config
-//   - MetricProviders
+//   - config *monitoring.Config
+//   - MetricProviders ...monitoring.MetricsProvider
 func (_e *MonitoringMetricsServer_Expecter) Init(config interface{}, MetricProviders ...interface{}) *MonitoringMetricsServer_Init_Call {
 	return &MonitoringMetricsServer_Init_Call{Call: _e.mock.On("Init",
 		append([]interface{}{config}, MetricProviders...)...)}
@@ -388,8 +406,20 @@ func (_e *MonitoringMetricsServer_Expecter) Init(config interface{}, MetricProvi
 
 func (_c *MonitoringMetricsServer_Init_Call) Run(run func(config *monitoring.Config, MetricProviders ...monitoring.MetricsProvider)) *MonitoringMetricsServer_Init_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[1].([]monitoring.MetricsProvider)
-		run(args[0].(*monitoring.Config), variadicArgs...)
+		var arg0 *monitoring.Config
+		if args[0] != nil {
+			arg0 = args[0].(*monitoring.Config)
+		}
+		var arg1 []monitoring.MetricsProvider
+		var variadicArgs []monitoring.MetricsProvider
+		if len(args) > 1 {
+			variadicArgs = args[1].([]monitoring.MetricsProvider)
+		}
+		arg1 = variadicArgs
+		run(
+			arg0,
+			arg1...,
+		)
 	})
 	return _c
 }
@@ -481,7 +511,7 @@ type MonitoringRegexpMonitoring_AddRegexps_Call struct {
 }
 
 // AddRegexps is a helper method to define mock.On call
-//   - regexps
+//   - regexps ...*monitoring.Regexp
 func (_e *MonitoringRegexpMonitoring_Expecter) AddRegexps(regexps ...interface{}) *MonitoringRegexpMonitoring_AddRegexps_Call {
 	return &MonitoringRegexpMonitoring_AddRegexps_Call{Call: _e.mock.On("AddRegexps",
 		append([]interface{}{}, regexps...)...)}
@@ -489,8 +519,15 @@ func (_e *MonitoringRegexpMonitoring_Expecter) AddRegexps(regexps ...interface{}
 
 func (_c *MonitoringRegexpMonitoring_AddRegexps_Call) Run(run func(regexps ...*monitoring.Regexp)) *MonitoringRegexpMonitoring_AddRegexps_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[0].([]*monitoring.Regexp)
-		run(variadicArgs...)
+		var arg0 []*monitoring.Regexp
+		var variadicArgs []*monitoring.Regexp
+		if len(args) > 0 {
+			variadicArgs = args[0].([]*monitoring.Regexp)
+		}
+		arg0 = variadicArgs
+		run(
+			arg0...,
+		)
 	})
 	return _c
 }
@@ -563,14 +600,20 @@ type MonitoringRegexpMonitoring_Text_Call struct {
 }
 
 // Text is a helper method to define mock.On call
-//   - text
+//   - text string
 func (_e *MonitoringRegexpMonitoring_Expecter) Text(text interface{}) *MonitoringRegexpMonitoring_Text_Call {
 	return &MonitoringRegexpMonitoring_Text_Call{Call: _e.mock.On("Text", text)}
 }
 
 func (_c *MonitoringRegexpMonitoring_Text_Call) Run(run func(text string)) *MonitoringRegexpMonitoring_Text_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }

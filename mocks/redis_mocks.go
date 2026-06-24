@@ -71,15 +71,26 @@ type RedisPriorityQueue_Pop_Call[T any] struct {
 }
 
 // Pop is a helper method to define mock.On call
-//   - ctx
-//   - numItems
+//   - ctx context.Context
+//   - numItems int
 func (_e *RedisPriorityQueue_Expecter[T]) Pop(ctx interface{}, numItems interface{}) *RedisPriorityQueue_Pop_Call[T] {
 	return &RedisPriorityQueue_Pop_Call[T]{Call: _e.mock.On("Pop", ctx, numItems)}
 }
 
 func (_c *RedisPriorityQueue_Pop_Call[T]) Run(run func(ctx context.Context, numItems int)) *RedisPriorityQueue_Pop_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(int))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 int
+		if args[1] != nil {
+			arg1 = args[1].(int)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -128,15 +139,26 @@ type RedisPriorityQueue_PopManyAndRemove_Call[T any] struct {
 }
 
 // PopManyAndRemove is a helper method to define mock.On call
-//   - ctx
-//   - numItems
+//   - ctx context.Context
+//   - numItems int
 func (_e *RedisPriorityQueue_Expecter[T]) PopManyAndRemove(ctx interface{}, numItems interface{}) *RedisPriorityQueue_PopManyAndRemove_Call[T] {
 	return &RedisPriorityQueue_PopManyAndRemove_Call[T]{Call: _e.mock.On("PopManyAndRemove", ctx, numItems)}
 }
 
 func (_c *RedisPriorityQueue_PopManyAndRemove_Call[T]) Run(run func(ctx context.Context, numItems int)) *RedisPriorityQueue_PopManyAndRemove_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(int))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 int
+		if args[1] != nil {
+			arg1 = args[1].(int)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -174,16 +196,32 @@ type RedisPriorityQueue_Push_Call[T any] struct {
 }
 
 // Push is a helper method to define mock.On call
-//   - ctx
-//   - item
-//   - priority
+//   - ctx context.Context
+//   - item T
+//   - priority int
 func (_e *RedisPriorityQueue_Expecter[T]) Push(ctx interface{}, item interface{}, priority interface{}) *RedisPriorityQueue_Push_Call[T] {
 	return &RedisPriorityQueue_Push_Call[T]{Call: _e.mock.On("Push", ctx, item, priority)}
 }
 
 func (_c *RedisPriorityQueue_Push_Call[T]) Run(run func(ctx context.Context, item T, priority int)) *RedisPriorityQueue_Push_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(T), args[2].(int))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 T
+		if args[1] != nil {
+			arg1 = args[1].(T)
+		}
+		var arg2 int
+		if args[2] != nil {
+			arg2 = args[2].(int)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }

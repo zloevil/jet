@@ -60,15 +60,26 @@ type EventBusSubscriber_Subscribe_Call struct {
 }
 
 // Subscribe is a helper method to define mock.On call
-//   - topic
-//   - fn
+//   - topic string
+//   - fn interface{}
 func (_e *EventBusSubscriber_Expecter) Subscribe(topic interface{}, fn interface{}) *EventBusSubscriber_Subscribe_Call {
 	return &EventBusSubscriber_Subscribe_Call{Call: _e.mock.On("Subscribe", topic, fn)}
 }
 
 func (_c *EventBusSubscriber_Subscribe_Call) Run(run func(topic string, fn interface{})) *EventBusSubscriber_Subscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -106,16 +117,32 @@ type EventBusSubscriber_SubscribeAsync_Call struct {
 }
 
 // SubscribeAsync is a helper method to define mock.On call
-//   - topic
-//   - fn
-//   - transactional
+//   - topic string
+//   - fn interface{}
+//   - transactional bool
 func (_e *EventBusSubscriber_Expecter) SubscribeAsync(topic interface{}, fn interface{}, transactional interface{}) *EventBusSubscriber_SubscribeAsync_Call {
 	return &EventBusSubscriber_SubscribeAsync_Call{Call: _e.mock.On("SubscribeAsync", topic, fn, transactional)}
 }
 
 func (_c *EventBusSubscriber_SubscribeAsync_Call) Run(run func(topic string, fn interface{}, transactional bool)) *EventBusSubscriber_SubscribeAsync_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}), args[2].(bool))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		var arg2 bool
+		if args[2] != nil {
+			arg2 = args[2].(bool)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -153,15 +180,26 @@ type EventBusSubscriber_SubscribeOnce_Call struct {
 }
 
 // SubscribeOnce is a helper method to define mock.On call
-//   - topic
-//   - fn
+//   - topic string
+//   - fn interface{}
 func (_e *EventBusSubscriber_Expecter) SubscribeOnce(topic interface{}, fn interface{}) *EventBusSubscriber_SubscribeOnce_Call {
 	return &EventBusSubscriber_SubscribeOnce_Call{Call: _e.mock.On("SubscribeOnce", topic, fn)}
 }
 
 func (_c *EventBusSubscriber_SubscribeOnce_Call) Run(run func(topic string, fn interface{})) *EventBusSubscriber_SubscribeOnce_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -199,15 +237,26 @@ type EventBusSubscriber_SubscribeOnceAsync_Call struct {
 }
 
 // SubscribeOnceAsync is a helper method to define mock.On call
-//   - topic
-//   - fn
+//   - topic string
+//   - fn interface{}
 func (_e *EventBusSubscriber_Expecter) SubscribeOnceAsync(topic interface{}, fn interface{}) *EventBusSubscriber_SubscribeOnceAsync_Call {
 	return &EventBusSubscriber_SubscribeOnceAsync_Call{Call: _e.mock.On("SubscribeOnceAsync", topic, fn)}
 }
 
 func (_c *EventBusSubscriber_SubscribeOnceAsync_Call) Run(run func(topic string, fn interface{})) *EventBusSubscriber_SubscribeOnceAsync_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -245,15 +294,26 @@ type EventBusSubscriber_Unsubscribe_Call struct {
 }
 
 // Unsubscribe is a helper method to define mock.On call
-//   - topic
-//   - handler
+//   - topic string
+//   - handler interface{}
 func (_e *EventBusSubscriber_Expecter) Unsubscribe(topic interface{}, handler interface{}) *EventBusSubscriber_Unsubscribe_Call {
 	return &EventBusSubscriber_Unsubscribe_Call{Call: _e.mock.On("Unsubscribe", topic, handler)}
 }
 
 func (_c *EventBusSubscriber_Unsubscribe_Call) Run(run func(topic string, handler interface{})) *EventBusSubscriber_Unsubscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -312,9 +372,9 @@ type EventBusPublisher_Publish_Call struct {
 }
 
 // Publish is a helper method to define mock.On call
-//   - ctx
-//   - topic
-//   - args
+//   - ctx context.Context
+//   - topic string
+//   - args ...interface{}
 func (_e *EventBusPublisher_Expecter) Publish(ctx interface{}, topic interface{}, args ...interface{}) *EventBusPublisher_Publish_Call {
 	return &EventBusPublisher_Publish_Call{Call: _e.mock.On("Publish",
 		append([]interface{}{ctx, topic}, args...)...)}
@@ -322,8 +382,25 @@ func (_e *EventBusPublisher_Expecter) Publish(ctx interface{}, topic interface{}
 
 func (_c *EventBusPublisher_Publish_Call) Run(run func(ctx context.Context, topic string, args ...interface{})) *EventBusPublisher_Publish_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]interface{})
-		run(args[0].(context.Context), args[1].(string), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 []interface{}
+		var variadicArgs []interface{}
+		if len(args) > 2 {
+			variadicArgs = args[2].([]interface{})
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -388,14 +465,20 @@ type EventBusController_HasCallback_Call struct {
 }
 
 // HasCallback is a helper method to define mock.On call
-//   - topic
+//   - topic string
 func (_e *EventBusController_Expecter) HasCallback(topic interface{}) *EventBusController_HasCallback_Call {
 	return &EventBusController_HasCallback_Call{Call: _e.mock.On("HasCallback", topic)}
 }
 
 func (_c *EventBusController_HasCallback_Call) Run(run func(topic string)) *EventBusController_HasCallback_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -493,14 +576,20 @@ type EventBus_HasCallback_Call struct {
 }
 
 // HasCallback is a helper method to define mock.On call
-//   - topic
+//   - topic string
 func (_e *EventBus_Expecter) HasCallback(topic interface{}) *EventBus_HasCallback_Call {
 	return &EventBus_HasCallback_Call{Call: _e.mock.On("HasCallback", topic)}
 }
 
 func (_c *EventBus_HasCallback_Call) Run(run func(topic string)) *EventBus_HasCallback_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -532,9 +621,9 @@ type EventBus_Publish_Call struct {
 }
 
 // Publish is a helper method to define mock.On call
-//   - ctx
-//   - topic
-//   - args
+//   - ctx context.Context
+//   - topic string
+//   - args ...interface{}
 func (_e *EventBus_Expecter) Publish(ctx interface{}, topic interface{}, args ...interface{}) *EventBus_Publish_Call {
 	return &EventBus_Publish_Call{Call: _e.mock.On("Publish",
 		append([]interface{}{ctx, topic}, args...)...)}
@@ -542,8 +631,25 @@ func (_e *EventBus_Expecter) Publish(ctx interface{}, topic interface{}, args ..
 
 func (_c *EventBus_Publish_Call) Run(run func(ctx context.Context, topic string, args ...interface{})) *EventBus_Publish_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]interface{})
-		run(args[0].(context.Context), args[1].(string), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 []interface{}
+		var variadicArgs []interface{}
+		if len(args) > 2 {
+			variadicArgs = args[2].([]interface{})
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -581,15 +687,26 @@ type EventBus_Subscribe_Call struct {
 }
 
 // Subscribe is a helper method to define mock.On call
-//   - topic
-//   - fn
+//   - topic string
+//   - fn interface{}
 func (_e *EventBus_Expecter) Subscribe(topic interface{}, fn interface{}) *EventBus_Subscribe_Call {
 	return &EventBus_Subscribe_Call{Call: _e.mock.On("Subscribe", topic, fn)}
 }
 
 func (_c *EventBus_Subscribe_Call) Run(run func(topic string, fn interface{})) *EventBus_Subscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -627,16 +744,32 @@ type EventBus_SubscribeAsync_Call struct {
 }
 
 // SubscribeAsync is a helper method to define mock.On call
-//   - topic
-//   - fn
-//   - transactional
+//   - topic string
+//   - fn interface{}
+//   - transactional bool
 func (_e *EventBus_Expecter) SubscribeAsync(topic interface{}, fn interface{}, transactional interface{}) *EventBus_SubscribeAsync_Call {
 	return &EventBus_SubscribeAsync_Call{Call: _e.mock.On("SubscribeAsync", topic, fn, transactional)}
 }
 
 func (_c *EventBus_SubscribeAsync_Call) Run(run func(topic string, fn interface{}, transactional bool)) *EventBus_SubscribeAsync_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}), args[2].(bool))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		var arg2 bool
+		if args[2] != nil {
+			arg2 = args[2].(bool)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -674,15 +807,26 @@ type EventBus_SubscribeOnce_Call struct {
 }
 
 // SubscribeOnce is a helper method to define mock.On call
-//   - topic
-//   - fn
+//   - topic string
+//   - fn interface{}
 func (_e *EventBus_Expecter) SubscribeOnce(topic interface{}, fn interface{}) *EventBus_SubscribeOnce_Call {
 	return &EventBus_SubscribeOnce_Call{Call: _e.mock.On("SubscribeOnce", topic, fn)}
 }
 
 func (_c *EventBus_SubscribeOnce_Call) Run(run func(topic string, fn interface{})) *EventBus_SubscribeOnce_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -720,15 +864,26 @@ type EventBus_SubscribeOnceAsync_Call struct {
 }
 
 // SubscribeOnceAsync is a helper method to define mock.On call
-//   - topic
-//   - fn
+//   - topic string
+//   - fn interface{}
 func (_e *EventBus_Expecter) SubscribeOnceAsync(topic interface{}, fn interface{}) *EventBus_SubscribeOnceAsync_Call {
 	return &EventBus_SubscribeOnceAsync_Call{Call: _e.mock.On("SubscribeOnceAsync", topic, fn)}
 }
 
 func (_c *EventBus_SubscribeOnceAsync_Call) Run(run func(topic string, fn interface{})) *EventBus_SubscribeOnceAsync_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -766,15 +921,26 @@ type EventBus_Unsubscribe_Call struct {
 }
 
 // Unsubscribe is a helper method to define mock.On call
-//   - topic
-//   - handler
+//   - topic string
+//   - handler interface{}
 func (_e *EventBus_Expecter) Unsubscribe(topic interface{}, handler interface{}) *EventBus_Unsubscribe_Call {
 	return &EventBus_Unsubscribe_Call{Call: _e.mock.On("Unsubscribe", topic, handler)}
 }
 
 func (_c *EventBus_Unsubscribe_Call) Run(run func(topic string, handler interface{})) *EventBus_Unsubscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -872,15 +1038,26 @@ type EventEvent_Execute_Call[T any] struct {
 }
 
 // Execute is a helper method to define mock.On call
-//   - ctx
-//   - data
+//   - ctx context.Context
+//   - data T
 func (_e *EventEvent_Expecter[T]) Execute(ctx interface{}, data interface{}) *EventEvent_Execute_Call[T] {
 	return &EventEvent_Execute_Call[T]{Call: _e.mock.On("Execute", ctx, data)}
 }
 
 func (_c *EventEvent_Execute_Call[T]) Run(run func(ctx context.Context, data T)) *EventEvent_Execute_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(T))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 T
+		if args[1] != nil {
+			arg1 = args[1].(T)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -907,15 +1084,26 @@ type EventEvent_ExecuteAsync_Call[T any] struct {
 }
 
 // ExecuteAsync is a helper method to define mock.On call
-//   - ctx
-//   - data
+//   - ctx context.Context
+//   - data T
 func (_e *EventEvent_Expecter[T]) ExecuteAsync(ctx interface{}, data interface{}) *EventEvent_ExecuteAsync_Call[T] {
 	return &EventEvent_ExecuteAsync_Call[T]{Call: _e.mock.On("ExecuteAsync", ctx, data)}
 }
 
 func (_c *EventEvent_ExecuteAsync_Call[T]) Run(run func(ctx context.Context, data T)) *EventEvent_ExecuteAsync_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(T))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 T
+		if args[1] != nil {
+			arg1 = args[1].(T)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -942,14 +1130,20 @@ type EventEvent_Register_Call[T any] struct {
 }
 
 // Register is a helper method to define mock.On call
-//   - handler
+//   - handler func(ctx context.Context, data T) error
 func (_e *EventEvent_Expecter[T]) Register(handler interface{}) *EventEvent_Register_Call[T] {
 	return &EventEvent_Register_Call[T]{Call: _e.mock.On("Register", handler)}
 }
 
 func (_c *EventEvent_Register_Call[T]) Run(run func(handler func(ctx context.Context, data T) error)) *EventEvent_Register_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(func(ctx context.Context, data T) error))
+		var arg0 func(ctx context.Context, data T) error
+		if args[0] != nil {
+			arg0 = args[0].(func(ctx context.Context, data T) error)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }

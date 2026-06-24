@@ -6,10 +6,6 @@ actual source disagree, **the source wins** — `jet` is a normal dependency, so
 `go doc github.com/zloevil/jet[/subpkg]` and reading the package's `*.go` /
 `doc.go` is always the tiebreaker. Don't trust a remembered signature; confirm it.
 
-> Internal mirror: in the monorepo the same toolkit is imported as
-> `gitlab.monowork.tech/back/kit`. The API is identical; everything below applies
-> to both import paths.
-
 ## Table of contents
 1. Errors — `AppError`
 2. Logging — `CLogger`

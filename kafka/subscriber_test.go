@@ -38,3 +38,21 @@ func (s *subscriberTestSuite) Test_IndexByKey() {
 	s.Equal(sub.chanIndexByKey([]byte(randKey)), sub.chanIndexByKey([]byte(randKey)))
 
 }
+
+func (s *subscriberTestSuite) Test_DeliveryGuarantee_DefaultsToAtMostOnce() {
+	cfg := NewSubscriberCfgBuilder().GroupId("g").Build()
+	s.Equal(AtMostOnce, cfg.DeliveryGuarantee)
+
+	sub := newSubscriber(s.logger, &TopicConfig{Topic: "t"}, cfg, []string{"localhost:9092"}, nil,
+		func([]byte) error { return nil })
+	s.False(sub.atLeastOnce)
+}
+
+func (s *subscriberTestSuite) Test_DeliveryGuarantee_AtLeastOnce() {
+	cfg := NewSubscriberCfgBuilder().GroupId("g").DeliveryGuarantee(AtLeastOnce).Build()
+	s.Equal(AtLeastOnce, cfg.DeliveryGuarantee)
+
+	sub := newSubscriber(s.logger, &TopicConfig{Topic: "t"}, cfg, []string{"localhost:9092"}, nil,
+		func([]byte) error { return nil })
+	s.True(sub.atLeastOnce)
+}

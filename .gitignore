@@ -20,3 +20,6 @@
 .claude
 CLAUDE.md
 .goal
+
+# Release notes drafts (pasted into the GitHub release UI, not tracked)
+release_notes.md

@@ -79,9 +79,9 @@ type GrpcTestServiceClient_Do_Call struct {
 }
 
 // Do is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *grpc.Empty
+//   - opts ...grpc0.CallOption
 func (_e *GrpcTestServiceClient_Expecter) Do(ctx interface{}, in interface{}, opts ...interface{}) *GrpcTestServiceClient_Do_Call {
 	return &GrpcTestServiceClient_Do_Call{Call: _e.mock.On("Do",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -89,8 +89,25 @@ func (_e *GrpcTestServiceClient_Expecter) Do(ctx interface{}, in interface{}, op
 
 func (_c *GrpcTestServiceClient_Do_Call) Run(run func(ctx context.Context, in *grpc.Empty, opts ...grpc0.CallOption)) *GrpcTestServiceClient_Do_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc0.CallOption)
-		run(args[0].(context.Context), args[1].(*grpc.Empty), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *grpc.Empty
+		if args[1] != nil {
+			arg1 = args[1].(*grpc.Empty)
+		}
+		var arg2 []grpc0.CallOption
+		var variadicArgs []grpc0.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc0.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -145,9 +162,9 @@ type GrpcTestServiceClient_WithError_Call struct {
 }
 
 // WithError is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *grpc.WithErrorRequest
+//   - opts ...grpc0.CallOption
 func (_e *GrpcTestServiceClient_Expecter) WithError(ctx interface{}, in interface{}, opts ...interface{}) *GrpcTestServiceClient_WithError_Call {
 	return &GrpcTestServiceClient_WithError_Call{Call: _e.mock.On("WithError",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -155,8 +172,25 @@ func (_e *GrpcTestServiceClient_Expecter) WithError(ctx interface{}, in interfac
 
 func (_c *GrpcTestServiceClient_WithError_Call) Run(run func(ctx context.Context, in *grpc.WithErrorRequest, opts ...grpc0.CallOption)) *GrpcTestServiceClient_WithError_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc0.CallOption)
-		run(args[0].(context.Context), args[1].(*grpc.WithErrorRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *grpc.WithErrorRequest
+		if args[1] != nil {
+			arg1 = args[1].(*grpc.WithErrorRequest)
+		}
+		var arg2 []grpc0.CallOption
+		var variadicArgs []grpc0.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc0.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -211,9 +245,9 @@ type GrpcTestServiceClient_WithPanic_Call struct {
 }
 
 // WithPanic is a helper method to define mock.On call
-//   - ctx
-//   - in
-//   - opts
+//   - ctx context.Context
+//   - in *grpc.WithPanicRequest
+//   - opts ...grpc0.CallOption
 func (_e *GrpcTestServiceClient_Expecter) WithPanic(ctx interface{}, in interface{}, opts ...interface{}) *GrpcTestServiceClient_WithPanic_Call {
 	return &GrpcTestServiceClient_WithPanic_Call{Call: _e.mock.On("WithPanic",
 		append([]interface{}{ctx, in}, opts...)...)}
@@ -221,8 +255,25 @@ func (_e *GrpcTestServiceClient_Expecter) WithPanic(ctx interface{}, in interfac
 
 func (_c *GrpcTestServiceClient_WithPanic_Call) Run(run func(ctx context.Context, in *grpc.WithPanicRequest, opts ...grpc0.CallOption)) *GrpcTestServiceClient_WithPanic_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[2].([]grpc0.CallOption)
-		run(args[0].(context.Context), args[1].(*grpc.WithPanicRequest), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *grpc.WithPanicRequest
+		if args[1] != nil {
+			arg1 = args[1].(*grpc.WithPanicRequest)
+		}
+		var arg2 []grpc0.CallOption
+		var variadicArgs []grpc0.CallOption
+		if len(args) > 2 {
+			variadicArgs = args[2].([]grpc0.CallOption)
+		}
+		arg2 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2...,
+		)
 	})
 	return _c
 }
@@ -298,15 +349,26 @@ type GrpcTestServiceServer_Do_Call struct {
 }
 
 // Do is a helper method to define mock.On call
-//   - context1
-//   - empty
+//   - context1 context.Context
+//   - empty *grpc.Empty
 func (_e *GrpcTestServiceServer_Expecter) Do(context1 interface{}, empty interface{}) *GrpcTestServiceServer_Do_Call {
 	return &GrpcTestServiceServer_Do_Call{Call: _e.mock.On("Do", context1, empty)}
 }
 
 func (_c *GrpcTestServiceServer_Do_Call) Run(run func(context1 context.Context, empty *grpc.Empty)) *GrpcTestServiceServer_Do_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*grpc.Empty))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *grpc.Empty
+		if args[1] != nil {
+			arg1 = args[1].(*grpc.Empty)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -355,15 +417,26 @@ type GrpcTestServiceServer_WithError_Call struct {
 }
 
 // WithError is a helper method to define mock.On call
-//   - context1
-//   - withErrorRequest
+//   - context1 context.Context
+//   - withErrorRequest *grpc.WithErrorRequest
 func (_e *GrpcTestServiceServer_Expecter) WithError(context1 interface{}, withErrorRequest interface{}) *GrpcTestServiceServer_WithError_Call {
 	return &GrpcTestServiceServer_WithError_Call{Call: _e.mock.On("WithError", context1, withErrorRequest)}
 }
 
 func (_c *GrpcTestServiceServer_WithError_Call) Run(run func(context1 context.Context, withErrorRequest *grpc.WithErrorRequest)) *GrpcTestServiceServer_WithError_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*grpc.WithErrorRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *grpc.WithErrorRequest
+		if args[1] != nil {
+			arg1 = args[1].(*grpc.WithErrorRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -412,15 +485,26 @@ type GrpcTestServiceServer_WithPanic_Call struct {
 }
 
 // WithPanic is a helper method to define mock.On call
-//   - context1
-//   - withPanicRequest
+//   - context1 context.Context
+//   - withPanicRequest *grpc.WithPanicRequest
 func (_e *GrpcTestServiceServer_Expecter) WithPanic(context1 interface{}, withPanicRequest interface{}) *GrpcTestServiceServer_WithPanic_Call {
 	return &GrpcTestServiceServer_WithPanic_Call{Call: _e.mock.On("WithPanic", context1, withPanicRequest)}
 }
 
 func (_c *GrpcTestServiceServer_WithPanic_Call) Run(run func(context1 context.Context, withPanicRequest *grpc.WithPanicRequest)) *GrpcTestServiceServer_WithPanic_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*grpc.WithPanicRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *grpc.WithPanicRequest
+		if args[1] != nil {
+			arg1 = args[1].(*grpc.WithPanicRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }

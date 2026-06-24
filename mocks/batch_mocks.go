@@ -49,14 +49,20 @@ type BatchWorker_Close_Call[T any] struct {
 }
 
 // Close is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *BatchWorker_Expecter[T]) Close(ctx interface{}) *BatchWorker_Close_Call[T] {
 	return &BatchWorker_Close_Call[T]{Call: _e.mock.On("Close", ctx)}
 }
 
 func (_c *BatchWorker_Close_Call[T]) Run(run func(ctx context.Context)) *BatchWorker_Close_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -83,14 +89,20 @@ type BatchWorker_Start_Call[T any] struct {
 }
 
 // Start is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *BatchWorker_Expecter[T]) Start(ctx interface{}) *BatchWorker_Start_Call[T] {
 	return &BatchWorker_Start_Call[T]{Call: _e.mock.On("Start", ctx)}
 }
 
 func (_c *BatchWorker_Start_Call[T]) Run(run func(ctx context.Context)) *BatchWorker_Start_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -117,15 +129,26 @@ type BatchWorker_Write_Call[T any] struct {
 }
 
 // Write is a helper method to define mock.On call
-//   - ctx
-//   - item
+//   - ctx context.Context
+//   - item *T
 func (_e *BatchWorker_Expecter[T]) Write(ctx interface{}, item interface{}) *BatchWorker_Write_Call[T] {
 	return &BatchWorker_Write_Call[T]{Call: _e.mock.On("Write", ctx, item)}
 }
 
 func (_c *BatchWorker_Write_Call[T]) Run(run func(ctx context.Context, item *T)) *BatchWorker_Write_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*T))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *T
+		if args[1] != nil {
+			arg1 = args[1].(*T)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -190,15 +213,26 @@ type BatchWriter_Write_Call[T any] struct {
 }
 
 // Write is a helper method to define mock.On call
-//   - ctx
-//   - items
+//   - ctx context.Context
+//   - items []*T
 func (_e *BatchWriter_Expecter[T]) Write(ctx interface{}, items interface{}) *BatchWriter_Write_Call[T] {
 	return &BatchWriter_Write_Call[T]{Call: _e.mock.On("Write", ctx, items)}
 }
 
 func (_c *BatchWriter_Write_Call[T]) Run(run func(ctx context.Context, items []*T)) *BatchWriter_Write_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].([]*T))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 []*T
+		if args[1] != nil {
+			arg1 = args[1].([]*T)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }

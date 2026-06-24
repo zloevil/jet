@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/stretchr/testify/suite"
 	"github.com/zloevil/jet"
-	kitAws "github.com/zloevil/jet/aws"
+	jetaws "github.com/zloevil/jet/aws"
 	"testing"
 )
 
@@ -25,7 +25,7 @@ func TestS3Suite(t *testing.T) {
 }
 
 var (
-	awsCfg = &kitAws.Config{
+	awsCfg = &jetaws.Config{
 		Region:              "eu-central-1",
 		AccessKeyId:         "access_key_id",
 		SecretAccessKey:     "secret_access_key",

@@ -4,7 +4,7 @@ import (
 	"context"
 	aero "github.com/aerospike/aerospike-client-go/v8"
 	aeroLogger "github.com/aerospike/aerospike-client-go/v8/logger"
-	kitLog "github.com/zloevil/jet"
+	"github.com/zloevil/jet"
 )
 
 type Config struct {
@@ -17,7 +17,7 @@ type Config struct {
 // Aerospike serves aerospike instance
 type Aerospike interface {
 	// Open opens aerospike instance
-	Open(ctx context.Context, cfg *Config, logger kitLog.CLoggerFunc) error
+	Open(ctx context.Context, cfg *Config, logger jet.CLoggerFunc) error
 	// Close closes instance
 	Close(ctx context.Context) error
 	// Instance returns instance
@@ -33,7 +33,7 @@ func New() Aerospike {
 }
 
 type aeroImpl struct {
-	logger kitLog.CLoggerFunc
+	logger jet.CLoggerFunc
 	client *aero.Client
 	cfg    *Config
 }
@@ -55,7 +55,7 @@ func (t *aeroImpl) Reconnect(ctx context.Context) error {
 	return nil
 }
 
-func (t *aeroImpl) l() kitLog.CLogger {
+func (t *aeroImpl) l() jet.CLogger {
 	return t.logger().Cmp("aerospike")
 }
 
@@ -63,7 +63,7 @@ func (t *aeroImpl) Instance() *aero.Client {
 	return t.client
 }
 
-func (t *aeroImpl) Open(ctx context.Context, cfg *Config, logger kitLog.CLoggerFunc) error {
+func (t *aeroImpl) Open(ctx context.Context, cfg *Config, logger jet.CLoggerFunc) error {
 	t.logger = logger
 	t.cfg = cfg
 	l := t.l().C(ctx).Mth("open").Dbg()

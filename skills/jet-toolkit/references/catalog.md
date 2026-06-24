@@ -21,7 +21,7 @@ correct; argument order may have evolved. Verify before you call.
 | `go func(){ recover() … }()` | `goroutine.New()….Go(ctx, fn)` | `goroutine` |
 | a parallel fan-out / errgroup | `goroutine.NewGroup(ctx)` | `goroutine` |
 | a retry/backoff loop | `retry.Do` + `retry.DefaultConfig`/`RPCConfig` | `retry` |
-| Kafka producer/consumer wiring, SASL, workers | `kafka.NewBroker` (+ cfg builders) | `kafka` |
+| Kafka producer/consumer wiring, SASL, workers, at-least-once delivery | `kafka.NewBroker` (+ cfg builders) | `kafka` |
 | an in-process pub/sub between components | `event.New` bus | `event` |
 | a "buffer items, flush by size/interval" accumulator | `batch.NewBatchWorker[T]` | `batch` |
 | a gorilla/mux HTTP server with CORS/tracing/graceful stop | `http.NewHttpServer` + `BaseController` | `http` |
@@ -80,7 +80,9 @@ three of them: the **logger** (`CLoggerFunc`), **errors** (`AppErrBuilder`), and
 
 - **`kafka`** — `NewBroker(CLoggerFunc)` → `Init/AddProducer/AddSubscriber/DeclareTopics/Start/Close`;
   cfg builders `NewProducerCfgBuilder/NewSubscriberCfgBuilder/NewTopicCfgBuilder`; SASL plain/sha256/sha512;
-  `Encode[T]`/`Decode[T]` carry the request context. `Producer.Send(ctx, key, msg)`.
+  `Encode[T]`/`Decode[T]` carry the request context. `Producer.Send(ctx, key, msg)`. Subscriber delivery
+  is at-most-once by default (parallel, commit on read); `NewSubscriberCfgBuilder().DeliveryGuarantee(kafka.AtLeastOnce)`
+  commits only after a handler returns nil (sequential, retries on error, redelivers on shutdown/crash — handlers must be idempotent).
 - **`event`** — `New(CLoggerFunc)` bus: `Subscribe/SubscribeAsync/SubscribeOnce/Publish/WaitAsync`. In-process only.
 - **`rpc`** (+ `rpc/client`, `rpc/server`) — request/response correlated over Kafka, with timeouts and a request pool.
 - **`aws/sqs`** — SQS broker/subscriber with context propagation.

@@ -8,7 +8,7 @@ import (
 	"github.com/zloevil/jet"
 	"github.com/zloevil/jet/storages/clickhouse"
 	"github.com/zloevil/jet/storages/migration"
-	kitStorage "github.com/zloevil/jet/storages/pg"
+	jetStorage "github.com/zloevil/jet/storages/pg"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -469,7 +469,7 @@ func (s *ServiceInstance[TCfg]) executePgCmd(cmd *cobra.Command, getDbConfigFn f
 	if err != nil {
 		return err
 	}
-	pgDbConfig, ok := dbConfig.(*kitStorage.DbConfig)
+	pgDbConfig, ok := dbConfig.(*jetStorage.DbConfig)
 	if !ok || pgDbConfig == nil {
 		return ErrPgConfigInvalid()
 	}
@@ -494,7 +494,7 @@ func (s *ServiceInstance[TCfg]) executePgCmd(cmd *cobra.Command, getDbConfigFn f
 
 	// build a function opening database
 	openDb := func() (*sql.DB, error) {
-		pg, err := kitStorage.Open(pgDbConfig, s.GetLogger())
+		pg, err := jetStorage.Open(pgDbConfig, s.GetLogger())
 		if err != nil {
 			return nil, err
 		}

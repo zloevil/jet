@@ -73,16 +73,32 @@ type KafkaBroker_AddProducer_Call struct {
 }
 
 // AddProducer is a helper method to define mock.On call
-//   - ctx
-//   - topic
-//   - cfg
+//   - ctx context.Context
+//   - topic *kafka.TopicConfig
+//   - cfg *kafka.ProducerConfig
 func (_e *KafkaBroker_Expecter) AddProducer(ctx interface{}, topic interface{}, cfg interface{}) *KafkaBroker_AddProducer_Call {
 	return &KafkaBroker_AddProducer_Call{Call: _e.mock.On("AddProducer", ctx, topic, cfg)}
 }
 
 func (_c *KafkaBroker_AddProducer_Call) Run(run func(ctx context.Context, topic *kafka.TopicConfig, cfg *kafka.ProducerConfig)) *KafkaBroker_AddProducer_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*kafka.TopicConfig), args[2].(*kafka.ProducerConfig))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *kafka.TopicConfig
+		if args[1] != nil {
+			arg1 = args[1].(*kafka.TopicConfig)
+		}
+		var arg2 *kafka.ProducerConfig
+		if args[2] != nil {
+			arg2 = args[2].(*kafka.ProducerConfig)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -126,10 +142,10 @@ type KafkaBroker_AddSubscriber_Call struct {
 }
 
 // AddSubscriber is a helper method to define mock.On call
-//   - ctx
-//   - topic
-//   - cfg
-//   - handlers
+//   - ctx context.Context
+//   - topic *kafka.TopicConfig
+//   - cfg *kafka.SubscriberConfig
+//   - handlers ...kafka.HandlerFn
 func (_e *KafkaBroker_Expecter) AddSubscriber(ctx interface{}, topic interface{}, cfg interface{}, handlers ...interface{}) *KafkaBroker_AddSubscriber_Call {
 	return &KafkaBroker_AddSubscriber_Call{Call: _e.mock.On("AddSubscriber",
 		append([]interface{}{ctx, topic, cfg}, handlers...)...)}
@@ -137,8 +153,30 @@ func (_e *KafkaBroker_Expecter) AddSubscriber(ctx interface{}, topic interface{}
 
 func (_c *KafkaBroker_AddSubscriber_Call) Run(run func(ctx context.Context, topic *kafka.TopicConfig, cfg *kafka.SubscriberConfig, handlers ...kafka.HandlerFn)) *KafkaBroker_AddSubscriber_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[3].([]kafka.HandlerFn)
-		run(args[0].(context.Context), args[1].(*kafka.TopicConfig), args[2].(*kafka.SubscriberConfig), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *kafka.TopicConfig
+		if args[1] != nil {
+			arg1 = args[1].(*kafka.TopicConfig)
+		}
+		var arg2 *kafka.SubscriberConfig
+		if args[2] != nil {
+			arg2 = args[2].(*kafka.SubscriberConfig)
+		}
+		var arg3 []kafka.HandlerFn
+		var variadicArgs []kafka.HandlerFn
+		if len(args) > 3 {
+			variadicArgs = args[3].([]kafka.HandlerFn)
+		}
+		arg3 = variadicArgs
+		run(
+			arg0,
+			arg1,
+			arg2,
+			arg3...,
+		)
 	})
 	return _c
 }
@@ -165,14 +203,20 @@ type KafkaBroker_Close_Call struct {
 }
 
 // Close is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *KafkaBroker_Expecter) Close(ctx interface{}) *KafkaBroker_Close_Call {
 	return &KafkaBroker_Close_Call{Call: _e.mock.On("Close", ctx)}
 }
 
 func (_c *KafkaBroker_Close_Call) Run(run func(ctx context.Context)) *KafkaBroker_Close_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -210,14 +254,20 @@ type KafkaBroker_DeclareTopics_Call struct {
 }
 
 // DeclareTopics is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *KafkaBroker_Expecter) DeclareTopics(ctx interface{}) *KafkaBroker_DeclareTopics_Call {
 	return &KafkaBroker_DeclareTopics_Call{Call: _e.mock.On("DeclareTopics", ctx)}
 }
 
 func (_c *KafkaBroker_DeclareTopics_Call) Run(run func(ctx context.Context)) *KafkaBroker_DeclareTopics_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -255,15 +305,26 @@ type KafkaBroker_Init_Call struct {
 }
 
 // Init is a helper method to define mock.On call
-//   - ctx
-//   - cfg
+//   - ctx context.Context
+//   - cfg *kafka.BrokerConfig
 func (_e *KafkaBroker_Expecter) Init(ctx interface{}, cfg interface{}) *KafkaBroker_Init_Call {
 	return &KafkaBroker_Init_Call{Call: _e.mock.On("Init", ctx, cfg)}
 }
 
 func (_c *KafkaBroker_Init_Call) Run(run func(ctx context.Context, cfg *kafka.BrokerConfig)) *KafkaBroker_Init_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*kafka.BrokerConfig))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *kafka.BrokerConfig
+		if args[1] != nil {
+			arg1 = args[1].(*kafka.BrokerConfig)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -301,14 +362,20 @@ type KafkaBroker_Start_Call struct {
 }
 
 // Start is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *KafkaBroker_Expecter) Start(ctx interface{}) *KafkaBroker_Start_Call {
 	return &KafkaBroker_Start_Call{Call: _e.mock.On("Start", ctx)}
 }
 
 func (_c *KafkaBroker_Start_Call) Run(run func(ctx context.Context)) *KafkaBroker_Start_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -375,14 +442,20 @@ type KafkaProducerConfigBuilder_Async_Call struct {
 }
 
 // Async is a helper method to define mock.On call
-//   - v
+//   - v bool
 func (_e *KafkaProducerConfigBuilder_Expecter) Async(v interface{}) *KafkaProducerConfigBuilder_Async_Call {
 	return &KafkaProducerConfigBuilder_Async_Call{Call: _e.mock.On("Async", v)}
 }
 
 func (_c *KafkaProducerConfigBuilder_Async_Call) Run(run func(v bool)) *KafkaProducerConfigBuilder_Async_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(bool))
+		var arg0 bool
+		if args[0] != nil {
+			arg0 = args[0].(bool)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -422,14 +495,20 @@ type KafkaProducerConfigBuilder_BatchSize_Call struct {
 }
 
 // BatchSize is a helper method to define mock.On call
-//   - size
+//   - size int
 func (_e *KafkaProducerConfigBuilder_Expecter) BatchSize(size interface{}) *KafkaProducerConfigBuilder_BatchSize_Call {
 	return &KafkaProducerConfigBuilder_BatchSize_Call{Call: _e.mock.On("BatchSize", size)}
 }
 
 func (_c *KafkaProducerConfigBuilder_BatchSize_Call) Run(run func(size int)) *KafkaProducerConfigBuilder_BatchSize_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(int))
+		var arg0 int
+		if args[0] != nil {
+			arg0 = args[0].(int)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -469,14 +548,20 @@ type KafkaProducerConfigBuilder_BatchTimeout_Call struct {
 }
 
 // BatchTimeout is a helper method to define mock.On call
-//   - to
+//   - to time.Duration
 func (_e *KafkaProducerConfigBuilder_Expecter) BatchTimeout(to interface{}) *KafkaProducerConfigBuilder_BatchTimeout_Call {
 	return &KafkaProducerConfigBuilder_BatchTimeout_Call{Call: _e.mock.On("BatchTimeout", to)}
 }
 
 func (_c *KafkaProducerConfigBuilder_BatchTimeout_Call) Run(run func(to time.Duration)) *KafkaProducerConfigBuilder_BatchTimeout_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(time.Duration))
+		var arg0 time.Duration
+		if args[0] != nil {
+			arg0 = args[0].(time.Duration)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -562,15 +647,26 @@ type KafkaProducerConfigBuilder_Retry_Call struct {
 }
 
 // Retry is a helper method to define mock.On call
-//   - time1
-//   - timeout
+//   - time1 int
+//   - timeout time.Duration
 func (_e *KafkaProducerConfigBuilder_Expecter) Retry(time1 interface{}, timeout interface{}) *KafkaProducerConfigBuilder_Retry_Call {
 	return &KafkaProducerConfigBuilder_Retry_Call{Call: _e.mock.On("Retry", time1, timeout)}
 }
 
 func (_c *KafkaProducerConfigBuilder_Retry_Call) Run(run func(time1 int, timeout time.Duration)) *KafkaProducerConfigBuilder_Retry_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(int), args[1].(time.Duration))
+		var arg0 int
+		if args[0] != nil {
+			arg0 = args[0].(int)
+		}
+		var arg1 time.Duration
+		if args[1] != nil {
+			arg1 = args[1].(time.Duration)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -635,16 +731,32 @@ type KafkaProducer_Send_Call struct {
 }
 
 // Send is a helper method to define mock.On call
-//   - ctx
-//   - key
-//   - payload
+//   - ctx context.Context
+//   - key string
+//   - payload interface{}
 func (_e *KafkaProducer_Expecter) Send(ctx interface{}, key interface{}, payload interface{}) *KafkaProducer_Send_Call {
 	return &KafkaProducer_Send_Call{Call: _e.mock.On("Send", ctx, key, payload)}
 }
 
 func (_c *KafkaProducer_Send_Call) Run(run func(ctx context.Context, key string, payload interface{})) *KafkaProducer_Send_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(interface{}))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 interface{}
+		if args[2] != nil {
+			arg2 = args[2].(interface{})
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -688,8 +800,8 @@ type KafkaProducer_SendMany_Call struct {
 }
 
 // SendMany is a helper method to define mock.On call
-//   - ctx
-//   - messages
+//   - ctx context.Context
+//   - messages ...*kafka.Message
 func (_e *KafkaProducer_Expecter) SendMany(ctx interface{}, messages ...interface{}) *KafkaProducer_SendMany_Call {
 	return &KafkaProducer_SendMany_Call{Call: _e.mock.On("SendMany",
 		append([]interface{}{ctx}, messages...)...)}
@@ -697,8 +809,20 @@ func (_e *KafkaProducer_Expecter) SendMany(ctx interface{}, messages ...interfac
 
 func (_c *KafkaProducer_SendMany_Call) Run(run func(ctx context.Context, messages ...*kafka.Message)) *KafkaProducer_SendMany_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[1].([]*kafka.Message)
-		run(args[0].(context.Context), variadicArgs...)
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 []*kafka.Message
+		var variadicArgs []*kafka.Message
+		if len(args) > 1 {
+			variadicArgs = args[1].([]*kafka.Message)
+		}
+		arg1 = variadicArgs
+		run(
+			arg0,
+			arg1...,
+		)
 	})
 	return _c
 }
@@ -765,14 +889,20 @@ type KafkaSubscriberConfigBuilder_BatchTimeout_Call struct {
 }
 
 // BatchTimeout is a helper method to define mock.On call
-//   - to
+//   - to time.Duration
 func (_e *KafkaSubscriberConfigBuilder_Expecter) BatchTimeout(to interface{}) *KafkaSubscriberConfigBuilder_BatchTimeout_Call {
 	return &KafkaSubscriberConfigBuilder_BatchTimeout_Call{Call: _e.mock.On("BatchTimeout", to)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_BatchTimeout_Call) Run(run func(to time.Duration)) *KafkaSubscriberConfigBuilder_BatchTimeout_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(time.Duration))
+		var arg0 time.Duration
+		if args[0] != nil {
+			arg0 = args[0].(time.Duration)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -858,14 +988,20 @@ type KafkaSubscriberConfigBuilder_CommitInterval_Call struct {
 }
 
 // CommitInterval is a helper method to define mock.On call
-//   - to
+//   - to time.Duration
 func (_e *KafkaSubscriberConfigBuilder_Expecter) CommitInterval(to interface{}) *KafkaSubscriberConfigBuilder_CommitInterval_Call {
 	return &KafkaSubscriberConfigBuilder_CommitInterval_Call{Call: _e.mock.On("CommitInterval", to)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_CommitInterval_Call) Run(run func(to time.Duration)) *KafkaSubscriberConfigBuilder_CommitInterval_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(time.Duration))
+		var arg0 time.Duration
+		if args[0] != nil {
+			arg0 = args[0].(time.Duration)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -876,6 +1012,59 @@ func (_c *KafkaSubscriberConfigBuilder_CommitInterval_Call) Return(subscriberCon
 }
 
 func (_c *KafkaSubscriberConfigBuilder_CommitInterval_Call) RunAndReturn(run func(to time.Duration) kafka.SubscriberConfigBuilder) *KafkaSubscriberConfigBuilder_CommitInterval_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// DeliveryGuarantee provides a mock function for the type KafkaSubscriberConfigBuilder
+func (_mock *KafkaSubscriberConfigBuilder) DeliveryGuarantee(g kafka.DeliveryGuarantee) kafka.SubscriberConfigBuilder {
+	ret := _mock.Called(g)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeliveryGuarantee")
+	}
+
+	var r0 kafka.SubscriberConfigBuilder
+	if returnFunc, ok := ret.Get(0).(func(kafka.DeliveryGuarantee) kafka.SubscriberConfigBuilder); ok {
+		r0 = returnFunc(g)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(kafka.SubscriberConfigBuilder)
+		}
+	}
+	return r0
+}
+
+// KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'DeliveryGuarantee'
+type KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call struct {
+	*mock.Call
+}
+
+// DeliveryGuarantee is a helper method to define mock.On call
+//   - g kafka.DeliveryGuarantee
+func (_e *KafkaSubscriberConfigBuilder_Expecter) DeliveryGuarantee(g interface{}) *KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call {
+	return &KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call{Call: _e.mock.On("DeliveryGuarantee", g)}
+}
+
+func (_c *KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call) Run(run func(g kafka.DeliveryGuarantee)) *KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		var arg0 kafka.DeliveryGuarantee
+		if args[0] != nil {
+			arg0 = args[0].(kafka.DeliveryGuarantee)
+		}
+		run(
+			arg0,
+		)
+	})
+	return _c
+}
+
+func (_c *KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call) Return(subscriberConfigBuilder kafka.SubscriberConfigBuilder) *KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call {
+	_c.Call.Return(subscriberConfigBuilder)
+	return _c
+}
+
+func (_c *KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call) RunAndReturn(run func(g kafka.DeliveryGuarantee) kafka.SubscriberConfigBuilder) *KafkaSubscriberConfigBuilder_DeliveryGuarantee_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -905,14 +1094,20 @@ type KafkaSubscriberConfigBuilder_GroupId_Call struct {
 }
 
 // GroupId is a helper method to define mock.On call
-//   - groupId
+//   - groupId string
 func (_e *KafkaSubscriberConfigBuilder_Expecter) GroupId(groupId interface{}) *KafkaSubscriberConfigBuilder_GroupId_Call {
 	return &KafkaSubscriberConfigBuilder_GroupId_Call{Call: _e.mock.On("GroupId", groupId)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_GroupId_Call) Run(run func(groupId string)) *KafkaSubscriberConfigBuilder_GroupId_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -952,14 +1147,20 @@ type KafkaSubscriberConfigBuilder_JoinGroupBackoff_Call struct {
 }
 
 // JoinGroupBackoff is a helper method to define mock.On call
-//   - t
+//   - t time.Duration
 func (_e *KafkaSubscriberConfigBuilder_Expecter) JoinGroupBackoff(t interface{}) *KafkaSubscriberConfigBuilder_JoinGroupBackoff_Call {
 	return &KafkaSubscriberConfigBuilder_JoinGroupBackoff_Call{Call: _e.mock.On("JoinGroupBackoff", t)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_JoinGroupBackoff_Call) Run(run func(t time.Duration)) *KafkaSubscriberConfigBuilder_JoinGroupBackoff_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(time.Duration))
+		var arg0 time.Duration
+		if args[0] != nil {
+			arg0 = args[0].(time.Duration)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -999,14 +1200,20 @@ type KafkaSubscriberConfigBuilder_Logging_Call struct {
 }
 
 // Logging is a helper method to define mock.On call
-//   - v
+//   - v bool
 func (_e *KafkaSubscriberConfigBuilder_Expecter) Logging(v interface{}) *KafkaSubscriberConfigBuilder_Logging_Call {
 	return &KafkaSubscriberConfigBuilder_Logging_Call{Call: _e.mock.On("Logging", v)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_Logging_Call) Run(run func(v bool)) *KafkaSubscriberConfigBuilder_Logging_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(bool))
+		var arg0 bool
+		if args[0] != nil {
+			arg0 = args[0].(bool)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -1046,14 +1253,20 @@ type KafkaSubscriberConfigBuilder_MaxWait_Call struct {
 }
 
 // MaxWait is a helper method to define mock.On call
-//   - to
+//   - to time.Duration
 func (_e *KafkaSubscriberConfigBuilder_Expecter) MaxWait(to interface{}) *KafkaSubscriberConfigBuilder_MaxWait_Call {
 	return &KafkaSubscriberConfigBuilder_MaxWait_Call{Call: _e.mock.On("MaxWait", to)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_MaxWait_Call) Run(run func(to time.Duration)) *KafkaSubscriberConfigBuilder_MaxWait_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(time.Duration))
+		var arg0 time.Duration
+		if args[0] != nil {
+			arg0 = args[0].(time.Duration)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -1093,14 +1306,20 @@ type KafkaSubscriberConfigBuilder_StartOffset_Call struct {
 }
 
 // StartOffset is a helper method to define mock.On call
-//   - v
+//   - v int64
 func (_e *KafkaSubscriberConfigBuilder_Expecter) StartOffset(v interface{}) *KafkaSubscriberConfigBuilder_StartOffset_Call {
 	return &KafkaSubscriberConfigBuilder_StartOffset_Call{Call: _e.mock.On("StartOffset", v)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_StartOffset_Call) Run(run func(v int64)) *KafkaSubscriberConfigBuilder_StartOffset_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(int64))
+		var arg0 int64
+		if args[0] != nil {
+			arg0 = args[0].(int64)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -1140,14 +1359,20 @@ type KafkaSubscriberConfigBuilder_Workers_Call struct {
 }
 
 // Workers is a helper method to define mock.On call
-//   - num
+//   - num int
 func (_e *KafkaSubscriberConfigBuilder_Expecter) Workers(num interface{}) *KafkaSubscriberConfigBuilder_Workers_Call {
 	return &KafkaSubscriberConfigBuilder_Workers_Call{Call: _e.mock.On("Workers", num)}
 }
 
 func (_c *KafkaSubscriberConfigBuilder_Workers_Call) Run(run func(num int)) *KafkaSubscriberConfigBuilder_Workers_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(int))
+		var arg0 int
+		if args[0] != nil {
+			arg0 = args[0].(int)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -1266,7 +1491,7 @@ type KafkaTopicBuilder_WithParams_Call struct {
 }
 
 // WithParams is a helper method to define mock.On call
-//   - params
+//   - params ...kafka.TopicParam
 func (_e *KafkaTopicBuilder_Expecter) WithParams(params ...interface{}) *KafkaTopicBuilder_WithParams_Call {
 	return &KafkaTopicBuilder_WithParams_Call{Call: _e.mock.On("WithParams",
 		append([]interface{}{}, params...)...)}
@@ -1274,8 +1499,15 @@ func (_e *KafkaTopicBuilder_Expecter) WithParams(params ...interface{}) *KafkaTo
 
 func (_c *KafkaTopicBuilder_WithParams_Call) Run(run func(params ...kafka.TopicParam)) *KafkaTopicBuilder_WithParams_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[0].([]kafka.TopicParam)
-		run(variadicArgs...)
+		var arg0 []kafka.TopicParam
+		var variadicArgs []kafka.TopicParam
+		if len(args) > 0 {
+			variadicArgs = args[0].([]kafka.TopicParam)
+		}
+		arg0 = variadicArgs
+		run(
+			arg0...,
+		)
 	})
 	return _c
 }
@@ -1315,14 +1547,20 @@ type KafkaTopicBuilder_WithPartitionNum_Call struct {
 }
 
 // WithPartitionNum is a helper method to define mock.On call
-//   - num
+//   - num int
 func (_e *KafkaTopicBuilder_Expecter) WithPartitionNum(num interface{}) *KafkaTopicBuilder_WithPartitionNum_Call {
 	return &KafkaTopicBuilder_WithPartitionNum_Call{Call: _e.mock.On("WithPartitionNum", num)}
 }
 
 func (_c *KafkaTopicBuilder_WithPartitionNum_Call) Run(run func(num int)) *KafkaTopicBuilder_WithPartitionNum_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(int))
+		var arg0 int
+		if args[0] != nil {
+			arg0 = args[0].(int)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }

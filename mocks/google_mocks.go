@@ -71,15 +71,26 @@ type GoogleCaptcha_Verify_Call struct {
 }
 
 // Verify is a helper method to define mock.On call
-//   - ctx
-//   - rq
+//   - ctx context.Context
+//   - rq *google.CaptchaRequest
 func (_e *GoogleCaptcha_Expecter) Verify(ctx interface{}, rq interface{}) *GoogleCaptcha_Verify_Call {
 	return &GoogleCaptcha_Verify_Call{Call: _e.mock.On("Verify", ctx, rq)}
 }
 
 func (_c *GoogleCaptcha_Verify_Call) Run(run func(ctx context.Context, rq *google.CaptchaRequest)) *GoogleCaptcha_Verify_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*google.CaptchaRequest))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *google.CaptchaRequest
+		if args[1] != nil {
+			arg1 = args[1].(*google.CaptchaRequest)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -155,15 +166,26 @@ type GoogleOAuth2_GetGoogleUser_Call struct {
 }
 
 // GetGoogleUser is a helper method to define mock.On call
-//   - ctx
-//   - token
+//   - ctx context.Context
+//   - token string
 func (_e *GoogleOAuth2_Expecter) GetGoogleUser(ctx interface{}, token interface{}) *GoogleOAuth2_GetGoogleUser_Call {
 	return &GoogleOAuth2_GetGoogleUser_Call{Call: _e.mock.On("GetGoogleUser", ctx, token)}
 }
 
 func (_c *GoogleOAuth2_GetGoogleUser_Call) Run(run func(ctx context.Context, token string)) *GoogleOAuth2_GetGoogleUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }

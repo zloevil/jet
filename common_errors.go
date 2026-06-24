@@ -3,7 +3,7 @@ package jet
 import "context"
 
 const (
-	ErrCodeAdapterConfigInvalid = "KIT-001"
+	ErrCodeAdapterConfigInvalid = "JET-001"
 )
 
 var (

@@ -49,14 +49,20 @@ type MemcacheMemCache_Delete_Call struct {
 }
 
 // Delete is a helper method to define mock.On call
-//   - key
+//   - key string
 func (_e *MemcacheMemCache_Expecter) Delete(key interface{}) *MemcacheMemCache_Delete_Call {
 	return &MemcacheMemCache_Delete_Call{Call: _e.mock.On("Delete", key)}
 }
 
 func (_c *MemcacheMemCache_Delete_Call) Run(run func(key string)) *MemcacheMemCache_Delete_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -105,14 +111,20 @@ type MemcacheMemCache_Get_Call struct {
 }
 
 // Get is a helper method to define mock.On call
-//   - key
+//   - key string
 func (_e *MemcacheMemCache_Expecter) Get(key interface{}) *MemcacheMemCache_Get_Call {
 	return &MemcacheMemCache_Get_Call{Call: _e.mock.On("Get", key)}
 }
 
 func (_c *MemcacheMemCache_Get_Call) Run(run func(key string)) *MemcacheMemCache_Get_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -139,16 +151,32 @@ type MemcacheMemCache_Set_Call struct {
 }
 
 // Set is a helper method to define mock.On call
-//   - key
-//   - v
-//   - ttl
+//   - key string
+//   - v interface{}
+//   - ttl time.Duration
 func (_e *MemcacheMemCache_Expecter) Set(key interface{}, v interface{}, ttl interface{}) *MemcacheMemCache_Set_Call {
 	return &MemcacheMemCache_Set_Call{Call: _e.mock.On("Set", key, v, ttl)}
 }
 
 func (_c *MemcacheMemCache_Set_Call) Run(run func(key string, v interface{}, ttl time.Duration)) *MemcacheMemCache_Set_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string), args[1].(interface{}), args[2].(time.Duration))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 interface{}
+		if args[1] != nil {
+			arg1 = args[1].(interface{})
+		}
+		var arg2 time.Duration
+		if args[2] != nil {
+			arg2 = args[2].(time.Duration)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }

@@ -106,14 +106,20 @@ type CentrifugoClient_Close_Call struct {
 }
 
 // Close is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *CentrifugoClient_Expecter) Close(ctx interface{}) *CentrifugoClient_Close_Call {
 	return &CentrifugoClient_Close_Call{Call: _e.mock.On("Close", ctx)}
 }
 
 func (_c *CentrifugoClient_Close_Call) Run(run func(ctx context.Context)) *CentrifugoClient_Close_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -151,15 +157,26 @@ type CentrifugoClient_Connect_Call struct {
 }
 
 // Connect is a helper method to define mock.On call
-//   - ctx
-//   - token
+//   - ctx context.Context
+//   - token string
 func (_e *CentrifugoClient_Expecter) Connect(ctx interface{}, token interface{}) *CentrifugoClient_Connect_Call {
 	return &CentrifugoClient_Connect_Call{Call: _e.mock.On("Connect", ctx, token)}
 }
 
 func (_c *CentrifugoClient_Connect_Call) Run(run func(ctx context.Context, token string)) *CentrifugoClient_Connect_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -241,15 +258,26 @@ type CentrifugoClient_OnPublication_Call struct {
 }
 
 // OnPublication is a helper method to define mock.On call
-//   - ctx
-//   - handler
+//   - ctx context.Context
+//   - handler func(p centrifuge.ServerPublicationEvent) error
 func (_e *CentrifugoClient_Expecter) OnPublication(ctx interface{}, handler interface{}) *CentrifugoClient_OnPublication_Call {
 	return &CentrifugoClient_OnPublication_Call{Call: _e.mock.On("OnPublication", ctx, handler)}
 }
 
 func (_c *CentrifugoClient_OnPublication_Call) Run(run func(ctx context.Context, handler func(p centrifuge.ServerPublicationEvent) error)) *CentrifugoClient_OnPublication_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(func(p centrifuge.ServerPublicationEvent) error))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 func(p centrifuge.ServerPublicationEvent) error
+		if args[1] != nil {
+			arg1 = args[1].(func(p centrifuge.ServerPublicationEvent) error)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -287,17 +315,38 @@ type CentrifugoClient_Subscribe_Call struct {
 }
 
 // Subscribe is a helper method to define mock.On call
-//   - ctx
-//   - token
-//   - channel
-//   - handler
+//   - ctx context.Context
+//   - token string
+//   - channel string
+//   - handler func(p centrifuge.Publication) error
 func (_e *CentrifugoClient_Expecter) Subscribe(ctx interface{}, token interface{}, channel interface{}, handler interface{}) *CentrifugoClient_Subscribe_Call {
 	return &CentrifugoClient_Subscribe_Call{Call: _e.mock.On("Subscribe", ctx, token, channel, handler)}
 }
 
 func (_c *CentrifugoClient_Subscribe_Call) Run(run func(ctx context.Context, token string, channel string, handler func(p centrifuge.Publication) error)) *CentrifugoClient_Subscribe_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(string), args[3].(func(p centrifuge.Publication) error))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 string
+		if args[2] != nil {
+			arg2 = args[2].(string)
+		}
+		var arg3 func(p centrifuge.Publication) error
+		if args[3] != nil {
+			arg3 = args[3].(func(p centrifuge.Publication) error)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+			arg3,
+		)
 	})
 	return _c
 }
@@ -362,16 +411,32 @@ type CentrifugoServer_BatchPublish_Call struct {
 }
 
 // BatchPublish is a helper method to define mock.On call
-//   - ctx
-//   - channels
-//   - msg
+//   - ctx context.Context
+//   - channels []string
+//   - msg any
 func (_e *CentrifugoServer_Expecter) BatchPublish(ctx interface{}, channels interface{}, msg interface{}) *CentrifugoServer_BatchPublish_Call {
 	return &CentrifugoServer_BatchPublish_Call{Call: _e.mock.On("BatchPublish", ctx, channels, msg)}
 }
 
 func (_c *CentrifugoServer_BatchPublish_Call) Run(run func(ctx context.Context, channels []string, msg any)) *CentrifugoServer_BatchPublish_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].([]string), args[2].(any))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 []string
+		if args[1] != nil {
+			arg1 = args[1].([]string)
+		}
+		var arg2 any
+		if args[2] != nil {
+			arg2 = args[2].(any)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -409,14 +474,20 @@ type CentrifugoServer_Close_Call struct {
 }
 
 // Close is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *CentrifugoServer_Expecter) Close(ctx interface{}) *CentrifugoServer_Close_Call {
 	return &CentrifugoServer_Close_Call{Call: _e.mock.On("Close", ctx)}
 }
 
 func (_c *CentrifugoServer_Close_Call) Run(run func(ctx context.Context)) *CentrifugoServer_Close_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -454,14 +525,20 @@ type CentrifugoServer_Connect_Call struct {
 }
 
 // Connect is a helper method to define mock.On call
-//   - ctx
+//   - ctx context.Context
 func (_e *CentrifugoServer_Expecter) Connect(ctx interface{}) *CentrifugoServer_Connect_Call {
 	return &CentrifugoServer_Connect_Call{Call: _e.mock.On("Connect", ctx)}
 }
 
 func (_c *CentrifugoServer_Connect_Call) Run(run func(ctx context.Context)) *CentrifugoServer_Connect_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -499,15 +576,26 @@ type CentrifugoServer_DisconnectUser_Call struct {
 }
 
 // DisconnectUser is a helper method to define mock.On call
-//   - ctx
-//   - userId
+//   - ctx context.Context
+//   - userId string
 func (_e *CentrifugoServer_Expecter) DisconnectUser(ctx interface{}, userId interface{}) *CentrifugoServer_DisconnectUser_Call {
 	return &CentrifugoServer_DisconnectUser_Call{Call: _e.mock.On("DisconnectUser", ctx, userId)}
 }
 
 func (_c *CentrifugoServer_DisconnectUser_Call) Run(run func(ctx context.Context, userId string)) *CentrifugoServer_DisconnectUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -556,15 +644,26 @@ type CentrifugoServer_GetPresence_Call struct {
 }
 
 // GetPresence is a helper method to define mock.On call
-//   - ctx
-//   - channel
+//   - ctx context.Context
+//   - channel string
 func (_e *CentrifugoServer_Expecter) GetPresence(ctx interface{}, channel interface{}) *CentrifugoServer_GetPresence_Call {
 	return &CentrifugoServer_GetPresence_Call{Call: _e.mock.On("GetPresence", ctx, channel)}
 }
 
 func (_c *CentrifugoServer_GetPresence_Call) Run(run func(ctx context.Context, channel string)) *CentrifugoServer_GetPresence_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -602,16 +701,32 @@ type CentrifugoServer_Publish_Call struct {
 }
 
 // Publish is a helper method to define mock.On call
-//   - ctx
-//   - channel
-//   - msg
+//   - ctx context.Context
+//   - channel string
+//   - msg any
 func (_e *CentrifugoServer_Expecter) Publish(ctx interface{}, channel interface{}, msg interface{}) *CentrifugoServer_Publish_Call {
 	return &CentrifugoServer_Publish_Call{Call: _e.mock.On("Publish", ctx, channel, msg)}
 }
 
 func (_c *CentrifugoServer_Publish_Call) Run(run func(ctx context.Context, channel string, msg any)) *CentrifugoServer_Publish_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(any))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 any
+		if args[2] != nil {
+			arg2 = args[2].(any)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }

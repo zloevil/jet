@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"github.com/zloevil/jet"
 	"go.uber.org/atomic"
+	"strconv"
 	"sync"
 	"testing"
 	"time"
@@ -512,6 +513,122 @@ func (s *kafkaTestSuite) Test_SubscriberRestart() {
 
 	time.Sleep(time.Second * 1000)
 
+}
+
+// Test_AtLeastOnce_RedeliversUncommittedOnStop verifies the at-least-once
+// guarantee: messages whose handler did not succeed before the consumer stops
+// are redelivered (not lost) to the next consumer in the group. Subscriber A's
+// handler keeps failing from message index 2 on, so those offsets are never
+// committed and must reappear on subscriber B. With the former commit-on-read
+// behavior the offset would have advanced past them and they would be lost.
+func (s *kafkaTestSuite) Test_AtLeastOnce_RedeliversUncommittedOnStop() {
+
+	// single partition so offsets are strictly ordered
+	part := 1
+	topic := &TopicConfig{
+		Topic:      jet.NewRandString(),
+		Partitions: &part,
+	}
+	groupId := jet.NewRandString()
+
+	// init pub broker and produce 5 messages up front; payload carries its index
+	pubBroker := NewBroker(s.logger)
+	if err := pubBroker.Init(s.Ctx, s.brokerCfg); err != nil {
+		s.Fatal(err)
+	}
+	producer, err := pubBroker.AddProducer(s.Ctx, topic,
+		NewProducerCfgBuilder().BatchSize(1).BatchTimeout(time.Millisecond*200).Build())
+	if err != nil {
+		s.Fatal(err)
+	}
+	if err := pubBroker.Start(s.Ctx); err != nil {
+		s.Fatal(err)
+	}
+	defer func() { pubBroker.Close(s.Ctx) }()
+
+	const total = 5
+	for i := 0; i < total; i++ {
+		if err := producer.Send(s.Ctx, fmt.Sprintf("k%d", i), &payload{Value: strconv.Itoa(i)}); err != nil {
+			s.Fatal(err)
+		}
+	}
+
+	// subscriber A (at-least-once): commits messages 0 and 1, but the handler keeps
+	// FAILING from message index 2 on, so those offsets are never committed
+	reachedFailing := make(chan struct{})
+	var once sync.Once
+	subA := NewBroker(s.logger)
+	if err := subA.Init(s.Ctx, s.brokerCfg); err != nil {
+		s.Fatal(err)
+	}
+	if err := subA.AddSubscriber(s.Ctx, topic, NewSubscriberCfgBuilder().
+		GroupId(groupId).
+		DeliveryGuarantee(AtLeastOnce).
+		JoinGroupBackoff(time.Millisecond*500).
+		StartOffset(kafka.FirstOffset).
+		MaxWait(time.Second).
+		Logging(true).
+		Build(), func(p []byte) error {
+		pl, _, decErr := Decode[payload](nil, p)
+		if decErr != nil {
+			return decErr
+		}
+		idx, _ := strconv.Atoi(pl.Value)
+		if idx >= 2 {
+			once.Do(func() { close(reachedFailing) })
+			return fmt.Errorf("simulated handler failure at idx %d", idx)
+		}
+		return nil // idx 0, 1 succeed -> committed
+	}); err != nil {
+		s.Fatal(err)
+	}
+	if err := subA.Start(s.Ctx); err != nil {
+		s.Fatal(err)
+	}
+
+	// wait until A is retrying message 2 (messages 0 and 1 are committed by now)
+	select {
+	case <-reachedFailing:
+	case <-time.After(time.Second * 15):
+		s.Fatal(fmt.Errorf("subscriber A never reached the failing message"))
+	}
+
+	// stop A: its retry loop exits on ctx cancel without committing messages 2..4,
+	// so the partition is released with the committed offset still at 2
+	subA.Close(s.Ctx)
+	time.Sleep(time.Second * 2) // let A's reader fully close before B joins the group
+
+	// subscriber B (same group, at-least-once): must redeliver messages 2, 3, 4
+	bCount := atomic.NewInt32(0)
+	subB := NewBroker(s.logger)
+	if err := subB.Init(s.Ctx, s.brokerCfg); err != nil {
+		s.Fatal(err)
+	}
+	if err := subB.AddSubscriber(s.Ctx, topic, NewSubscriberCfgBuilder().
+		GroupId(groupId).
+		DeliveryGuarantee(AtLeastOnce).
+		JoinGroupBackoff(time.Millisecond*500).
+		StartOffset(kafka.FirstOffset).
+		MaxWait(time.Second).
+		Logging(true).
+		Build(), func(p []byte) error {
+		bCount.Inc()
+		return nil
+	}); err != nil {
+		s.Fatal(err)
+	}
+	if err := subB.Start(s.Ctx); err != nil {
+		s.Fatal(err)
+	}
+	defer func() { subB.Close(s.Ctx) }()
+
+	// no loss: the uncommitted messages (2, 3, 4) are redelivered to B
+	if err := <-jet.Await(func() (bool, error) {
+		return bCount.Load() >= 3, nil
+	}, time.Millisecond*200, time.Second*20); err != nil {
+		s.Fatal(fmt.Errorf("subscriber B did not redeliver the uncommitted messages (got %d, want >= 3): %w", bCount.Load(), err))
+	}
+	s.L().InfF("B redelivered: %d", bCount.Load())
 }
 
 func (s *kafkaTestSuite) handler(i int, workTime time.Duration, wg *jet.WaitGroup, callback func(int, []byte)) HandlerFn {

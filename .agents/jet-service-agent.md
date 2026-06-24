@@ -159,7 +159,7 @@ interfaces → (2) implement `domain/impl` **with unit tests** → (3) define + 
 | gRPC server | `grpc.NewServer(svc, fn, *grpc.ServerConfig) (*grpc.Server, error)`; register on `srv.Srv`; `srv.ListenAsync(ctx)`; `srv.Close()` |
 | gRPC client | `grpc.NewClient(*grpc.ClientConfig) (*grpc.Client, error)`; stub from `cl.Conn`; `cl.AwaitReadiness(d)`; errors come back as `AppError` |
 | HTTP server | `http.NewHttpServer(*http.Config, fn) *http.Server`; routes on `srv.RootRouter`; `http.BaseController` (`RespondOK`/`RespondError`); `srv.Listen()`; `srv.Close()` |
-| Kafka | `kafka.NewBroker(fn)` → `.Init(ctx,*BrokerConfig)` · `.AddProducer(ctx, topicCfg, prodCfg) (Producer,_)` · `.AddSubscriber(ctx, topicCfg, subCfg, ...HandlerFn)` · `.Start(ctx)` (calls `DeclareTopics`) · `.Close(ctx)`. Topic/producer/subscriber configs are built, not literals: `kafka.NewTopicCfgBuilder(topic).Build() *TopicConfig`, `kafka.NewProducerCfgBuilder().Build()`, `kafka.NewSubscriberCfgBuilder().GroupId(code).Build()`. `producer.Send(ctx, key, payload)`; `kafka.Decode[T](ctx, msg)` |
+| Kafka | `kafka.NewBroker(fn)` → `.Init(ctx,*BrokerConfig)` · `.AddProducer(ctx, topicCfg, prodCfg) (Producer,_)` · `.AddSubscriber(ctx, topicCfg, subCfg, ...HandlerFn)` · `.Start(ctx)` (calls `DeclareTopics`) · `.Close(ctx)`. Topic/producer/subscriber configs are built, not literals: `kafka.NewTopicCfgBuilder(topic).Build() *TopicConfig`, `kafka.NewProducerCfgBuilder().Build()`, `kafka.NewSubscriberCfgBuilder().GroupId(code).Build()` (default at-most-once; add `.DeliveryGuarantee(kafka.AtLeastOnce)` to commit only after a handler returns nil (retries on error/panic) — no loss on shutdown/crash, redelivers so handlers must be idempotent). `producer.Send(ctx, key, payload)`; `kafka.Decode[T](ctx, msg)` |
 | Metrics | `monitoring.NewMetricsServer(fn)` → `.Init(*Config, ...MetricsProvider)` · `.Listen()` · `.Close()`; ship `monitoring.NewErrorMonitoring()`. A custom metric is a `monitoring.MetricsProvider` — `GetCollector() monitoring.MetricsCollector` where `MetricsCollector = func() monitoring.MetricsCollection` and `MetricsCollection = []prometheus.Collector` |
 | Healthcheck | `jet.NewHealthCheck(*jet.HealthcheckConfig)` → `.AddReadinessCheck(name, func() error)` · `.Start()` · `.Stop()` |
 | Goroutines | `goroutine.New().WithLoggerFn(fn).Cmp(c).Mth(m).WithRetry(goroutine.Unrestricted).Go(ctx, func(){...})`; `goroutine.NewGroup(ctx)` |
@@ -309,7 +309,7 @@ import (
 	"time"
 
 	"github.com/zloevil/jet"
-	kitgrpc "github.com/zloevil/jet/grpc"
+	jetgrpc "github.com/zloevil/jet/grpc"
 	"github.com/zloevil/jet/kafka"
 	"github.com/zloevil/jet/monitoring"
 	"github.com/zloevil/jet/storages/pg"
@@ -334,7 +334,7 @@ type App struct {
 	db      *pg.Storage
 	redis   *redis.Redis
 	broker  kafka.Broker
-	payment *kitgrpc.Client
+	payment *jetgrpc.Client
 	metrics monitoring.MetricsServer
 	health  *jet.Healthcheck
 	grpc    *grpctransport.Server
@@ -366,7 +366,7 @@ func (a *App) Init(ctx context.Context, cfgAny any) error {
 	if err != nil {
 		return err
 	}
-	if a.payment, err = kitgrpc.NewClient(&cfg.Payment); err != nil {
+	if a.payment, err = jetgrpc.NewClient(&cfg.Payment); err != nil {
 		return err
 	}
 	// gate the egress client at boot: block briefly until the connection is READY so the first
@@ -911,7 +911,7 @@ import (
 	"context"
 
 	"github.com/zloevil/jet"
-	kitgrpc "github.com/zloevil/jet/grpc"
+	jetgrpc "github.com/zloevil/jet/grpc"
 	"github.com/zloevil/jet/retry"
 
 	"example.com/orders/internal/domain"
@@ -923,7 +923,7 @@ type adapter struct {
 	logger jet.CLoggerFunc
 }
 
-func NewAdapter(conn *kitgrpc.Client, logger jet.CLoggerFunc) domain.PaymentRepository {
+func NewAdapter(conn *jetgrpc.Client, logger jet.CLoggerFunc) domain.PaymentRepository {
 	return &adapter{client: paymentpb.NewPaymentServiceClient(conn.Conn), logger: logger}
 }
 
@@ -965,7 +965,7 @@ import (
 	"context"
 
 	"github.com/zloevil/jet"
-	kitgrpc "github.com/zloevil/jet/grpc"
+	jetgrpc "github.com/zloevil/jet/grpc"
 
 	"example.com/orders/internal/domain"
 	"example.com/orders/internal/usecase"
@@ -976,7 +976,7 @@ import (
 type Server struct {
 	orderspb.UnimplementedOrdersServer
 	service  string
-	srv      *kitgrpc.Server
+	srv      *jetgrpc.Server
 	orders   domain.OrderService
 	checkout usecase.CheckoutUc
 	logger   jet.CLoggerFunc
@@ -986,8 +986,8 @@ func New(service string, orders domain.OrderService, checkout usecase.CheckoutUc
 	return &Server{service: service, orders: orders, checkout: checkout, logger: logger}
 }
 
-func (s *Server) Init(cfg *kitgrpc.ServerConfig) error {
-	srv, err := kitgrpc.NewServer(s.service, s.logger, cfg)
+func (s *Server) Init(cfg *jetgrpc.ServerConfig) error {
+	srv, err := jetgrpc.NewServer(s.service, s.logger, cfg)
 	if err != nil {
 		return err
 	}
@@ -1065,7 +1065,7 @@ func (h *Handler) PaymentCompletedHandler() kafka.HandlerFn {
 ```
 
 The `order_converter.go` holds `toCreateOrderDomain(pb) *domain.CreateOrderRequest` and
-`toOrderPb(*domain.Order) *orderspb.Order` (time fields via `kitgrpc.ToTimestamp`/`ToTime`),
+`toOrderPb(*domain.Order) *orderspb.Order` (time fields via `jetgrpc.ToTimestamp`/`ToTime`),
 returning `nil` on `nil`.
 
 **An HTTP facade**, if you also need REST/webhooks: `http.NewHttpServer(&http.Config{Port:"8080"},
@@ -1441,7 +1441,10 @@ lives in the section noted, not here.
   `Close`; never block in `Start` (`cluster` owns the signal wait). (§3.1, §3.4, §8)
 - [ ] **Kafka.** Consumer `GroupId == ServiceCode` (replicas share one group); producers key by
   entity id for per-entity ordering; consumers `kafka.Decode[T]` to restore the request context.
-  `Close` drains everything in order. (§3.4, §5.3, §6)
+  Delivery defaults to at-most-once (offset committed on read); set `DeliveryGuarantee(kafka.AtLeastOnce)`
+  when losing a message is unacceptable (e.g. financial events) — it commits only after a handler returns
+  nil (retrying on error), redelivers on shutdown/crash, so handlers must be idempotent. `Close` drains
+  everything in order. (§3.4, §5.3, §6)
 - [ ] **Consistency.** Cross-aggregate work uses usecase compensation + Redis locks, not a sprawling
   multi-table DB transaction; a DB transaction stays inside a single storage method. (§4.3, §5.2)
 - [ ] **Testing & build.** Domain + usecase have `jet.Suite` unit tests (positive + negative);

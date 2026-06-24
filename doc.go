@@ -16,5 +16,5 @@
 // (goroutine, retry) and observability (monitoring, profile).
 //
 // The toolkit favors boring, explicit building blocks over magic, and is
-// extracted from an internal kit that has run 20+ production services.
+// extracted from an internal toolkit that has run 20+ production services.
 package jet

@@ -166,6 +166,9 @@ func (b *brokerImpl) AddSubscriber(ctx context.Context, topic *TopicConfig, cfg 
 	if len(handlers) == 0 {
 		return ErrKafkaSubNoHandlers(ctx)
 	}
+	if cfg.DeliveryGuarantee != "" && cfg.DeliveryGuarantee != AtMostOnce && cfg.DeliveryGuarantee != AtLeastOnce {
+		return ErrKafkaInvalidDeliveryGuarantee(ctx, string(cfg.DeliveryGuarantee))
+	}
 
 	b.Lock()
 	defer b.Unlock()

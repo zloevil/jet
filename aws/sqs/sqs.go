@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/zloevil/jet"
-	kitAws "github.com/zloevil/jet/aws"
+	jetaws "github.com/zloevil/jet/aws"
 )
 
 const (
@@ -33,11 +33,11 @@ type Config struct {
 
 type Client struct {
 	logger    jet.CLoggerFunc
-	awsCfg    *kitAws.Config
+	awsCfg    *jetaws.Config
 	sqsClient *sqs.Client
 }
 
-func NewClient(awsCfg *kitAws.Config, logger jet.CLoggerFunc) *Client {
+func NewClient(awsCfg *jetaws.Config, logger jet.CLoggerFunc) *Client {
 	return &Client{
 		logger: logger,
 		awsCfg: awsCfg,
@@ -45,7 +45,7 @@ func NewClient(awsCfg *kitAws.Config, logger jet.CLoggerFunc) *Client {
 }
 
 func (c *Client) Init(ctx context.Context) error {
-	awsConfig, err := kitAws.GetAwsConfig(ctx, c.awsCfg)
+	awsConfig, err := jetaws.GetAwsConfig(ctx, c.awsCfg)
 	if err != nil {
 		return err
 	}

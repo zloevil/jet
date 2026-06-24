@@ -61,14 +61,20 @@ type NotificationBuilder_B_Call[T any] struct {
 }
 
 // B is a helper method to define mock.On call
-//   - msg
+//   - msg *T
 func (_e *NotificationBuilder_Expecter[T]) B(msg interface{}) *NotificationBuilder_B_Call[T] {
 	return &NotificationBuilder_B_Call[T]{Call: _e.mock.On("B", msg)}
 }
 
 func (_c *NotificationBuilder_B_Call[T]) Run(run func(msg *T)) *NotificationBuilder_B_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*T))
+		var arg0 *T
+		if args[0] != nil {
+			arg0 = args[0].(*T)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -108,14 +114,20 @@ type NotificationBuilder_Receivers_Call[T any] struct {
 }
 
 // Receivers is a helper method to define mock.On call
-//   - receivers
+//   - receivers []*notification.Receiver
 func (_e *NotificationBuilder_Expecter[T]) Receivers(receivers interface{}) *NotificationBuilder_Receivers_Call[T] {
 	return &NotificationBuilder_Receivers_Call[T]{Call: _e.mock.On("Receivers", receivers)}
 }
 
 func (_c *NotificationBuilder_Receivers_Call[T]) Run(run func(receivers []*notification.Receiver)) *NotificationBuilder_Receivers_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].([]*notification.Receiver))
+		var arg0 []*notification.Receiver
+		if args[0] != nil {
+			arg0 = args[0].([]*notification.Receiver)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -161,7 +173,7 @@ type NotificationBuilder_Types_Call[T any] struct {
 }
 
 // Types is a helper method to define mock.On call
-//   - types
+//   - types ...string
 func (_e *NotificationBuilder_Expecter[T]) Types(types ...interface{}) *NotificationBuilder_Types_Call[T] {
 	return &NotificationBuilder_Types_Call[T]{Call: _e.mock.On("Types",
 		append([]interface{}{}, types...)...)}
@@ -169,8 +181,15 @@ func (_e *NotificationBuilder_Expecter[T]) Types(types ...interface{}) *Notifica
 
 func (_c *NotificationBuilder_Types_Call[T]) Run(run func(types ...string)) *NotificationBuilder_Types_Call[T] {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[0].([]string)
-		run(variadicArgs...)
+		var arg0 []string
+		var variadicArgs []string
+		if len(args) > 0 {
+			variadicArgs = args[0].([]string)
+		}
+		arg0 = variadicArgs
+		run(
+			arg0...,
+		)
 	})
 	return _c
 }
@@ -292,14 +311,20 @@ type NotificationReceivers_Permissions_Call struct {
 }
 
 // Permissions is a helper method to define mock.On call
-//   - resolver
+//   - resolver notification.Resolver
 func (_e *NotificationReceivers_Expecter) Permissions(resolver interface{}) *NotificationReceivers_Permissions_Call {
 	return &NotificationReceivers_Permissions_Call{Call: _e.mock.On("Permissions", resolver)}
 }
 
 func (_c *NotificationReceivers_Permissions_Call) Run(run func(resolver notification.Resolver)) *NotificationReceivers_Permissions_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(notification.Resolver))
+		var arg0 notification.Resolver
+		if args[0] != nil {
+			arg0 = args[0].(notification.Resolver)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -345,7 +370,7 @@ type NotificationReceivers_Scopes_Call struct {
 }
 
 // Scopes is a helper method to define mock.On call
-//   - fns
+//   - fns ...notification.ReceiverFn
 func (_e *NotificationReceivers_Expecter) Scopes(fns ...interface{}) *NotificationReceivers_Scopes_Call {
 	return &NotificationReceivers_Scopes_Call{Call: _e.mock.On("Scopes",
 		append([]interface{}{}, fns...)...)}
@@ -353,8 +378,15 @@ func (_e *NotificationReceivers_Expecter) Scopes(fns ...interface{}) *Notificati
 
 func (_c *NotificationReceivers_Scopes_Call) Run(run func(fns ...notification.ReceiverFn)) *NotificationReceivers_Scopes_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[0].([]notification.ReceiverFn)
-		run(variadicArgs...)
+		var arg0 []notification.ReceiverFn
+		var variadicArgs []notification.ReceiverFn
+		if len(args) > 0 {
+			variadicArgs = args[0].([]notification.ReceiverFn)
+		}
+		arg0 = variadicArgs
+		run(
+			arg0...,
+		)
 	})
 	return _c
 }

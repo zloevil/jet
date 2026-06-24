@@ -2,8 +2,8 @@
 name: jet-toolkit
 description: >-
   Use this skill whenever working on a Go service that is (or should be) built on
-  the `jet` toolkit — imported as `github.com/zloevil/jet` or, in the monorepo, as
-  `gitlab.monowork.tech/back/kit`. jet ships production-grade building blocks
+  the `jet` toolkit — imported as `github.com/zloevil/jet`. jet ships
+  production-grade building blocks
   (structured logger, AppError model, request context, typed config, service
   lifecycle/`cluster`, panic-safe goroutines, retry, Kafka, gRPC/HTTP servers,
   Postgres/Redis/Mongo/etc. adapters, healthcheck, metrics) so a service should
@@ -11,20 +11,19 @@ description: >-
   feature, endpoint, repository, worker, consumer, or whole service in such a repo
   (so it's built on jet from the start), and especially when REFACTORING or
   REVIEWING — when the user wants to "убрать велосипеды / выпилить бойлерплейт /
-  использовать jet (kit) / переписать на jet / почему руками, есть же jet",
+  использовать jet / переписать на jet / почему руками, есть же jet",
   replace custom logging/error/config/retry/goroutine/kafka/db plumbing with jet
   equivalents, or asks why hand-written infra exists where jet already provides it.
-  Fires on jet/kit component names (CLogger, AppError, AppErrBuilder, cluster,
+  Fires on jet component names (CLogger, AppError, AppErrBuilder, cluster,
   Bootstrap, CLoggerFunc, goroutine.New, NewAppErrBuilder, pg.Open, kafka.NewBroker)
-  and on Go services in the fin domain (killjoy, ton-service, payouts, swapper,
-  scavenger). This is the source of truth for using jet idiomatically and for
-  spotting reinvented wheels. NOT for developing the jet library itself, and NOT
-  for Go code that has nothing to do with jet/kit.
+  and on Go services in the fin domain. This is the source of truth for using jet
+  idiomatically and for spotting reinvented wheels. NOT for developing the jet library itself, and NOT
+  for Go code that has nothing to do with jet.
 ---
 
 # Working with the jet toolkit
 
-`jet` (public mirror `github.com/zloevil/jet`; internal `gitlab.monowork.tech/back/kit`)
+`jet` (`github.com/zloevil/jet`)
 is a pragmatic Go microservice toolkit that already implements the things most
 services rewrite from scratch: structured logging, a structured error model,
 request-context propagation, typed config, service lifecycle, panic-safe
@@ -43,11 +42,11 @@ Before applying any of this, make sure jet is actually in play — otherwise the
 conventions don't apply and you'd be forcing a dependency:
 
 ```
-rg 'zloevil/jet|back/kit' go.mod
+rg 'zloevil/jet' go.mod
 ```
 
 If it's there (or the user is explicitly asking to adopt jet), proceed. If a Go
-repo has nothing to do with jet/kit, this skill doesn't apply — don't push it.
+repo has nothing to do with jet, this skill doesn't apply — don't push it.
 
 ## The reflex: check the catalog before writing infra
 
@@ -89,8 +88,8 @@ build it on jet from the first line:
 
 For larger, multi-layer work (a new service, a cross-domain feature, a gateway
 integration), the repo also ships two expert subagents — `jet-service-agent` (domain/
-business services) and `jet-gateway-agent` (external-integration gateways) — and a
-`kit-migration-architect` for systematic audits. Hand off to those for heavy
+business services) and `jet-gateway-agent` (external-integration gateways). Hand
+off to those for heavy
 scaffolding; use this skill for the in-the-moment "use jet, not a велосипед" reflex.
 
 ### Refactoring out велосипеды

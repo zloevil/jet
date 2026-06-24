@@ -92,14 +92,20 @@ type ProfileServer_Init_Call struct {
 }
 
 // Init is a helper method to define mock.On call
-//   - config
+//   - config *profile.Config
 func (_e *ProfileServer_Expecter) Init(config interface{}) *ProfileServer_Init_Call {
 	return &ProfileServer_Init_Call{Call: _e.mock.On("Init", config)}
 }
 
 func (_c *ProfileServer_Init_Call) Run(run func(config *profile.Config)) *ProfileServer_Init_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*profile.Config))
+		var arg0 *profile.Config
+		if args[0] != nil {
+			arg0 = args[0].(*profile.Config)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }

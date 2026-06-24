@@ -1,0 +1,62 @@
+all: false
+include-auto-generated: true
+template: testify
+dir: mocks
+pkgname: mocks
+filename: "{{.SrcPackageName}}_mocks.go"
+structname: "{{ .SrcPackageName | firstUpper }}{{ .InterfaceName }}"
+packages:
+  github.com/zloevil/jet:
+    config:
+      all: true
+  github.com/zloevil/jet/batch:
+    config:
+      all: true
+  github.com/zloevil/jet/centrifugo:
+    config:
+      all: true
+  github.com/zloevil/jet/centrifugo/proto:
+    config:
+      all: true
+  github.com/zloevil/jet/cluster:
+    config:
+      all: true
+  github.com/zloevil/jet/elasticsearch:
+    config:
+      all: true
+  github.com/zloevil/jet/event:
+    config:
+      all: true
+  github.com/zloevil/jet/google:
+    config:
+      all: true
+  github.com/zloevil/jet/goroutine:
+    config:
+      all: true
+  github.com/zloevil/jet/grpc:
+    config:
+      all: true
+  github.com/zloevil/jet/http:
+    config:
+      all: true
+  github.com/zloevil/jet/kafka:
+    config:
+      all: true
+  github.com/zloevil/jet/memcache:
+    config:
+      all: true
+  github.com/zloevil/jet/monitoring:
+    config:
+      all: true
+  github.com/zloevil/jet/notification:
+    config:
+      all: true
+  github.com/zloevil/jet/profile:
+    config:
+      all: true
+  github.com/zloevil/jet/storages/migration:
+    config:
+      all: true
+  github.com/zloevil/jet/storages/redis:
+    config:
+      all: true

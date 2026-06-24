@@ -73,7 +73,7 @@ type HttpController_HasRoles_Call struct {
 }
 
 // HasRoles is a helper method to define mock.On call
-//   - roles
+//   - roles ...string
 func (_e *HttpController_Expecter) HasRoles(roles ...interface{}) *HttpController_HasRoles_Call {
 	return &HttpController_HasRoles_Call{Call: _e.mock.On("HasRoles",
 		append([]interface{}{}, roles...)...)}
@@ -81,8 +81,15 @@ func (_e *HttpController_Expecter) HasRoles(roles ...interface{}) *HttpControlle
 
 func (_c *HttpController_HasRoles_Call) Run(run func(roles ...string)) *HttpController_HasRoles_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[0].([]string)
-		run(variadicArgs...)
+		var arg0 []string
+		var variadicArgs []string
+		if len(args) > 0 {
+			variadicArgs = args[0].([]string)
+		}
+		arg0 = variadicArgs
+		run(
+			arg0...,
+		)
 	})
 	return _c
 }
@@ -129,15 +136,26 @@ type HttpController_MyUser_Call struct {
 }
 
 // MyUser is a helper method to define mock.On call
-//   - ctx
-//   - r
+//   - ctx context.Context
+//   - r *http.Request
 func (_e *HttpController_Expecter) MyUser(ctx interface{}, r interface{}) *HttpController_MyUser_Call {
 	return &HttpController_MyUser_Call{Call: _e.mock.On("MyUser", ctx, r)}
 }
 
 func (_c *HttpController_MyUser_Call) Run(run func(ctx context.Context, r *http.Request)) *HttpController_MyUser_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*http.Request))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *http.Request
+		if args[1] != nil {
+			arg1 = args[1].(*http.Request)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -237,15 +255,26 @@ type HttpMetricsProvider_RequestErrorInc_Call struct {
 }
 
 // RequestErrorInc is a helper method to define mock.On call
-//   - ctx
-//   - metric
+//   - ctx context.Context
+//   - metric *http0.RequestError
 func (_e *HttpMetricsProvider_Expecter) RequestErrorInc(ctx interface{}, metric interface{}) *HttpMetricsProvider_RequestErrorInc_Call {
 	return &HttpMetricsProvider_RequestErrorInc_Call{Call: _e.mock.On("RequestErrorInc", ctx, metric)}
 }
 
 func (_c *HttpMetricsProvider_RequestErrorInc_Call) Run(run func(ctx context.Context, metric *http0.RequestError)) *HttpMetricsProvider_RequestErrorInc_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*http0.RequestError))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *http0.RequestError
+		if args[1] != nil {
+			arg1 = args[1].(*http0.RequestError)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -272,15 +301,26 @@ type HttpMetricsProvider_RequestLatencySet_Call struct {
 }
 
 // RequestLatencySet is a helper method to define mock.On call
-//   - ctx
-//   - metric
+//   - ctx context.Context
+//   - metric *http0.RequestLatency
 func (_e *HttpMetricsProvider_Expecter) RequestLatencySet(ctx interface{}, metric interface{}) *HttpMetricsProvider_RequestLatencySet_Call {
 	return &HttpMetricsProvider_RequestLatencySet_Call{Call: _e.mock.On("RequestLatencySet", ctx, metric)}
 }
 
 func (_c *HttpMetricsProvider_RequestLatencySet_Call) Run(run func(ctx context.Context, metric *http0.RequestLatency)) *HttpMetricsProvider_RequestLatencySet_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*http0.RequestLatency))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *http0.RequestLatency
+		if args[1] != nil {
+			arg1 = args[1].(*http0.RequestLatency)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -356,16 +396,32 @@ type HttpResourcePolicyManager_GetRequestedResources_Call struct {
 }
 
 // GetRequestedResources is a helper method to define mock.On call
-//   - ctx
-//   - routeId
-//   - r
+//   - ctx context.Context
+//   - routeId string
+//   - r *http.Request
 func (_e *HttpResourcePolicyManager_Expecter) GetRequestedResources(ctx interface{}, routeId interface{}, r interface{}) *HttpResourcePolicyManager_GetRequestedResources_Call {
 	return &HttpResourcePolicyManager_GetRequestedResources_Call{Call: _e.mock.On("GetRequestedResources", ctx, routeId, r)}
 }
 
 func (_c *HttpResourcePolicyManager_GetRequestedResources_Call) Run(run func(ctx context.Context, routeId string, r *http.Request)) *HttpResourcePolicyManager_GetRequestedResources_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(string), args[2].(*http.Request))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 string
+		if args[1] != nil {
+			arg1 = args[1].(string)
+		}
+		var arg2 *http.Request
+		if args[2] != nil {
+			arg2 = args[2].(*http.Request)
+		}
+		run(
+			arg0,
+			arg1,
+			arg2,
+		)
 	})
 	return _c
 }
@@ -397,8 +453,8 @@ type HttpResourcePolicyManager_RegisterResourceMapping_Call struct {
 }
 
 // RegisterResourceMapping is a helper method to define mock.On call
-//   - routeId
-//   - policies
+//   - routeId string
+//   - policies ...http0.ResourcePolicy
 func (_e *HttpResourcePolicyManager_Expecter) RegisterResourceMapping(routeId interface{}, policies ...interface{}) *HttpResourcePolicyManager_RegisterResourceMapping_Call {
 	return &HttpResourcePolicyManager_RegisterResourceMapping_Call{Call: _e.mock.On("RegisterResourceMapping",
 		append([]interface{}{routeId}, policies...)...)}
@@ -406,8 +462,20 @@ func (_e *HttpResourcePolicyManager_Expecter) RegisterResourceMapping(routeId in
 
 func (_c *HttpResourcePolicyManager_RegisterResourceMapping_Call) Run(run func(routeId string, policies ...http0.ResourcePolicy)) *HttpResourcePolicyManager_RegisterResourceMapping_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := args[1].([]http0.ResourcePolicy)
-		run(args[0].(string), variadicArgs...)
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		var arg1 []http0.ResourcePolicy
+		var variadicArgs []http0.ResourcePolicy
+		if len(args) > 1 {
+			variadicArgs = args[1].([]http0.ResourcePolicy)
+		}
+		arg1 = variadicArgs
+		run(
+			arg0,
+			arg1...,
+		)
 	})
 	return _c
 }
@@ -483,15 +551,26 @@ type HttpResourcePolicy_Resolve_Call struct {
 }
 
 // Resolve is a helper method to define mock.On call
-//   - ctx
-//   - r
+//   - ctx context.Context
+//   - r *http.Request
 func (_e *HttpResourcePolicy_Expecter) Resolve(ctx interface{}, r interface{}) *HttpResourcePolicy_Resolve_Call {
 	return &HttpResourcePolicy_Resolve_Call{Call: _e.mock.On("Resolve", ctx, r)}
 }
 
 func (_c *HttpResourcePolicy_Resolve_Call) Run(run func(ctx context.Context, r *http.Request)) *HttpResourcePolicy_Resolve_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(*http.Request))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *http.Request
+		if args[1] != nil {
+			arg1 = args[1].(*http.Request)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -567,14 +646,20 @@ type HttpHttpClient_Do_Call struct {
 }
 
 // Do is a helper method to define mock.On call
-//   - req
+//   - req *http.Request
 func (_e *HttpHttpClient_Expecter) Do(req interface{}) *HttpHttpClient_Do_Call {
 	return &HttpHttpClient_Do_Call{Call: _e.mock.On("Do", req)}
 }
 
 func (_c *HttpHttpClient_Do_Call) Run(run func(req *http.Request)) *HttpHttpClient_Do_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*http.Request))
+		var arg0 *http.Request
+		if args[0] != nil {
+			arg0 = args[0].(*http.Request)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -699,15 +784,26 @@ type HttpWsUpgrader_Set_Call struct {
 }
 
 // Set is a helper method to define mock.On call
-//   - router
-//   - upgrader
+//   - router *mux.Router
+//   - upgrader *websocket.Upgrader
 func (_e *HttpWsUpgrader_Expecter) Set(router interface{}, upgrader interface{}) *HttpWsUpgrader_Set_Call {
 	return &HttpWsUpgrader_Set_Call{Call: _e.mock.On("Set", router, upgrader)}
 }
 
 func (_c *HttpWsUpgrader_Set_Call) Run(run func(router *mux.Router, upgrader *websocket.Upgrader)) *HttpWsUpgrader_Set_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(*mux.Router), args[1].(*websocket.Upgrader))
+		var arg0 *mux.Router
+		if args[0] != nil {
+			arg0 = args[0].(*mux.Router)
+		}
+		var arg1 *websocket.Upgrader
+		if args[1] != nil {
+			arg1 = args[1].(*websocket.Upgrader)
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }

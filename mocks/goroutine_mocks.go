@@ -144,14 +144,20 @@ type GoroutineErrGroup_Cmp_Call struct {
 }
 
 // Cmp is a helper method to define mock.On call
-//   - component
+//   - component string
 func (_e *GoroutineErrGroup_Expecter) Cmp(component interface{}) *GoroutineErrGroup_Cmp_Call {
 	return &GoroutineErrGroup_Cmp_Call{Call: _e.mock.On("Cmp", component)}
 }
 
 func (_c *GoroutineErrGroup_Cmp_Call) Run(run func(component string)) *GoroutineErrGroup_Cmp_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -178,14 +184,20 @@ type GoroutineErrGroup_Go_Call struct {
 }
 
 // Go is a helper method to define mock.On call
-//   - f
+//   - f func() error
 func (_e *GoroutineErrGroup_Expecter) Go(f interface{}) *GoroutineErrGroup_Go_Call {
 	return &GoroutineErrGroup_Go_Call{Call: _e.mock.On("Go", f)}
 }
 
 func (_c *GoroutineErrGroup_Go_Call) Run(run func(f func() error)) *GoroutineErrGroup_Go_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(func() error))
+		var arg0 func() error
+		if args[0] != nil {
+			arg0 = args[0].(func() error)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -225,14 +237,20 @@ type GoroutineErrGroup_Mth_Call struct {
 }
 
 // Mth is a helper method to define mock.On call
-//   - method
+//   - method string
 func (_e *GoroutineErrGroup_Expecter) Mth(method interface{}) *GoroutineErrGroup_Mth_Call {
 	return &GoroutineErrGroup_Mth_Call{Call: _e.mock.On("Mth", method)}
 }
 
 func (_c *GoroutineErrGroup_Mth_Call) Run(run func(method string)) *GoroutineErrGroup_Mth_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -316,14 +334,20 @@ type GoroutineErrGroup_WithLogger_Call struct {
 }
 
 // WithLogger is a helper method to define mock.On call
-//   - logger
+//   - logger jet.CLogger
 func (_e *GoroutineErrGroup_Expecter) WithLogger(logger interface{}) *GoroutineErrGroup_WithLogger_Call {
 	return &GoroutineErrGroup_WithLogger_Call{Call: _e.mock.On("WithLogger", logger)}
 }
 
 func (_c *GoroutineErrGroup_WithLogger_Call) Run(run func(logger jet.CLogger)) *GoroutineErrGroup_WithLogger_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(jet.CLogger))
+		var arg0 jet.CLogger
+		if args[0] != nil {
+			arg0 = args[0].(jet.CLogger)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -363,14 +387,20 @@ type GoroutineErrGroup_WithLoggerFn_Call struct {
 }
 
 // WithLoggerFn is a helper method to define mock.On call
-//   - loggerFn
+//   - loggerFn jet.CLoggerFunc
 func (_e *GoroutineErrGroup_Expecter) WithLoggerFn(loggerFn interface{}) *GoroutineErrGroup_WithLoggerFn_Call {
 	return &GoroutineErrGroup_WithLoggerFn_Call{Call: _e.mock.On("WithLoggerFn", loggerFn)}
 }
 
 func (_c *GoroutineErrGroup_WithLoggerFn_Call) Run(run func(loggerFn jet.CLoggerFunc)) *GoroutineErrGroup_WithLoggerFn_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(jet.CLoggerFunc))
+		var arg0 jet.CLoggerFunc
+		if args[0] != nil {
+			arg0 = args[0].(jet.CLoggerFunc)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -437,14 +467,20 @@ type GoroutineGoroutine_Cmp_Call struct {
 }
 
 // Cmp is a helper method to define mock.On call
-//   - component
+//   - component string
 func (_e *GoroutineGoroutine_Expecter) Cmp(component interface{}) *GoroutineGoroutine_Cmp_Call {
 	return &GoroutineGoroutine_Cmp_Call{Call: _e.mock.On("Cmp", component)}
 }
 
 func (_c *GoroutineGoroutine_Cmp_Call) Run(run func(component string)) *GoroutineGoroutine_Cmp_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -471,15 +507,26 @@ type GoroutineGoroutine_Go_Call struct {
 }
 
 // Go is a helper method to define mock.On call
-//   - ctx
-//   - f
+//   - ctx context.Context
+//   - f func()
 func (_e *GoroutineGoroutine_Expecter) Go(ctx interface{}, f interface{}) *GoroutineGoroutine_Go_Call {
 	return &GoroutineGoroutine_Go_Call{Call: _e.mock.On("Go", ctx, f)}
 }
 
 func (_c *GoroutineGoroutine_Go_Call) Run(run func(ctx context.Context, f func())) *GoroutineGoroutine_Go_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(context.Context), args[1].(func()))
+		var arg0 context.Context
+		if args[0] != nil {
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 func()
+		if args[1] != nil {
+			arg1 = args[1].(func())
+		}
+		run(
+			arg0,
+			arg1,
+		)
 	})
 	return _c
 }
@@ -519,14 +566,20 @@ type GoroutineGoroutine_Mth_Call struct {
 }
 
 // Mth is a helper method to define mock.On call
-//   - method
+//   - method string
 func (_e *GoroutineGoroutine_Expecter) Mth(method interface{}) *GoroutineGoroutine_Mth_Call {
 	return &GoroutineGoroutine_Mth_Call{Call: _e.mock.On("Mth", method)}
 }
 
 func (_c *GoroutineGoroutine_Mth_Call) Run(run func(method string)) *GoroutineGoroutine_Mth_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(string))
+		var arg0 string
+		if args[0] != nil {
+			arg0 = args[0].(string)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -566,14 +619,20 @@ type GoroutineGoroutine_WithLogger_Call struct {
 }
 
 // WithLogger is a helper method to define mock.On call
-//   - logger
+//   - logger jet.CLogger
 func (_e *GoroutineGoroutine_Expecter) WithLogger(logger interface{}) *GoroutineGoroutine_WithLogger_Call {
 	return &GoroutineGoroutine_WithLogger_Call{Call: _e.mock.On("WithLogger", logger)}
 }
 
 func (_c *GoroutineGoroutine_WithLogger_Call) Run(run func(logger jet.CLogger)) *GoroutineGoroutine_WithLogger_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(jet.CLogger))
+		var arg0 jet.CLogger
+		if args[0] != nil {
+			arg0 = args[0].(jet.CLogger)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -613,14 +672,20 @@ type GoroutineGoroutine_WithLoggerFn_Call struct {
 }
 
 // WithLoggerFn is a helper method to define mock.On call
-//   - loggerFn
+//   - loggerFn jet.CLoggerFunc
 func (_e *GoroutineGoroutine_Expecter) WithLoggerFn(loggerFn interface{}) *GoroutineGoroutine_WithLoggerFn_Call {
 	return &GoroutineGoroutine_WithLoggerFn_Call{Call: _e.mock.On("WithLoggerFn", loggerFn)}
 }
 
 func (_c *GoroutineGoroutine_WithLoggerFn_Call) Run(run func(loggerFn jet.CLoggerFunc)) *GoroutineGoroutine_WithLoggerFn_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(jet.CLoggerFunc))
+		var arg0 jet.CLoggerFunc
+		if args[0] != nil {
+			arg0 = args[0].(jet.CLoggerFunc)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -660,14 +725,20 @@ type GoroutineGoroutine_WithRetry_Call struct {
 }
 
 // WithRetry is a helper method to define mock.On call
-//   - retry
+//   - retry int
 func (_e *GoroutineGoroutine_Expecter) WithRetry(retry interface{}) *GoroutineGoroutine_WithRetry_Call {
 	return &GoroutineGoroutine_WithRetry_Call{Call: _e.mock.On("WithRetry", retry)}
 }
 
 func (_c *GoroutineGoroutine_WithRetry_Call) Run(run func(retry int)) *GoroutineGoroutine_WithRetry_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(int))
+		var arg0 int
+		if args[0] != nil {
+			arg0 = args[0].(int)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }
@@ -707,14 +778,20 @@ type GoroutineGoroutine_WithRetryDelay_Call struct {
 }
 
 // WithRetryDelay is a helper method to define mock.On call
-//   - delay
+//   - delay time.Duration
 func (_e *GoroutineGoroutine_Expecter) WithRetryDelay(delay interface{}) *GoroutineGoroutine_WithRetryDelay_Call {
 	return &GoroutineGoroutine_WithRetryDelay_Call{Call: _e.mock.On("WithRetryDelay", delay)}
 }
 
 func (_c *GoroutineGoroutine_WithRetryDelay_Call) Run(run func(delay time.Duration)) *GoroutineGoroutine_WithRetryDelay_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		run(args[0].(time.Duration))
+		var arg0 time.Duration
+		if args[0] != nil {
+			arg0 = args[0].(time.Duration)
+		}
+		run(
+			arg0,
+		)
 	})
 	return _c
 }

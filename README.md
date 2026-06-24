@@ -27,7 +27,7 @@ Requires Go 1.26+.
 | `jet/cluster` | Service lifecycle (`Bootstrap` + CLI), config loading, DB migrations |
 | `jet/goroutine` | Panic-safe goroutines and error groups |
 | `jet/retry` | Bounded retry with exponential backoff + jitter |
-| `jet/kafka` | Kafka producer/subscriber (segmentio/kafka-go) with SASL, workers, context propagation |
+| `jet/kafka` | Kafka producer/subscriber (segmentio/kafka-go) with SASL, workers, context propagation, at-most/at-least-once delivery |
 | `jet/http`, `jet/grpc` | HTTP (gorilla/mux) and gRPC servers with middleware |
 | `jet/storages/pg` | PostgreSQL via GORM + JSONB/paging helpers |
 | `jet/storages/{redis,mongodb,clickhouse,migration,minio,aerospike}` | Storage adapters |
@@ -135,7 +135,7 @@ _ = broker.Init(ctx, &kafka.BrokerConfig{Url: "localhost:9092"})
 
 _ = broker.AddSubscriber(ctx,
 	kafka.NewTopicCfgBuilder("orders").Build(),
-	kafka.NewSubscriberCfgBuilder().GroupId("my-service").Build(),
+	kafka.NewSubscriberCfgBuilder().GroupId("my-service").Build(), // at-most-once; or .DeliveryGuarantee(kafka.AtLeastOnce)
 	func(payload []byte) error { /* handle message */ return nil },
 )
 
@@ -196,7 +196,7 @@ and when reviewing or refactoring, it hunts down hand-rolled boilerplate and rep
 
 To use it, copy `skills/jet-toolkit/` into your Claude Code skills directory (e.g.
 `~/.claude/skills/`). It activates automatically when you work on a Go service that imports
-`github.com/zloevil/jet` (or, internally, `gitlab.monowork.tech/back/kit`).
+`github.com/zloevil/jet`.
 
 ## Contributing
 
